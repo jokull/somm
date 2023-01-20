@@ -12,23 +12,9 @@ export interface DokobitSession {
 	phone?: string;
 }
 
-export async function getDokobitRedirectUrl(returnUrl: string) {
-	const data = await fetch(`${env.DOKOBIT_URL}/create?access_token=${env.DOKOBIT_TOKEN}`, {
-		method: 'POST',
-		headers: { 'content-type': 'application/json' },
-		body: JSON.stringify({ return_url: returnUrl })
-	}).then((response) => {
-		if (response.status !== 200) {
-			throw new Error(response.statusText);
-		}
-		return response.json() as unknown;
-	});
-	return (data as { url: string }).url;
-}
-
 export async function getDokobitSession(sessionToken: string) {
 	const response = await fetch(
-		`${env.DOKOBIT_URL}/${sessionToken}/status?access_token=${env.DOKOBIT_URL}`
+		`${env.DOKOBIT_URL}/${sessionToken}/status?access_token=${env.DOKOBIT_TOKEN}`
 	);
 	const data = (await response.json()) as Record<string, unknown>;
 	if (data.status === 'error') throw Error(data.message as string);
