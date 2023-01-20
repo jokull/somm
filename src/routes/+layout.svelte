@@ -17,7 +17,7 @@
 <div class="mx-auto max-w-7xl relative">
 	<div class="min-h-screen flex flex-col px-4 py-8">
 		<div
-			class="px-6 py-3 mb-4 text-center font-bold text-xl rounded bg-amber-100 text-amber-600 shadow-xl shadow-amber-700/10"
+			class="px-6 py-3 mb-12 sm:mb-4 text-center font-bold text-xl rounded bg-amber-100 text-amber-600 shadow-xl shadow-amber-700/10"
 		>
 			Vefurinn er í vinnslu <br />{' '}
 			<span class="text-sm">

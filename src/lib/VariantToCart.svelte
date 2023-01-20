@@ -43,7 +43,7 @@
 		{location.join(', ')}
 	</div>
 	<div class="md:hidden text-sm truncate">
-		{product.region?.value}
+		{product.region?.value ?? ''}
 	</div>
 </div>
 <div class="flex items-center justify-between">

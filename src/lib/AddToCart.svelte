@@ -18,24 +18,31 @@
 	`);
 
 	$: cartLine = cart.lines.edges.find(({ node }) => node.merchandise.id === variant.id);
+	$: soldOut = variant.quantityAvailable !== null ? variant.quantityAvailable === 0 : false;
 </script>
 
 <div class="flex justify-between gap-2">
 	{#if cartLine}
-		<div class="hidden sm:block">
+		<div>
 			<CartLineItemQuantity line={cartLine} {cart} />
 		</div>
 	{:else}
 		<button
 			class={classNames(
-				!$addCartItem.fetching ? 'hover:text-[blue] underline whitespace-nowrap' : ''
+				'whitespace-nowrap',
+				soldOut || $addCartItem.fetching ? 'text-neutral-400' : 'hover:text-[blue] underline'
 			)}
+			disabled={soldOut}
 			on:click={(event) => {
 				event.preventDefault();
 				addCartItem.mutate({ cartId: cart.id, lineItem: { merchandiseId: variant.id } });
 			}}
 		>
-			{$addCartItem.fetching ? 'Augnablik' : 'Bæta í körfu'}
+			{#if soldOut}
+				Uppselt
+			{:else}
+				{$addCartItem.fetching ? 'Augnablik' : 'Bæta í körfu'}
+			{/if}
 		</button>
 	{/if}
 </div>

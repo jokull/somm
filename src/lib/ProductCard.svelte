@@ -15,7 +15,7 @@
 </script>
 
 <div>
-	<a href={`/${vendor.slug}/${id}`} class="relative shrink-0">
+	<a href={`/${vendor.slug}/${id}`} class="relative block">
 		{#if variant.image}
 			<div class="overflow-hidden rounded-md shadow-xl">
 				<img
@@ -37,7 +37,7 @@
 		>
 			<div>
 				{#if product.abv && Number(product.abv.value) === 0.0}
-					<div>
+					<div class="whitespace-nowrap">
 						{Number(product.abv.value).toLocaleString('de-DE', {
 							minimumFractionDigits: 1,
 							maximumFractionDigits: 1
