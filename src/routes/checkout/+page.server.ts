@@ -46,6 +46,8 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 		}
 	`);
 
+	let checkoutUrl = '';
+
 	if (dokobitSessionToken && session.cartId) {
 		const dokobitSession = await getDokobitSession(dokobitSessionToken);
 		const { cartBuyerIdentityUpdate } = await UpdateOrderMetadata.mutate({
@@ -60,11 +62,12 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 			]
 		});
 		if (cartBuyerIdentityUpdate?.cart?.checkoutUrl) {
-			throw redirect(301, cartBuyerIdentityUpdate?.cart?.checkoutUrl);
+			checkoutUrl = cartBuyerIdentityUpdate.cart.checkoutUrl;
+			// throw redirect(301, cartBuyerIdentityUpdate.cart.checkoutUrl);
 		} else {
 			throw Error('Could not checkout');
 		}
 	}
 
-	return {};
+	return { checkoutUrl };
 };

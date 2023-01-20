@@ -46,6 +46,12 @@
 		{/if}
 		<table class="table w-full max-w-sm">
 			<tbody>
+				{#if product.wineType}
+					<tr>
+						<td class="pr-2 font-semibold">Tegund</td>
+						<td>{product.wineType.value}</td>
+					</tr>
+				{/if}
 				{#if product.framleidandi}
 					<tr>
 						<td class="pr-2 font-semibold">Framleiðandi</td>

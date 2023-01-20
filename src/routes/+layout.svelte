@@ -8,10 +8,9 @@
 	import Logo from './Logo.svelte';
 	import SiggiImage from './SiggiImage.svelte';
 	import WineTypeOption from './WineTypeOption.svelte';
-	import { invalidate } from '$app/navigation';
 
 	export let data: LayoutServerData;
-	$: ({ vendor, vendors, wineType, session, cart } = data);
+	$: ({ vendor, vendors, wineType, cart } = data);
 	const wineTypes = [null, 'Rauðvín', 'Hvítvín', 'Rósavín', 'Freyðivín', 'Gulvín', 'Te'] as const;
 </script>
 
