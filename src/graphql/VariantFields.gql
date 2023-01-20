@@ -1,0 +1,25 @@
+fragment VariantFields on ProductVariant {
+	__typename
+	id
+	title
+	availableForSale
+	quantityAvailable
+	image {
+		__typename
+		id
+		url(transform: { maxHeight: 1200, maxWidth: 1200, scale: 2 })
+		altText
+		width
+		height
+	}
+	priceV2 {
+		__typename
+		amount
+		currencyCode
+	}
+	compareAtPriceV2 {
+		__typename
+		amount
+		currencyCode
+	}
+}

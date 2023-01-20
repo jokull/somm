@@ -1,0 +1,26 @@
+fragment LineItemFields on CartLine {
+	id
+	__typename
+	quantity
+	cost {
+		__typename
+		totalAmount {
+			amount
+			currencyCode
+		}
+	}
+	merchandise {
+		__typename
+		... on ProductVariant {
+			__typename
+			id
+			product {
+				__typename
+				id
+				title
+				vendor
+			}
+			...VariantFields
+		}
+	}
+}

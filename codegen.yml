@@ -1,0 +1,22 @@
+overwrite: true
+schema:
+  - https://somm-is.myshopify.com/api/2022-07/graphql:
+      headers:
+        X-Shopify-Storefront-Access-Token: d69aaa070510c4d1d270b30d49161d6e
+documents: "graphql/*.gql"
+generates:
+  schema.graphql:
+    plugins:
+      - schema-ast
+  storefront.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-generic-sdk
+    config:
+      typesPrefix: Shopify
+      experimentalFragmentVariables: true
+      rawRequest: true
+      scalars:
+        Decimal: string
+        URL: string

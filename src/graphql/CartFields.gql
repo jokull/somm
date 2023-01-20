@@ -1,0 +1,29 @@
+fragment CartFields on Cart {
+	__typename
+	id
+	totalQuantity
+	checkoutUrl
+	cost {
+		subtotalAmount {
+			amount
+			currencyCode
+		}
+		totalAmount {
+			amount
+			currencyCode
+		}
+		totalTaxAmount {
+			amount
+			currencyCode
+		}
+	}
+	lines(first: 250) {
+		__typename
+		edges {
+			__typename
+			node {
+				...LineItemFields
+			}
+		}
+	}
+}
