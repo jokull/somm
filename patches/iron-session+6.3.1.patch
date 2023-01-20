@@ -1,0 +1,18 @@
+diff --git a/node_modules/iron-session/edge/dist/index.mjs b/node_modules/iron-session/edge/dist/index.mjs
+index a36d79e..7a4fb6d 100644
+--- a/node_modules/iron-session/edge/dist/index.mjs
++++ b/node_modules/iron-session/edge/dist/index.mjs
+@@ -187,9 +187,10 @@ var getCrypto = () => {
+     return globalThis.crypto;
+   if (typeof ((_c = (_b = globalThis.crypto) == null ? void 0 : _b.webcrypto) == null ? void 0 : _c.subtle) === "object")
+     return globalThis.crypto.webcrypto;
+-  throw new Error(
+-    "no native implementation of WebCrypto is available in current context"
+-  );
++  return globalThis.crypto
++  // throw new Error(
++  //   "no native implementation of WebCrypto is available in current context"
++  // );
+ };
+ var _crypto = getCrypto();
+ var unsealData = createUnsealData(_crypto);
