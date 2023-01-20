@@ -25,8 +25,6 @@
 				somm.is er enn á prufustigi - neðst niðri er póstlistaskráning fyrir þá sem vilja fylgjast
 				með
 			</span>
-			<pre class="text-xs text-left w-full">{JSON.stringify(session, undefined, 2)}
-			</pre>
 		</div>
 		<div class="mb-8 lg:my-12 flex flex-row gap-4 items-center justify-between">
 			<div><!-- /* spacer to center the next element* --></div>
