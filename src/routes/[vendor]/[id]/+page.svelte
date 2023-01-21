@@ -2,7 +2,7 @@
 	import Product from './Product.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	let { product, vendor } = data;
+	let { product, vendor, cart } = data;
 </script>
 
 <svelte:head>
@@ -14,5 +14,7 @@
 </svelte:head>
 
 <div>
-	<Product {product} />
+	{#if cart}
+		<Product serverCart={cart} {product} />
+	{/if}
 </div>

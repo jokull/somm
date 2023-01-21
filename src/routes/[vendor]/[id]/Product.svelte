@@ -1,12 +1,30 @@
 <script lang="ts">
-	import type { Product$result } from '$houdini';
+	import { graphql, type Cart$result, type Product$result } from '$houdini';
+	import AddToCart from '$lib/AddToCart.svelte';
 	import { getVendorFromName } from '$lib/utils';
 	import VendorName from '$lib/VendorName.svelte';
+	import classNames from 'classnames';
+	import type { CartProductCartVariables } from './$houdini';
 
 	export let product: NonNullable<Product$result['product']>;
-	const variants = product.variants.edges.map(({ node }) => node);
-	product;
-	const variant = variants.find((variant) => variant.availableForSale) ?? variants[0];
+	export let serverCart: NonNullable<Cart$result['cart']>;
+
+	export const _CartProductCartVariables: CartProductCartVariables = () => {
+		return { cartId: serverCart.id };
+	};
+
+	const store = graphql(`
+		query CartProductCart($cartId: ID!) {
+			cart(id: $cartId) {
+				...CartFields
+			}
+		}
+	`);
+
+	$: cart = $store.data?.cart ?? serverCart;
+
+	const variants = product.variants.edges.map(({ node }) => node) ?? [];
+	let selectedVariant = variants.find((variant) => variant.availableForSale) ?? variants[0];
 
 	let raektun: string[] = [];
 	try {
@@ -22,12 +40,12 @@
 </script>
 
 <div class="flex flex-col sm:flex-row gap-4 sm:gap-8">
-	{#if variant.image}
+	{#if selectedVariant.image}
 		<div class="sm:max-w-2xl">
 			<img
-				src={variant.image.url}
-				width={variant.image.width ?? undefined}
-				height={variant.image.height ?? undefined}
+				src={selectedVariant.image.url}
+				width={selectedVariant.image.width ?? undefined}
+				height={selectedVariant.image.height ?? undefined}
 				class="object-cover aspect-[3/4] rounded shadow-xl"
 				loading="lazy"
 				alt="Product"
@@ -35,7 +53,7 @@
 		</div>
 	{/if}
 	<div class="shrink-0">
-		<div class="mb-4">
+		<div class="mb-4 border-b pb-2">
 			<VendorName {vendor} linkify />
 		</div>
 		<h1 class="text-2xl mb-4">
@@ -107,8 +125,34 @@
 				{/if}
 			</tbody>
 		</table>
-		<div class="max-w-xs flex flex-col gap-2 mt-4">
-			<!-- <VariantToCart product={product} /> -->
+		<div class="flex items-center justify-between gap-2 border-t pt-4 mt-4">
+			<div class="flex gap-2">
+				{#each variants as variant}
+					<button
+						class={classNames(
+							variant.id === selectedVariant.id
+								? 'border-neutral-900 bg-neutral-900 text-white'
+								: 'border-neutral-200 hover:border-neutral-800',
+							'rounded border px-2 pb-0 pt-1 relative'
+						)}
+						on:click={() => {
+							selectedVariant = variant;
+						}}
+					>
+						{variant.title}
+						<!-- Would be cool to have a blue dot here to indicate if added to cart or not -->
+					</button>
+				{/each}
+			</div>
+			<p class="grow text-right">
+				{new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 }).format(
+					parseInt(selectedVariant.priceV2.amount)
+				)}
+				kr
+			</p>
+			{#if cart}
+				<AddToCart variant={selectedVariant} {cart} />
+			{/if}
 		</div>
 	</div>
 </div>
