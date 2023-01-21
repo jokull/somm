@@ -2,12 +2,17 @@
 	import Product from './Product.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	let { Product: ProductData } = data;
-	$: ({ Product: ProductData } = data);
+	let { product, vendor } = data;
 </script>
 
+<svelte:head>
+	<title>{product.title} - {vendor?.name} - Somm</title>
+	<meta
+		name="description"
+		content={`${product.title} frá ${product?.framleidandi?.value ?? product.vendor}`}
+	/>
+</svelte:head>
+
 <div>
-	{#if $ProductData.data?.product}
-		<Product product={$ProductData.data.product} />
-	{/if}
+	<Product {product} />
 </div>
