@@ -10,7 +10,6 @@ import type { Actions, PageServerLoad } from './$types';
 export const actions: Actions = {
 	default: async ({ url, fetch }) => {
 		const returnUrl = new URL('/checkout', url);
-		console.log({ returnUrl: returnUrl.toString() });
 		const data = await fetch(`${env.DOKOBIT_URL}/create?access_token=${env.DOKOBIT_TOKEN}`, {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
@@ -21,7 +20,6 @@ export const actions: Actions = {
 			}
 			return response.json() as unknown;
 		});
-		console.log({ data });
 		throw redirect(302, (data as { url: string }).url);
 	}
 };
@@ -66,7 +64,6 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 		});
 		if (cartBuyerIdentityUpdate?.cart?.checkoutUrl) {
 			checkoutUrl = cartBuyerIdentityUpdate.cart.checkoutUrl;
-			console.log({ checkoutUrl });
 			throw redirect(302, checkoutUrl);
 		} else {
 			throw Error('Could not checkout');
