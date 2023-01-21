@@ -9,17 +9,20 @@ import type { Actions, PageServerLoad } from './$types';
 // On POST request to start the dokobit verification process and redirect to it
 export const actions: Actions = {
 	default: async ({ url, fetch }) => {
+		const returnUrl = new URL('/checkout', url);
+		console.log({ returnUrl: returnUrl.toString() });
 		const data = await fetch(`${env.DOKOBIT_URL}/create?access_token=${env.DOKOBIT_TOKEN}`, {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify({ return_url: new URL('/checkout', url).toString() })
+			body: JSON.stringify({ return_url: returnUrl.toString() })
 		}).then((response) => {
 			if (response.status !== 200) {
 				throw new Error(response.statusText);
 			}
 			return response.json() as unknown;
 		});
-		throw redirect(301, (data as { url: string }).url);
+		console.log({ data });
+		throw redirect(302, (data as { url: string }).url);
 	}
 };
 
@@ -63,7 +66,8 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 		});
 		if (cartBuyerIdentityUpdate?.cart?.checkoutUrl) {
 			checkoutUrl = cartBuyerIdentityUpdate.cart.checkoutUrl;
-			// throw redirect(301, cartBuyerIdentityUpdate.cart.checkoutUrl);
+			console.log({ checkoutUrl });
+			throw redirect(302, checkoutUrl);
 		} else {
 			throw Error('Could not checkout');
 		}
