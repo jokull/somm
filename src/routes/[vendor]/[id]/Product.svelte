@@ -1,25 +1,18 @@
 <script lang="ts">
-	import { graphql, type Cart$result, type Product$result } from '$houdini';
+	import { CartStore, graphql, type Cart$result, type Product$result } from '$houdini';
 	import AddToCart from '$lib/AddToCart.svelte';
 	import { getVendorFromName } from '$lib/utils';
 	import VendorName from '$lib/VendorName.svelte';
 	import classNames from 'classnames';
-	import type { CartProductCartVariables } from './$houdini';
+	import { onMount } from 'svelte';
 
 	export let product: NonNullable<Product$result['product']>;
 	export let serverCart: NonNullable<Cart$result['cart']>;
 
-	export const _CartProductCartVariables: CartProductCartVariables = () => {
-		return { cartId: serverCart.id };
-	};
-
-	const store = graphql(`
-		query CartProductCart($cartId: ID!) {
-			cart(id: $cartId) {
-				...CartFields
-			}
-		}
-	`);
+	$: store = new CartStore();
+	onMount(() => {
+		store.fetch({ variables: { cartId: serverCart.id } });
+	});
 
 	$: cart = $store.data?.cart ?? serverCart;
 
@@ -140,7 +133,11 @@
 						}}
 					>
 						{variant.title}
-						<!-- Would be cool to have a blue dot here to indicate if added to cart or not -->
+						{#if cart.lines.edges.find(({ node }) => node.merchandise.id === variant.id)}
+							<div
+								class="absolute -top-1 -right-1 rounded-full bg-[blue] w-2 h-2 border border-1 border-white"
+							/>
+						{/if}
 					</button>
 				{/each}
 			</div>
