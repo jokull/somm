@@ -8,6 +8,7 @@
 	import Logo from './Logo.svelte';
 	import SiggiImage from './SiggiImage.svelte';
 	import WineTypeOption from './WineTypeOption.svelte';
+	import Newsletter from './newsletter/Newsletter.svelte';
 
 	export let data: LayoutServerData;
 	$: ({ vendor, vendors, wineType, cart } = data);
@@ -76,7 +77,7 @@
 		<footer class="flex justify-between items-end">
 			<div class="mt-20">
 				<div class="mb-8">
-					<!-- <Newsletter /> -->
+					<Newsletter />
 				</div>
 				<ul>
 					<li>

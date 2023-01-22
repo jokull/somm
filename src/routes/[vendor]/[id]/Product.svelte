@@ -1,19 +1,16 @@
 <script lang="ts">
-	import { CartStore, graphql, type Cart$result, type Product$result } from '$houdini';
+	import { browser } from '$app/environment';
+	import { CartStore, type Cart$result, type Product$result } from '$houdini';
 	import AddToCart from '$lib/AddToCart.svelte';
 	import { getVendorFromName } from '$lib/utils';
 	import VendorName from '$lib/VendorName.svelte';
 	import classNames from 'classnames';
-	import { onMount } from 'svelte';
 
 	export let product: NonNullable<Product$result['product']>;
 	export let serverCart: NonNullable<Cart$result['cart']>;
 
 	$: store = new CartStore();
-	onMount(() => {
-		store.fetch({ variables: { cartId: serverCart.id } });
-	});
-
+	$: browser && store.fetch({ variables: { cartId: serverCart.id } });
 	$: cart = $store.data?.cart ?? serverCart;
 
 	const variants = product.variants.edges.map(({ node }) => node) ?? [];

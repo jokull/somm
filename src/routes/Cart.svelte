@@ -1,25 +1,15 @@
 <script lang="ts">
-	import { graphql, type Cart$result } from '$houdini';
-	import CartLines from '$lib/CartLines.svelte';
+	import { browser } from '$app/environment';
+	import { CartStore, type Cart$result } from '$houdini';
 	import CartButton from '$lib/CartButton.svelte';
+	import CartLines from '$lib/CartLines.svelte';
 	import Dialog from '$lib/Dialog.svelte';
 	import { fly } from 'svelte/transition';
-	import type { CartClientCartVariables } from './$houdini';
 
 	export let serverCart: NonNullable<Cart$result['cart']>;
 
-	export const _CartClientCartVariables: CartClientCartVariables = () => {
-		return { cartId: serverCart.id };
-	};
-
-	const store = graphql(`
-		query CartClientCart($cartId: ID!) {
-			cart(id: $cartId) {
-				...CartFields
-			}
-		}
-	`);
-
+	$: store = new CartStore();
+	$: browser && store.fetch({ variables: { cartId: serverCart.id } });
 	$: cart = $store.data?.cart ?? serverCart;
 
 	let open = false;
