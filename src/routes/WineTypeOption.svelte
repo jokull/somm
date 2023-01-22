@@ -7,5 +7,5 @@
 </script>
 
 <a {href} class={classNames(current === option ? 'underline' : '', 'font-medium cursor-pointer')}>
-	<span class="whitespace-nowrap">{option ?? 'Öll vín'}</span>
+	<span class="whitespace-nowrap">{option ?? 'Allt'}</span>
 </a>

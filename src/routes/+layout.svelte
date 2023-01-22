@@ -18,10 +18,10 @@
 <div class="mx-auto max-w-7xl relative">
 	<div class="min-h-screen flex flex-col px-4 py-8">
 		<div
-			class="px-6 py-3 mb-12 sm:mb-4 text-center font-bold text-xl rounded bg-amber-100 text-amber-600 shadow-xl shadow-amber-700/10"
+			class="-mx-4 -mt-8 px-6 py-4 mb-12 sm:mb-4 text-center font-bold text-lg leading-tight bg-amber-100 text-amber-600 border-b border-amber-200"
 		>
-			Vefurinn er í vinnslu <br />{' '}
-			<span class="text-sm">
+			Vefurinn er í gerjun <br />{' '}
+			<span class="text-xs font-normal leading-tight">
 				somm.is er enn á prufustigi - neðst niðri er póstlistaskráning fyrir þá sem vilja fylgjast
 				með
 			</span>
