@@ -1,7 +1,7 @@
 import { loadAll, load_Products } from '$houdini';
-import type { PageLoad } from './$types';
+import type { PageLoadEvent } from './$types';
 
-export const load: PageLoad = async (event) => {
+export async function load(event: PageLoadEvent) {
 	const wineType = event.url.searchParams.get('wineType');
 	return await loadAll(
 		load_Products({
@@ -17,4 +17,4 @@ export const load: PageLoad = async (event) => {
 			}
 		})
 	);
-};
+}
