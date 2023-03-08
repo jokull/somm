@@ -15,8 +15,8 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^1.0.0",
-		"@sveltejs/adapter-cloudflare": "^1.1.0",
-		"@sveltejs/kit": "^1.0.0",
+		"@sveltejs/adapter-cloudflare": "^2.2.0",
+		"@sveltejs/kit": "^1.10.0",
 		"@tailwindcss/forms": "^0.5.3",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
@@ -26,8 +26,6 @@
 		"eslint-plugin-simple-import-sort": "^9.0.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"eslint-plugin-unused-imports": "^2.0.0",
-		"houdini": "^0.20.1",
-		"houdini-svelte": "^0.20.1",
 		"patch-package": "^6.5.1",
 		"postcss": "^8.4.14",
 		"postcss-load-config": "^4.0.1",
@@ -44,6 +42,8 @@
 	"type": "module",
 	"dependencies": {
 		"classnames": "^2.3.2",
+		"houdini": "^1.0.11",
+		"houdini-svelte": "^1.0.11",
 		"iron-session": "^6.3.1",
 		"remeda": "^1.6.0",
 		"toucan-js": "^3.1.0",

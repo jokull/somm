@@ -27,10 +27,10 @@ export const load: LayoutServerLoad = async ({ params, url, cookies, ...eventPro
 		});
 		cart = data?.cart ?? null;
 	} else {
-		const { cartCreate } = await CreateCart.mutate({});
-		if (cartCreate?.cart) {
-			await seal(cookies, { cartId: cartCreate.cart.id });
-			cart = cartCreate.cart;
+		const { data } = await CreateCart.mutate({});
+		if (data?.cartCreate?.cart) {
+			await seal(cookies, { cartId: data.cartCreate.cart.id });
+			cart = data.cartCreate.cart;
 		}
 	}
 

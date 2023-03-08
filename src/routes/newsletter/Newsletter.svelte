@@ -6,7 +6,7 @@
 	let errorMessage = '';
 	type Invalid = Extract<ActionData, { missing: boolean }>;
 	type Success = Extract<ActionData, { success: boolean }>;
-	const submitFunction: SubmitFunction<Success, Invalid> = ({}) => {
+	const submitFunction: SubmitFunction<Success, Invalid> = () => {
 		return async ({ result }) => {
 			if (result.type === 'success') {
 				success = true;

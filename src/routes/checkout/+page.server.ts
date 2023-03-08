@@ -1,7 +1,7 @@
 import { env } from '$env/dynamic/private';
 import { redirect } from '@sveltejs/kit';
 
-import { CountryCode, graphql } from '$houdini';
+import { graphql, type CountryCode$options } from '$houdini';
 import { getDokobitSession } from '$lib/dokobit';
 import { unseal } from '$lib/session';
 import type { Actions, PageServerLoad } from './$types';
@@ -51,19 +51,19 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 
 	if (dokobitSessionToken && session.cartId) {
 		const dokobitSession = await getDokobitSession(dokobitSessionToken);
-		const { cartBuyerIdentityUpdate } = await UpdateOrderMetadata.mutate({
+		const { data } = await UpdateOrderMetadata.mutate({
 			cartId: session.cartId,
 			buyerIdentidy: {
 				phone: dokobitSession.phone,
-				countryCode: dokobitSession.country_code.toLocaleUpperCase() as CountryCode
+				countryCode: dokobitSession.country_code.toLocaleUpperCase() as CountryCode$options
 			},
 			attributes: [
 				{ key: 'kennitala', value: dokobitSession.code },
 				{ key: 'name', value: `${dokobitSession.name} ${dokobitSession.surname}` }
 			]
 		});
-		if (cartBuyerIdentityUpdate?.cart?.checkoutUrl) {
-			checkoutUrl = cartBuyerIdentityUpdate.cart.checkoutUrl;
+		if (data?.cartBuyerIdentityUpdate?.cart?.checkoutUrl) {
+			checkoutUrl = data.cartBuyerIdentityUpdate.cart.checkoutUrl;
 			throw redirect(302, checkoutUrl);
 		} else {
 			throw Error('Could not checkout');

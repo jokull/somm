@@ -19,12 +19,16 @@
 	let raektun: string[] = [];
 	try {
 		raektun = JSON.parse(product.raektun?.value ?? '[]') as string[];
-	} catch (error) {}
+	} catch (error) {
+		raektun = [];
+	}
 
 	let thruga: string[] = [];
 	try {
 		thruga = JSON.parse(product.thruga?.value ?? '[]') as string[];
-	} catch (error) {}
+	} catch (error) {
+		thruga = [];
+	}
 
 	const vendor = getVendorFromName(product.vendor);
 </script>

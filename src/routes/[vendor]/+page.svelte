@@ -4,8 +4,8 @@
 
 	import type { PageData } from './$types';
 	export let data: PageData;
-	let { Products, Cart, vendor } = data;
-	$: ({ Products, Cart } = data);
+	let { Products, vendor, cart } = data;
+	$: ({ Products } = data);
 </script>
 
 <svelte:head>
@@ -14,9 +14,9 @@
 </svelte:head>
 
 <div>
-	{#if $Products.fetching || $Cart.fetching}
+	{#if $Products.fetching || !cart}
 		<ProductsGridSkeleton />
-	{:else if $Products.data?.collection?.products && $Cart.data?.cart}
-		<ProductsGrid products={$Products.data.collection?.products} serverCart={$Cart.data.cart} />
+	{:else if $Products.data?.collection?.products && cart}
+		<ProductsGrid products={$Products.data.collection?.products} serverCart={cart} />
 	{/if}
 </div>
