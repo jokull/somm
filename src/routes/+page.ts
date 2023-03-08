@@ -1,8 +1,7 @@
-import { loadAll, load_Cart, load_Products } from '$houdini';
+import { loadAll, load_Products } from '$houdini';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async (event) => {
-	const parent = await event.parent();
 	const wineType = event.url.searchParams.get('wineType');
 	return await loadAll(
 		load_Products({
@@ -16,7 +15,6 @@ export const load: PageLoad = async (event) => {
 					  }
 					: {})
 			}
-		}),
-		load_Cart({ event, variables: { cartId: parent.cart?.id ?? '' } })
+		})
 	);
 };
