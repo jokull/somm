@@ -25,10 +25,11 @@ export const load = async (event) => {
 		const response = await store.fetch({
 			event,
 			variables: { cartId: session.cartId }
-			// blocking: true
 		});
 		cart = response.data?.cart ?? null;
-	} else {
+	}
+
+	if (!cart) {
 		const { data } = await CreateCart.mutate({}, { event });
 		if (data?.cartCreate?.cart) {
 			await seal(cookies, { cartId: data.cartCreate.cart.id });
