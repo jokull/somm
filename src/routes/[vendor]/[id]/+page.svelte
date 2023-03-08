@@ -1,20 +1,23 @@
 <script lang="ts">
+	import type { PageData } from './$houdini';
 	import Product from './Product.svelte';
-	import type { PageData } from './$types';
 	export let data: PageData;
-	let { product, vendor, cart } = data;
+	$: ({ Product: ProductStore } = data);
+	let { vendor, cart } = data;
 </script>
 
 <svelte:head>
-	<title>{product.title} - {vendor?.name} - Somm</title>
+	<title>{$ProductStore.data?.product?.title} - {vendor?.name} - Somm</title>
 	<meta
 		name="description"
-		content={`${product.title} frá ${product?.framleidandi?.value ?? product.vendor}`}
+		content={`${$ProductStore?.data?.product?.title} frá ${
+			$ProductStore?.data?.product?.framleidandi?.value ?? $ProductStore?.data?.product?.vendor
+		}`}
 	/>
 </svelte:head>
 
 <div>
-	{#if cart}
-		<Product serverCart={cart} {product} />
+	{#if cart && $ProductStore.data?.product}
+		<Product serverCart={cart} product={$ProductStore.data.product} />
 	{/if}
 </div>

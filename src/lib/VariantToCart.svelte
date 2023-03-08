@@ -15,30 +15,38 @@
 		location.push(product.country.value);
 	}
 
-	let selected = variants.find((variant) => variant.availableForSale) ?? variants[0];
-	const price = parseInt(selected.priceV2.amount);
+	$: selected =
+		variants.length > 0
+			? variants.find((variant) => variant.availableForSale) ?? variants[0]
+			: null;
+	$: price = selected ? parseInt(selected.priceV2.amount) : null;
 </script>
 
 <div class="flex items-center justify-between text-neutral-500">
-	<label class="text-sm flex items-center gap-1">
-		<span class="sr-only">Ár </span>
-		{#if variants.length > 1}
-			<select
-				id="location"
-				name="location"
-				class="block text-sm border-0 border-gray-300 py-1 pl-0 pr-8 -mr-3 focus:border-[blue] focus:ring-0"
-				bind:value={selected}
-			>
-				{#each variants as variant}
-					<option value={variant} disabled={!variant.availableForSale}>
-						{variant.title}
-					</option>
-				{/each}
-			</select>
-		{:else}
-			<div class="py-1 text-sm">{selected.title === 'Default Title' ? '' : selected.title}</div>
-		{/if}
-	</label>
+	{#if selected}
+		<label class="text-sm flex items-center gap-1">
+			<span class="sr-only">Ár </span>
+
+			{#if variants.length > 1}
+				<select
+					id="location"
+					name="location"
+					class="block text-sm border-0 border-gray-300 py-1 pl-0 pr-8 -mr-3 focus:border-[blue] focus:ring-0"
+					bind:value={selected}
+				>
+					{#each variants as variant}
+						<option value={variant} disabled={!variant.availableForSale}>
+							{variant.title}
+						</option>
+					{/each}
+				</select>
+			{:else}
+				<div class="py-1 text-sm">{selected.title === 'Default Title' ? '' : selected.title}</div>
+			{/if}
+		</label>
+	{:else}
+		Uppselt
+	{/if}
 	<div class="hidden md:block text-sm truncate">
 		{location.join(', ')}
 	</div>
@@ -46,10 +54,12 @@
 		{product.region?.value ?? ''}
 	</div>
 </div>
-<div class="flex items-center justify-between">
-	<AddToCart variant={selected} {cart} />
-	<p>
-		{new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 }).format(price)}
-		kr
-	</p>
-</div>
+{#if selected && price}
+	<div class="flex items-center justify-between">
+		<AddToCart variant={selected} {cart} />
+		<p>
+			{new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 }).format(price)}
+			kr
+		</p>
+	</div>
+{/if}
