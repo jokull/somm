@@ -4,6 +4,7 @@
 	export let data: PageData;
 	$: ({ Product: ProductStore } = data);
 	let { vendor, cart } = data;
+	console.log({ product: $ProductStore });
 </script>
 
 <svelte:head>

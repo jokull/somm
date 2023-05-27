@@ -17,15 +17,6 @@
 
 <div class="mx-auto max-w-7xl relative">
 	<div class="min-h-screen flex flex-col px-4 py-8">
-		<div
-			class="-mx-4 -mt-8 px-6 py-4 mb-12 sm:mb-4 text-center font-bold text-lg leading-tight bg-amber-100 text-amber-600 border-b border-amber-200"
-		>
-			Vefurinn er í gerjun <br />{' '}
-			<span class="text-xs font-normal leading-tight">
-				somm.is er enn á prufustigi - neðst niðri er póstlistaskráning fyrir þá sem vilja fylgjast
-				með
-			</span>
-		</div>
 		<div class="mb-8 lg:my-12 flex flex-row gap-4 items-center justify-between">
 			<div><!-- /* spacer to center the next element* --></div>
 			<a href="/">

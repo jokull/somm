@@ -4,10 +4,10 @@ import { redirect } from '@sveltejs/kit';
 import { graphql, type CountryCode$options } from '$houdini';
 import { getDokobitSession } from '$lib/dokobit';
 import { unseal } from '$lib/session';
-// import type { Actions, PageServerLoad } from './$types';
+import type { Actions } from './$types.js';
 
 // On POST request to start the dokobit verification process and redirect to it
-export const actions = {
+export const actions: Actions = {
 	default: async ({ url, fetch }) => {
 		const returnUrl = new URL('/checkout', url);
 		const data = await fetch(`${env.DOKOBIT_URL}/create?access_token=${env.DOKOBIT_TOKEN}`, {

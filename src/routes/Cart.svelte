@@ -10,7 +10,7 @@
 
 	$: store = new CartStore();
 	$: browser && store.fetch({ variables: { cartId: serverCart.id } });
-	$: cart = $store.data?.cart ?? serverCart;
+	$: cart = $store?.data?.cart ?? serverCart;
 
 	let open = false;
 	let dialog: HTMLDialogElement;

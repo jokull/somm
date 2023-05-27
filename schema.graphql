@@ -24,10 +24,11 @@ directive @inContext(
 ) on MUTATION | QUERY
 
 """
-A version of the API, as defined by [Shopify API versioning](https://shopify.dev/api/usage/versioning).
-Versions are commonly referred to by their handle (for example, `2021-10`).
-
+Requires that exactly one field must be supplied and that field must not be `null`.
 """
+directive @oneOf on INPUT_OBJECT
+
+"A version of the API, as defined by [Shopify API versioning](https://shopify.dev/api/usage/versioning).\nVersions are commonly referred to by their handle (for example, `2021-10`).\n"
 type ApiVersion {
   """The human-readable name of the version."""
   displayName: String!
@@ -57,7 +58,7 @@ type AppliedGiftCard implements Node {
   """The amount left on the gift card."""
   balanceV2: MoneyV2!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The last characters of the gift card."""
@@ -114,13 +115,10 @@ type Article implements HasMetafields & Node & OnlineStorePublishable {
   """The excerpt of the article, complete with HTML formatting."""
   excerptHtml: HTML
 
-  """
-  A human-friendly unique string for the Article automatically generated from its title.
-  
-  """
+  "A human-friendly unique string for the Article automatically generated from its title.\n"
   handle: String!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The image associated with the article."""
@@ -135,10 +133,7 @@ type Article implements HasMetafields & Node & OnlineStorePublishable {
     namespace: String!
   ): Metafield
 
-  """
-  The metafields associated with the resource matching the supplied list of namespaces and keys.
-  
-  """
+  "The metafields associated with the resource matching the supplied list of namespaces and keys.\n"
   metafields(
     """The list of metafields to retrieve by namespace and key."""
     identifiers: [HasMetafieldsIdentifier!]!
@@ -180,10 +175,7 @@ type ArticleAuthor {
   name: String!
 }
 
-"""
-An auto-generated type for paginating through multiple Articles.
-
-"""
+"An auto-generated type for paginating through multiple Articles.\n"
 type ArticleConnection {
   """A list of edges."""
   edges: [ArticleEdge!]!
@@ -195,10 +187,7 @@ type ArticleConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one Article and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one Article and a cursor during pagination.\n"
 type ArticleEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -221,11 +210,7 @@ enum ArticleSortKeys {
   """Sort by the `published_at` value."""
   PUBLISHED_AT
 
-  """
-  Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-  Don't use this sort key when no search query is specified.
-  
-  """
+  "Sort by relevance to the search terms when the `query` parameter is specified on the connection.\nDon't use this sort key when no search query is specified.\n"
   RELEVANCE
 
   """Sort by the `title` value."""
@@ -244,7 +229,7 @@ type Attribute {
   value: String
 }
 
-"""Specifies the input fields required for an attribute."""
+"""The input fields for an attribute."""
 input AttributeInput {
   """Key or name of the attribute."""
   key: String!
@@ -253,10 +238,7 @@ input AttributeInput {
   value: String!
 }
 
-"""
-Automatic discount applications capture the intentions of a discount that was automatically applied.
-
-"""
+"Automatic discount applications capture the intentions of a discount that was automatically applied.\n"
 type AutomaticDiscountApplication implements DiscountApplication {
   """
   The method by which the discount's value is allocated to its entitled items.
@@ -278,12 +260,7 @@ type AutomaticDiscountApplication implements DiscountApplication {
 
 """A collection of available shipping rates for a checkout."""
 type AvailableShippingRates {
-  """
-  Whether or not the shipping rates are ready.
-  The `shippingRates` field is `null` when this value is `false`.
-  This field should be polled until its value becomes `true`.
-  
-  """
+  "Whether or not the shipping rates are ready.\nThe `shippingRates` field is `null` when this value is `false`.\nThis field should be polled until its value becomes `true`.\n"
   ready: Boolean!
 
   """The fetched shipping rates. `null` until the `ready` field is `true`."""
@@ -312,19 +289,7 @@ type Blog implements HasMetafields & Node & OnlineStorePublishable {
     """Returns up to the last `n` elements from the list."""
     last: Int
 
-    """
-    Supported filter parameters:
-     - `author`
-     - `blog_title`
-     - `created_at`
-     - `tag`
-     - `tag_not`
-     - `updated_at`
-    
-    See the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)
-    for more information about using filters.
-    
-    """
+    "Supported filter parameters:\n - `author`\n - `blog_title`\n - `created_at`\n - `tag`\n - `tag_not`\n - `updated_at`\n\nSee the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)\nfor more information about using filters.\n"
     query: String
 
     """Reverse the order of the underlying list."""
@@ -337,13 +302,10 @@ type Blog implements HasMetafields & Node & OnlineStorePublishable {
   """The authors who have contributed to the blog."""
   authors: [ArticleAuthor!]!
 
-  """
-  A human-friendly unique string for the Blog automatically generated from its title.
-  
-  """
+  "A human-friendly unique string for the Blog automatically generated from its title.\n"
   handle: String!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """Returns a metafield found by namespace and key."""
@@ -355,10 +317,7 @@ type Blog implements HasMetafields & Node & OnlineStorePublishable {
     namespace: String!
   ): Metafield
 
-  """
-  The metafields associated with the resource matching the supplied list of namespaces and keys.
-  
-  """
+  "The metafields associated with the resource matching the supplied list of namespaces and keys.\n"
   metafields(
     """The list of metafields to retrieve by namespace and key."""
     identifiers: [HasMetafieldsIdentifier!]!
@@ -376,10 +335,7 @@ type Blog implements HasMetafields & Node & OnlineStorePublishable {
   title: String!
 }
 
-"""
-An auto-generated type for paginating through multiple Blogs.
-
-"""
+"An auto-generated type for paginating through multiple Blogs.\n"
 type BlogConnection {
   """A list of edges."""
   edges: [BlogEdge!]!
@@ -391,10 +347,7 @@ type BlogConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one Blog and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one Blog and a cursor during pagination.\n"
 type BlogEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -411,11 +364,7 @@ enum BlogSortKeys {
   """Sort by the `id` value."""
   ID
 
-  """
-  Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-  Don't use this sort key when no search query is specified.
-  
-  """
+  "Sort by relevance to the search terms when the `query` parameter is specified on the connection.\nDon't use this sort key when no search query is specified.\n"
   RELEVANCE
 
   """Sort by the `title` value."""
@@ -445,13 +394,7 @@ enum CardBrand {
   VISA
 }
 
-"""
-A cart represents the merchandise that a buyer intends to purchase,
-and the estimated cost associated with the cart. Learn how to
-[interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
-during a customer's session.
-
-"""
+"A cart represents the merchandise that a buyer intends to purchase,\nand the estimated cost associated with the cart. Learn how to\n[interact with a cart](https://shopify.dev/custom-storefronts/internationalization/international-pricing)\nduring a customer's session.\n"
 type Cart implements Node {
   """An attribute associated with the cart."""
   attribute(
@@ -501,22 +444,13 @@ type Cart implements Node {
   """The discounts that have been applied to the entire cart."""
   discountAllocations: [CartDiscountAllocation!]!
 
-  """
-  The case-insensitive discount codes that the customer added at checkout.
-  
-  """
+  "The case-insensitive discount codes that the customer added at checkout.\n"
   discountCodes: [CartDiscountCode!]!
 
-  """
-  The estimated costs that the buyer will pay at checkout.
-  The estimated costs are subject to change and changes will be reflected at checkout.
-  The `estimatedCost` field uses the `buyerIdentity` field to determine
-  [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
-  
-  """
+  "The estimated costs that the buyer will pay at checkout.\nThe estimated costs are subject to change and changes will be reflected at checkout.\nThe `estimatedCost` field uses the `buyerIdentity` field to determine\n[international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).\n"
   estimatedCost: CartEstimatedCost! @deprecated(reason: "Use `cost` instead.")
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """
@@ -588,13 +522,7 @@ type CartBuyerIdentity {
   phone: String
 }
 
-"""
-Specifies the input fields to update the buyer information associated with a cart.
-Buyer identity is used to determine
-[international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
-and should match the customer's shipping address.
-
-"""
+"Specifies the input fields to update the buyer information associated with a cart.\nBuyer identity is used to determine\n[international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing)\nand should match the customer's shipping address.\n"
 input CartBuyerIdentityInput {
   """The country where the buyer is located."""
   countryCode: CountryCode
@@ -631,12 +559,7 @@ type CartCodeDiscountAllocation implements CartDiscountAllocation {
   discountedAmount: MoneyV2!
 }
 
-"""
-The costs that the buyer will pay at checkout.
-The cart cost uses [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity) to determine
-[international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
-
-"""
+"The costs that the buyer will pay at checkout.\nThe cart cost uses [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity) to determine\n[international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).\n"
 type CartCost {
   """
   The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to `subtotalAmount`.
@@ -722,10 +645,7 @@ type CartDeliveryGroup {
   id: ID!
 }
 
-"""
-An auto-generated type for paginating through multiple CartDeliveryGroups.
-
-"""
+"An auto-generated type for paginating through multiple CartDeliveryGroups.\n"
 type CartDeliveryGroupConnection {
   """A list of edges."""
   edges: [CartDeliveryGroupEdge!]!
@@ -737,10 +657,7 @@ type CartDeliveryGroupConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one CartDeliveryGroup and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one CartDeliveryGroup and a cursor during pagination.\n"
 type CartDeliveryGroupEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -811,14 +728,7 @@ enum CartErrorCode {
   MISSING_NOTE
 }
 
-"""
-The estimated costs that the buyer will pay at checkout.
-The estimated cost uses
-[`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity)
-to determine
-[international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
-
-"""
+"The estimated costs that the buyer will pay at checkout.\nThe estimated cost uses\n[`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity)\nto determine\n[international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).\n"
 type CartEstimatedCost {
   """
   The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to`subtotal_amount`.
@@ -840,25 +750,17 @@ type CartEstimatedCost {
   totalTaxAmount: MoneyV2
 }
 
-"""Specifies the input fields to create a cart."""
+"""The input fields to create a cart."""
 input CartInput {
   """
   An array of key-value pairs that contains additional information about the cart.
   """
   attributes: [AttributeInput!]
 
-  """
-  The customer associated with the cart. Used to determine [international pricing]
-  (https://shopify.dev/custom-storefronts/internationalization/international-pricing).
-  Buyer identity should match the customer's shipping address.
-  
-  """
+  "The customer associated with the cart. Used to determine [international pricing]\n(https://shopify.dev/custom-storefronts/internationalization/international-pricing).\nBuyer identity should match the customer's shipping address.\n"
   buyerIdentity: CartBuyerIdentityInput
 
-  """
-  The case-insensitive discount codes that the customer added at checkout.
-  
-  """
+  "The case-insensitive discount codes that the customer added at checkout.\n"
   discountCodes: [String!]
 
   """A list of merchandise lines to add to the cart."""
@@ -896,7 +798,7 @@ type CartLine implements Node {
   """
   estimatedCost: CartLineEstimatedCost! @deprecated(reason: "Use `cost` instead.")
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The merchandise that the buyer intends to purchase."""
@@ -911,10 +813,7 @@ type CartLine implements Node {
   sellingPlanAllocation: SellingPlanAllocation
 }
 
-"""
-An auto-generated type for paginating through multiple CartLines.
-
-"""
+"An auto-generated type for paginating through multiple CartLines.\n"
 type CartLineConnection {
   """A list of edges."""
   edges: [CartLineEdge!]!
@@ -941,10 +840,7 @@ type CartLineCost {
   totalAmount: MoneyV2!
 }
 
-"""
-An auto-generated type which holds one CartLine and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one CartLine and a cursor during pagination.\n"
 type CartLineEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -970,43 +866,43 @@ type CartLineEstimatedCost {
   totalAmount: MoneyV2!
 }
 
-"""Specifies the input fields to create a merchandise line on a cart."""
+"""The input fields to create a merchandise line on a cart."""
 input CartLineInput {
   """
   An array of key-value pairs that contains additional information about the merchandise line.
   """
   attributes: [AttributeInput!]
 
-  """The identifier of the merchandise that the buyer intends to purchase."""
+  """The ID of the merchandise that the buyer intends to purchase."""
   merchandiseId: ID!
 
   """The quantity of the merchandise."""
   quantity: Int = 1
 
   """
-  The identifier of the selling plan that the merchandise is being purchased with.
+  The ID of the selling plan that the merchandise is being purchased with.
   """
   sellingPlanId: ID
 }
 
-"""Specifies the input fields to update a line item on a cart."""
+"""The input fields to update a line item on a cart."""
 input CartLineUpdateInput {
   """
   An array of key-value pairs that contains additional information about the merchandise line.
   """
   attributes: [AttributeInput!]
 
-  """The identifier of the merchandise line."""
+  """The ID of the merchandise line."""
   id: ID!
 
-  """The identifier of the merchandise for the line item."""
+  """The ID of the merchandise for the line item."""
   merchandiseId: ID
 
   """The quantity of the line item."""
   quantity: Int
 
   """
-  The identifier of the selling plan that the merchandise is being purchased with.
+  The ID of the selling plan that the merchandise is being purchased with.
   """
   sellingPlanId: ID
 }
@@ -1066,12 +962,7 @@ type Checkout implements Node {
   """The gift cards used on the checkout."""
   appliedGiftCards: [AppliedGiftCard!]!
 
-  """
-  The available shipping rates for this Checkout.
-  Should only be used when checkout `requiresShipping` is `true` and
-  the shipping address is valid.
-  
-  """
+  "The available shipping rates for this Checkout.\nShould only be used when checkout `requiresShipping` is `true` and\nthe shipping address is valid.\n"
   availableShippingRates: AvailableShippingRates
 
   """The identity of the customer associated with the checkout."""
@@ -1110,7 +1001,7 @@ type Checkout implements Node {
   """The email attached to this checkout."""
   email: String
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """
@@ -1159,13 +1050,7 @@ type Checkout implements Node {
   """
   paymentDueV2: MoneyV2!
 
-  """
-  Whether or not the Checkout is ready and can be completed. Checkouts may
-  have asynchronous operations that can take time to finish. If you want
-  to complete a checkout or ensure all the fields are populated and up to
-  date, polling is required until the value is true.
-  
-  """
+  "Whether or not the Checkout is ready and can be completed. Checkouts may\nhave asynchronous operations that can take time to finish. If you want\nto complete a checkout or ensure all the fields are populated and up to\ndate, polling is required until the value is true.\n"
   ready: Boolean!
 
   """States whether or not the fulfillment requires shipping."""
@@ -1174,10 +1059,7 @@ type Checkout implements Node {
   """The shipping address to where the line items will be shipped."""
   shippingAddress: MailingAddress
 
-  """
-  The discounts that have been allocated onto the shipping line by discount applications.
-  
-  """
+  "The discounts that have been allocated onto the shipping line by discount applications.\n"
   shippingDiscountAllocations: [DiscountAllocation!]!
 
   """
@@ -1227,15 +1109,9 @@ type Checkout implements Node {
   webUrl: URL!
 }
 
-"""Specifies the fields required to update a checkout's attributes."""
+"""The input fields required to update a checkout's attributes."""
 input CheckoutAttributesUpdateV2Input {
-  """
-  Allows setting partial addresses on a Checkout, skipping the full validation of attributes.
-  The required attributes are city, province, and country.
-  Full validation of the addresses is still done at completion time. Defaults to `false` with 
-  each operation.
-  
-  """
+  "Allows setting partial addresses on a Checkout, skipping the full validation of attributes.\nThe required attributes are city, province, and country.\nFull validation of the addresses is still done at completion time. Defaults to `false` with \neach operation.\n"
   allowPartialAddresses: Boolean = false
 
   """A list of extra information that is added to the checkout."""
@@ -1265,14 +1141,11 @@ type CheckoutBuyerIdentity {
   countryCode: CountryCode
 }
 
-"""Specifies the identity of the customer associated with the checkout."""
+"""
+The input fields for the identity of the customer associated with the checkout.
+"""
 input CheckoutBuyerIdentityInput {
-  """
-  The country code of one of the shop's
-  [enabled countries](https://help.shopify.com/en/manual/payments/shopify-payments/multi-currency/setup).
-  For example, `CA`. Including this field creates a checkout in the specified country's currency.
-  
-  """
+  "The country code of one of the shop's\n[enabled countries](https://help.shopify.com/en/manual/payments/shopify-payments/multi-currency/setup).\nFor example, `CA`. Including this field creates a checkout in the specified country's currency.\n"
   countryCode: CountryCode!
 }
 
@@ -1318,14 +1191,9 @@ type CheckoutCompleteWithTokenizedPaymentV3Payload {
   userErrors: [UserError!]! @deprecated(reason: "Use `checkoutUserErrors` instead.")
 }
 
-"""Specifies the fields required to create a checkout."""
+"""The input fields required to create a checkout."""
 input CheckoutCreateInput {
-  """
-  Allows setting partial addresses on a Checkout, skipping the full validation of attributes.
-  The required attributes are city, province, and country.
-  Full validation of addresses is still done at completion time. Defaults to `null`.
-  
-  """
+  "Allows setting partial addresses on a Checkout, skipping the full validation of attributes.\nThe required attributes are city, province, and country.\nFull validation of addresses is still done at completion time. Defaults to `null`.\n"
   allowPartialAddresses: Boolean
 
   """The identity of the customer associated with the checkout."""
@@ -1607,7 +1475,7 @@ type CheckoutLineItem implements Node {
   """
   discountAllocations: [DiscountAllocation!]!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The quantity of the line item."""
@@ -1623,10 +1491,7 @@ type CheckoutLineItem implements Node {
   variant: ProductVariant
 }
 
-"""
-An auto-generated type for paginating through multiple CheckoutLineItems.
-
-"""
+"An auto-generated type for paginating through multiple CheckoutLineItems.\n"
 type CheckoutLineItemConnection {
   """A list of edges."""
   edges: [CheckoutLineItemEdge!]!
@@ -1638,10 +1503,7 @@ type CheckoutLineItemConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one CheckoutLineItem and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one CheckoutLineItem and a cursor during pagination.\n"
 type CheckoutLineItemEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -1650,7 +1512,7 @@ type CheckoutLineItemEdge {
   node: CheckoutLineItem!
 }
 
-"""Specifies the input fields to create a line item on a checkout."""
+"""The input fields to create a line item on a checkout."""
 input CheckoutLineItemInput {
   """
   Extra information in the form of an array of Key-Value pairs about the line item.
@@ -1660,24 +1522,24 @@ input CheckoutLineItemInput {
   """The quantity of the line item."""
   quantity: Int!
 
-  """The identifier of the product variant for the line item."""
+  """The ID of the product variant for the line item."""
   variantId: ID!
 }
 
-"""Specifies the input fields to update a line item on the checkout."""
+"""The input fields to update a line item on the checkout."""
 input CheckoutLineItemUpdateInput {
   """
   Extra information in the form of an array of Key-Value pairs about the line item.
   """
   customAttributes: [AttributeInput!]
 
-  """The identifier of the line item."""
+  """The ID of the line item."""
   id: ID
 
   """The quantity of the line item."""
   quantity: Int
 
-  """The variant identifier of the line item."""
+  """The variant ID of the line item."""
   variantId: ID
 }
 
@@ -1779,14 +1641,10 @@ type Collection implements HasMetafields & Node & OnlineStorePublishable {
   """The description of the collection, complete with HTML formatting."""
   descriptionHtml: HTML!
 
-  """
-  A human-friendly unique string for the collection automatically generated from its title.
-  Limit of 255 characters.
-  
-  """
+  "A human-friendly unique string for the collection automatically generated from its title.\nLimit of 255 characters.\n"
   handle: String!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """Image associated with the collection."""
@@ -1801,10 +1659,7 @@ type Collection implements HasMetafields & Node & OnlineStorePublishable {
     namespace: String!
   ): Metafield
 
-  """
-  The metafields associated with the resource matching the supplied list of namespaces and keys.
-  
-  """
+  "The metafields associated with the resource matching the supplied list of namespaces and keys.\n"
   metafields(
     """The list of metafields to retrieve by namespace and key."""
     identifiers: [HasMetafieldsIdentifier!]!
@@ -1849,10 +1704,7 @@ type Collection implements HasMetafields & Node & OnlineStorePublishable {
   updatedAt: DateTime!
 }
 
-"""
-An auto-generated type for paginating through multiple Collections.
-
-"""
+"An auto-generated type for paginating through multiple Collections.\n"
 type CollectionConnection {
   """A list of edges."""
   edges: [CollectionEdge!]!
@@ -1864,10 +1716,7 @@ type CollectionConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one Collection and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one Collection and a cursor during pagination.\n"
 type CollectionEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -1881,11 +1730,7 @@ enum CollectionSortKeys {
   """Sort by the `id` value."""
   ID
 
-  """
-  Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-  Don't use this sort key when no search query is specified.
-  
-  """
+  "Sort by relevance to the search terms when the `query` parameter is specified on the connection.\nDon't use this sort key when no search query is specified.\n"
   RELEVANCE
 
   """Sort by the `title` value."""
@@ -1909,7 +1754,7 @@ type Comment implements Node {
   """The content of the comment, complete with HTML formatting."""
   contentHtml: HTML!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 }
 
@@ -1922,10 +1767,7 @@ type CommentAuthor {
   name: String!
 }
 
-"""
-An auto-generated type for paginating through multiple Comments.
-
-"""
+"An auto-generated type for paginating through multiple Comments.\n"
 type CommentConnection {
   """A list of edges."""
   edges: [CommentEdge!]!
@@ -1937,10 +1779,7 @@ type CommentConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one Comment and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one Comment and a cursor during pagination.\n"
 type CommentEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -1967,13 +1806,7 @@ type Country {
   unitSystem: UnitSystem!
 }
 
-"""
-The code designating a country/region, which generally follows ISO 3166-1 alpha-2 guidelines.
-If a territory doesn't have a country code value in the `CountryCode` enum, then it might be considered a subdivision
-of another country. For example, the territories associated with Spain are represented by the country code `ES`,
-and the territories associated with the United States of America are represented by the country code `US`.
-
-"""
+"The code designating a country/region, which generally follows ISO 3166-1 alpha-2 guidelines.\nIf a territory doesn't have a country code value in the `CountryCode` enum, then it might be considered a subdivision\nof another country. For example, the territories associated with Spain are represented by the country code `ES`,\nand the territories associated with the United States of America are represented by the country code `US`.\n"
 enum CountryCode {
   """Ascension Island."""
   AC
@@ -2738,11 +2571,7 @@ type CreditCard {
   maskedNumber: String
 }
 
-"""
-Specifies the fields required to complete a checkout with
-a Shopify vaulted credit card payment.
-
-"""
+"Specifies the fields required to complete a checkout with\na Shopify vaulted credit card payment.\n"
 input CreditCardPaymentInputV2 {
   """The billing address for the payment."""
   billingAddress: MailingAddressInput!
@@ -2792,11 +2621,7 @@ type Currency {
   symbol: String!
 }
 
-"""
-The three-letter currency codes that represent the world currencies used in stores. These include standard ISO 4217 codes, legacy codes,
-and non-standard codes.
-
-"""
+"The three-letter currency codes that represent the world currencies used in stores. These include standard ISO 4217 codes, legacy codes,\nand non-standard codes.\n"
 enum CurrencyCode {
   """United Arab Emirates Dirham (AED)."""
   AED
@@ -3324,7 +3149,7 @@ type Customer implements HasMetafields {
   """The customer’s first name."""
   firstName: String
 
-  """A unique identifier for the customer."""
+  """A unique ID for the customer."""
   id: ID!
 
   """The customer's most recently updated, incomplete checkout."""
@@ -3342,10 +3167,7 @@ type Customer implements HasMetafields {
     namespace: String!
   ): Metafield
 
-  """
-  The metafields associated with the resource matching the supplied list of namespaces and keys.
-  
-  """
+  "The metafields associated with the resource matching the supplied list of namespaces and keys.\n"
   metafields(
     """The list of metafields to retrieve by namespace and key."""
     identifiers: [HasMetafieldsIdentifier!]!
@@ -3365,14 +3187,7 @@ type Customer implements HasMetafields {
     """Returns up to the last `n` elements from the list."""
     last: Int
 
-    """
-    Supported filter parameters:
-     - `processed_at`
-    
-    See the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)
-    for more information about using filters.
-    
-    """
+    "Supported filter parameters:\n - `processed_at`\n\nSee the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)\nfor more information about using filters.\n"
     query: String
 
     """Reverse the order of the underlying list."""
@@ -3385,11 +3200,7 @@ type Customer implements HasMetafields {
   """The customer’s phone number."""
   phone: String
 
-  """
-  A comma separated list of tags that have been added to the customer.
-  Additional access scope required: unauthenticated_read_customer_tags.
-  
-  """
+  "A comma separated list of tags that have been added to the customer.\nAdditional access scope required: unauthenticated_read_customer_tags.\n"
   tags: [String!]!
 
   """The date and time when the customer information was updated."""
@@ -3407,7 +3218,7 @@ type CustomerAccessToken {
   expiresAt: DateTime!
 }
 
-"""Specifies the input fields required to create a customer access token."""
+"""The input fields required to create a customer access token."""
 input CustomerAccessTokenCreateInput {
   """The email associated to the customer."""
   email: String!
@@ -3470,7 +3281,7 @@ type CustomerActivateByUrlPayload {
   customerUserErrors: [CustomerUserError!]!
 }
 
-"""Specifies the input fields required to activate a customer."""
+"""The input fields to activate a customer."""
 input CustomerActivateInput {
   """The activation token required to activate the customer."""
   activationToken: String!
@@ -3530,7 +3341,7 @@ type CustomerAddressUpdatePayload {
   userErrors: [UserError!]! @deprecated(reason: "Use `customerUserErrors` instead.")
 }
 
-"""The fields required to create a new customer."""
+"""The input fields to create a new customer."""
 input CustomerCreateInput {
   """
   Indicates whether the customer has consented to be sent marketing material via email.
@@ -3549,12 +3360,7 @@ input CustomerCreateInput {
   """The login password used by the customer."""
   password: String!
 
-  """
-  A unique phone number for the customer.
-  
-  Formatted using E.164 standard. For example, _+16135551111_.
-  
-  """
+  "A unique phone number for the customer.\n\nFormatted using E.164 standard. For example, _+16135551111_.\n"
   phone: String
 }
 
@@ -3654,7 +3460,7 @@ type CustomerResetByUrlPayload {
   userErrors: [UserError!]! @deprecated(reason: "Use `customerUserErrors` instead.")
 }
 
-"""Specifies the fields required to reset a customer’s password."""
+"""The input fields to reset a customer's password."""
 input CustomerResetInput {
   """New password that will be set as part of the reset password process."""
   password: String!
@@ -3678,7 +3484,7 @@ type CustomerResetPayload {
   userErrors: [UserError!]! @deprecated(reason: "Use `customerUserErrors` instead.")
 }
 
-"""Specifies the fields required to update the Customer information."""
+"""The input fields to update the Customer information."""
 input CustomerUpdateInput {
   """
   Indicates whether the customer has consented to be sent marketing material via email.
@@ -3697,12 +3503,7 @@ input CustomerUpdateInput {
   """The login password used by the customer."""
   password: String
 
-  """
-  A unique phone number for the customer.
-  
-  Formatted using E.164 standard. For example, _+16135551111_. To remove the phone number, specify `null`.
-  
-  """
+  "A unique phone number for the customer.\n\nFormatted using E.164 standard. For example, _+16135551111_. To remove the phone number, specify `null`.\n"
   phone: String
 }
 
@@ -3711,11 +3512,7 @@ type CustomerUpdatePayload {
   """The updated customer object."""
   customer: Customer
 
-  """
-  The newly created customer access token. If the customer's password is updated, all previous access tokens
-  (including the one used to perform this mutation) become invalid, and a new token is generated.
-  
-  """
+  "The newly created customer access token. If the customer's password is updated, all previous access tokens\n(including the one used to perform this mutation) become invalid, and a new token is generated.\n"
   customerAccessToken: CustomerAccessToken
 
   """The list of errors that occurred from executing the mutation."""
@@ -3739,20 +3536,10 @@ type CustomerUserError implements DisplayableError {
   message: String!
 }
 
-"""
-Represents an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)-encoded date and time string.
-For example, 3:50 pm on September 7, 2019 in the time zone of UTC (Coordinated Universal Time) is
-represented as `"2019-09-07T15:50:00Z`".
-
-"""
+"Represents an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)-encoded date and time string.\nFor example, 3:50 pm on September 7, 2019 in the time zone of UTC (Coordinated Universal Time) is\nrepresented as `\"2019-09-07T15:50:00Z`\".\n"
 scalar DateTime
 
-"""
-A signed decimal number, which supports arbitrary precision and is serialized as a string.
-
-Example values: `"29.99"`, `"29.999"`.
-
-"""
+"A signed decimal number, which supports arbitrary precision and is serialized as a string.\n\nExample values: `\"29.99\"`, `\"29.999\"`.\n"
 scalar Decimal
 
 """List of different delivery method types."""
@@ -3793,10 +3580,7 @@ enum DigitalWallet {
   SHOPIFY_PAY
 }
 
-"""
-An amount discounting the line that has been allocated by a discount.
-
-"""
+"An amount discounting the line that has been allocated by a discount.\n"
 type DiscountAllocation {
   """Amount of discount allocated."""
   allocatedAmount: MoneyV2!
@@ -3805,11 +3589,7 @@ type DiscountAllocation {
   discountApplication: DiscountApplication!
 }
 
-"""
-Discount applications capture the intentions of a discount source at
-the time of application.
-
-"""
+"Discount applications capture the intentions of a discount source at\nthe time of application.\n"
 interface DiscountApplication {
   """
   The method by which the discount's value is allocated to its entitled items.
@@ -3840,10 +3620,7 @@ enum DiscountApplicationAllocationMethod {
   ONE @deprecated(reason: "Use ACROSS instead.")
 }
 
-"""
-An auto-generated type for paginating through multiple DiscountApplications.
-
-"""
+"An auto-generated type for paginating through multiple DiscountApplications.\n"
 type DiscountApplicationConnection {
   """A list of edges."""
   edges: [DiscountApplicationEdge!]!
@@ -3855,10 +3632,7 @@ type DiscountApplicationConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one DiscountApplication and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one DiscountApplication and a cursor during pagination.\n"
 type DiscountApplicationEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -3867,13 +3641,7 @@ type DiscountApplicationEdge {
   node: DiscountApplication!
 }
 
-"""
-The lines on the order to which the discount is applied, of the type defined by
-the discount application's `targetType`. For example, the value `ENTITLED`, combined with a `targetType` of
-`LINE_ITEM`, applies the discount on all line items that are entitled to the discount.
-The value `ALL`, combined with a `targetType` of `SHIPPING_LINE`, applies the discount on all shipping lines.
-
-"""
+"The lines on the order to which the discount is applied, of the type defined by\nthe discount application's `targetType`. For example, the value `ENTITLED`, combined with a `targetType` of\n`LINE_ITEM`, applies the discount on all line items that are entitled to the discount.\nThe value `ALL`, combined with a `targetType` of `SHIPPING_LINE`, applies the discount on all shipping lines.\n"
 enum DiscountApplicationTargetSelection {
   """The discount is allocated onto all the lines."""
   ALL
@@ -3885,10 +3653,7 @@ enum DiscountApplicationTargetSelection {
   EXPLICIT
 }
 
-"""
-The type of line (i.e. line item or shipping line) on an order that the discount is applicable towards.
-
-"""
+"The type of line (i.e. line item or shipping line) on an order that the discount is applicable towards.\n"
 enum DiscountApplicationTargetType {
   """The discount applies onto line items."""
   LINE_ITEM
@@ -3897,11 +3662,7 @@ enum DiscountApplicationTargetType {
   SHIPPING_LINE
 }
 
-"""
-Discount code applications capture the intentions of a discount code at
-the time that it is applied.
-
-"""
+"Discount code applications capture the intentions of a discount code at\nthe time that it is applied.\n"
 type DiscountCodeApplication implements DiscountApplication {
   """
   The method by which the discount's value is allocated to its entitled items.
@@ -3961,7 +3722,7 @@ type ExternalVideo implements Media & Node {
   """The host of the external video."""
   host: MediaHost!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The media content type."""
@@ -3989,13 +3750,7 @@ type Filter {
   values: [FilterValue!]!
 }
 
-"""
-The type of data that the filter group represents.
-
-For more information, refer to [Filter products in a collection with the Storefront API]
-(https://shopify.dev/custom-storefronts/products-collections/filter-products).
-
-"""
+"The type of data that the filter group represents.\n\nFor more information, refer to [Filter products in a collection with the Storefront API]\n(https://shopify.dev/custom-storefronts/products-collections/filter-products).\n"
 enum FilterType {
   """A boolean value."""
   BOOLEAN
@@ -4015,12 +3770,7 @@ type FilterValue {
   """A unique identifier."""
   id: String!
 
-  """
-  An input object that can be used to filter by this value on the parent field.
-  
-  The value is provided as a helper for building dynamic filtering UI. For example, if you have a list of selected `FilterValue` objects, you can combine their respective `input` values to use in a subsequent query.
-  
-  """
+  "An input object that can be used to filter by this value on the parent field.\n\nThe value is provided as a helper for building dynamic filtering UI. For example, if you have a list of selected `FilterValue` objects, you can combine their respective `input` values to use in a subsequent query.\n"
   input: JSON!
 
   """A human-friendly string for this filter value."""
@@ -4050,11 +3800,7 @@ type Fulfillment {
   """The name of the tracking company."""
   trackingCompany: String
 
-  """
-  Tracking information associated with the fulfillment,
-  such as the tracking number and tracking URL.
-  
-  """
+  "Tracking information associated with the fulfillment,\nsuch as the tracking number and tracking URL.\n"
   trackingInfo(
     """Truncate the array result to this size."""
     first: Int
@@ -4072,10 +3818,7 @@ type FulfillmentLineItem {
   quantity: Int!
 }
 
-"""
-An auto-generated type for paginating through multiple FulfillmentLineItems.
-
-"""
+"An auto-generated type for paginating through multiple FulfillmentLineItems.\n"
 type FulfillmentLineItemConnection {
   """A list of edges."""
   edges: [FulfillmentLineItemEdge!]!
@@ -4087,10 +3830,7 @@ type FulfillmentLineItemConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one FulfillmentLineItem and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one FulfillmentLineItem and a cursor during pagination.\n"
 type FulfillmentLineItemEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -4115,7 +3855,7 @@ type GenericFile implements Node {
   """A word or phrase to indicate the contents of a file."""
   alt: String
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The MIME type of the file."""
@@ -4131,7 +3871,7 @@ type GenericFile implements Node {
   url: URL
 }
 
-"""Used to specify a geographical location."""
+"""The input fields used to specify a geographical location."""
 input GeoCoordinateInput {
   """The coordinate's latitude value."""
   latitude: Float!
@@ -4140,13 +3880,7 @@ input GeoCoordinateInput {
   longitude: Float!
 }
 
-"""
-A string containing HTML code. Refer to the [HTML spec](https://html.spec.whatwg.org/#elements-3) for a
-complete list of HTML elements.
-
-Example value: `"<p>Grey cotton knit sweater.</p>"`
-
-"""
+"A string containing HTML code. Refer to the [HTML spec](https://html.spec.whatwg.org/#elements-3) for a\ncomplete list of HTML elements.\n\nExample value: `\"<p>Grey cotton knit sweater.</p>\"`\n"
 scalar HTML
 
 """
@@ -4162,17 +3896,16 @@ interface HasMetafields {
     namespace: String!
   ): Metafield
 
-  """
-  The metafields associated with the resource matching the supplied list of namespaces and keys.
-  
-  """
+  "The metafields associated with the resource matching the supplied list of namespaces and keys.\n"
   metafields(
     """The list of metafields to retrieve by namespace and key."""
     identifiers: [HasMetafieldsIdentifier!]!
   ): [Metafield]!
 }
 
-"""Identifies a metafield on an owner resource by namespace and key."""
+"""
+The input fields to identify a metafield on an owner resource by namespace and key.
+"""
 input HasMetafieldsIdentifier {
   """The identifier for the metafield."""
   key: String!
@@ -4191,27 +3924,16 @@ type Image {
   """
   height: Int
 
-  """A unique identifier for the image."""
+  """A unique ID for the image."""
   id: ID
 
-  """
-  The location of the original image as a URL.
-  
-  If there are any existing transformations in the original source URL, they will remain and not be stripped.
-  
-  """
+  "The location of the original image as a URL.\n\nIf there are any existing transformations in the original source URL, they will remain and not be stripped.\n"
   originalSrc: URL! @deprecated(reason: "Use `url` instead.")
 
   """The location of the image as a URL."""
   src: URL! @deprecated(reason: "Use `url` instead.")
 
-  """
-  The location of the transformed image as a URL.
-  
-  All transformation arguments are considered "best-effort". If they can be applied to an image, they will be.
-  Otherwise any transformations which an image type does not support will be ignored.
-  
-  """
+  "The location of the transformed image as a URL.\n\nAll transformation arguments are considered \"best-effort\". If they can be applied to an image, they will be.\nOtherwise any transformations which an image type does not support will be ignored.\n"
   transformedSrc(
     """Crops the image according to the specified region."""
     crop: CropRegion
@@ -4233,16 +3955,7 @@ type Image {
     scale: Int = 1
   ): URL! @deprecated(reason: "Use `url(transform:)` instead")
 
-  """
-  The location of the image as a URL.
-  
-  If no transform options are specified, then the original image will be preserved including any pre-applied transforms.
-  
-  All transformation options are considered "best-effort". Any transformation that the original image type doesn't support will be ignored.
-  
-  If you need multiple variations of the same image, then you can use [GraphQL aliases](https://graphql.org/learn/queries/#aliases).
-  
-  """
+  "The location of the image as a URL.\n\nIf no transform options are specified, then the original image will be preserved including any pre-applied transforms.\n\nAll transformation options are considered \"best-effort\". Any transformation that the original image type doesn't support will be ignored.\n\nIf you need multiple variations of the same image, then you can use [GraphQL aliases](https://graphql.org/learn/queries/#aliases).\n"
   url(
     """A set of options to transform the original image."""
     transform: ImageTransformInput
@@ -4254,10 +3967,7 @@ type Image {
   width: Int
 }
 
-"""
-An auto-generated type for paginating through multiple Images.
-
-"""
+"An auto-generated type for paginating through multiple Images.\n"
 type ImageConnection {
   """A list of edges."""
   edges: [ImageEdge!]!
@@ -4281,10 +3991,7 @@ enum ImageContentType {
   WEBP
 }
 
-"""
-An auto-generated type which holds one Image and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one Image and a cursor during pagination.\n"
 type ImageEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -4293,65 +4000,25 @@ type ImageEdge {
   node: Image!
 }
 
-"""
-The available options for transforming an image.
-
-All transformation options are considered best effort. Any transformation that the original image type doesn't support will be ignored.
-
-"""
+"The available options for transforming an image.\n\nAll transformation options are considered best effort. Any transformation that the original image type doesn't support will be ignored.\n"
 input ImageTransformInput {
-  """
-  The region of the image to remain after cropping.
-  Must be used in conjunction with the `maxWidth` and/or `maxHeight` fields, where the `maxWidth` and `maxHeight` aren't equal.
-  The `crop` argument should coincide with the smaller value. A smaller `maxWidth` indicates a `LEFT` or `RIGHT` crop, while
-  a smaller `maxHeight` indicates a `TOP` or `BOTTOM` crop. For example, `{ maxWidth: 5, maxHeight: 10, crop: LEFT }` will result
-  in an image with a width of 5 and height of 10, where the right side of the image is removed.
-  
-  """
+  "The region of the image to remain after cropping.\nMust be used in conjunction with the `maxWidth` and/or `maxHeight` fields, where the `maxWidth` and `maxHeight` aren't equal.\nThe `crop` argument should coincide with the smaller value. A smaller `maxWidth` indicates a `LEFT` or `RIGHT` crop, while\na smaller `maxHeight` indicates a `TOP` or `BOTTOM` crop. For example, `{ maxWidth: 5, maxHeight: 10, crop: LEFT }` will result\nin an image with a width of 5 and height of 10, where the right side of the image is removed.\n"
   crop: CropRegion
 
-  """
-  Image height in pixels between 1 and 5760.
-  
-  """
+  "Image height in pixels between 1 and 5760.\n"
   maxHeight: Int
 
-  """
-  Image width in pixels between 1 and 5760.
-  
-  """
+  "Image width in pixels between 1 and 5760.\n"
   maxWidth: Int
 
-  """
-  Convert the source image into the preferred content type.
-  Supported conversions: `.svg` to `.png`, any file type to `.jpg`, and any file type to `.webp`.
-  
-  """
+  "Convert the source image into the preferred content type.\nSupported conversions: `.svg` to `.png`, any file type to `.jpg`, and any file type to `.webp`.\n"
   preferredContentType: ImageContentType
 
-  """
-  Image size multiplier for high-resolution retina displays. Must be within 1..3.
-  
-  """
+  "Image size multiplier for high-resolution retina displays. Must be within 1..3.\n"
   scale: Int = 1
 }
 
-"""
-A [JSON](https://www.json.org/json-en.html) object.
-
-Example value:
-`{
-  "product": {
-    "id": "gid://shopify/Product/1346443542550",
-    "title": "White T-shirt",
-    "options": [{
-      "name": "Size",
-      "values": ["M", "L"]
-    }]
-  }
-}`
-
-"""
+"A [JSON](https://www.json.org/json-en.html) object.\n\nExample value:\n`{\n  \"product\": {\n    \"id\": \"gid://shopify/Product/1346443542550\",\n    \"title\": \"White T-shirt\",\n    \"options\": [{\n      \"name\": \"Size\",\n      \"values\": [\"M\", \"L\"]\n    }]\n  }\n}`\n"
 scalar JSON
 
 """A language."""
@@ -4806,17 +4473,14 @@ type Location implements Node {
   """The address of the location."""
   address: LocationAddress!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The name of the location."""
   name: String!
 }
 
-"""
-Represents the address of a location.
-
-"""
+"Represents the address of a location.\n"
 type LocationAddress {
   """The first line of the address for the location."""
   address1: String
@@ -4848,20 +4512,14 @@ type LocationAddress {
   """The province of the location."""
   province: String
 
-  """
-  The code for the province, state, or district of the address of the location.
-  
-  """
+  "The code for the province, state, or district of the address of the location.\n"
   provinceCode: String
 
   """The ZIP code of the location."""
   zip: String
 }
 
-"""
-An auto-generated type for paginating through multiple Locations.
-
-"""
+"An auto-generated type for paginating through multiple Locations.\n"
 type LocationConnection {
   """A list of edges."""
   edges: [LocationEdge!]!
@@ -4873,10 +4531,7 @@ type LocationConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one Location and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one Location and a cursor during pagination.\n"
 type LocationEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -4907,44 +4562,22 @@ type MailingAddress implements Node {
   """
   address1: String
 
-  """
-  The second line of the address. Typically the number of the apartment, suite, or unit.
-  
-  """
+  "The second line of the address. Typically the number of the apartment, suite, or unit.\n"
   address2: String
 
-  """
-  The name of the city, district, village, or town.
-  
-  """
+  "The name of the city, district, village, or town.\n"
   city: String
 
-  """
-  The name of the customer's company or organization.
-  
-  """
+  "The name of the customer's company or organization.\n"
   company: String
 
-  """
-  The name of the country.
-  
-  """
+  "The name of the country.\n"
   country: String
 
-  """
-  The two-letter code for the country of the address.
-  
-  For example, US.
-  
-  """
+  "The two-letter code for the country of the address.\n\nFor example, US.\n"
   countryCode: String @deprecated(reason: "Use `countryCodeV2` instead.")
 
-  """
-  The two-letter code for the country of the address.
-  
-  For example, US.
-  
-  """
+  "The two-letter code for the country of the address.\n\nFor example, US.\n"
   countryCodeV2: CountryCode
 
   """The first name of the customer."""
@@ -4964,7 +4597,7 @@ type MailingAddress implements Node {
   """A comma-separated list of the values for city, province, and country."""
   formattedArea: String
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The last name of the customer."""
@@ -4976,39 +4609,23 @@ type MailingAddress implements Node {
   """The longitude coordinate of the customer address."""
   longitude: Float
 
-  """
-  The full name of the customer, based on firstName and lastName.
-  
-  """
+  "The full name of the customer, based on firstName and lastName.\n"
   name: String
 
-  """
-  A unique phone number for the customer.
-  
-  Formatted using E.164 standard. For example, _+16135551111_.
-  
-  """
+  "A unique phone number for the customer.\n\nFormatted using E.164 standard. For example, _+16135551111_.\n"
   phone: String
 
   """The region of the address, such as the province, state, or district."""
   province: String
 
-  """
-  The two-letter code for the region.
-  
-  For example, ON.
-  
-  """
+  "The two-letter code for the region.\n\nFor example, ON.\n"
   provinceCode: String
 
   """The zip or postal code of the address."""
   zip: String
 }
 
-"""
-An auto-generated type for paginating through multiple MailingAddresses.
-
-"""
+"An auto-generated type for paginating through multiple MailingAddresses.\n"
 type MailingAddressConnection {
   """A list of edges."""
   edges: [MailingAddressEdge!]!
@@ -5020,10 +4637,7 @@ type MailingAddressConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one MailingAddress and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one MailingAddress and a cursor during pagination.\n"
 type MailingAddressEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -5032,30 +4646,18 @@ type MailingAddressEdge {
   node: MailingAddress!
 }
 
-"""Specifies the fields accepted to create or update a mailing address."""
+"""The input fields to create or update a mailing address."""
 input MailingAddressInput {
-  """
-  The first line of the address. Typically the street address or PO Box number.
-  
-  """
+  "The first line of the address. Typically the street address or PO Box number.\n"
   address1: String
 
-  """
-  The second line of the address. Typically the number of the apartment, suite, or unit.
-  
-  """
+  "The second line of the address. Typically the number of the apartment, suite, or unit.\n"
   address2: String
 
-  """
-  The name of the city, district, village, or town.
-  
-  """
+  "The name of the city, district, village, or town.\n"
   city: String
 
-  """
-  The name of the customer's company or organization.
-  
-  """
+  "The name of the customer's company or organization.\n"
   company: String
 
   """The name of the country."""
@@ -5067,12 +4669,7 @@ input MailingAddressInput {
   """The last name of the customer."""
   lastName: String
 
-  """
-  A unique phone number for the customer.
-  
-  Formatted using E.164 standard. For example, _+16135551111_.
-  
-  """
+  "A unique phone number for the customer.\n\nFormatted using E.164 standard. For example, _+16135551111_.\n"
   phone: String
 
   """The region of the address, such as the province, state, or district."""
@@ -5082,10 +4679,7 @@ input MailingAddressInput {
   zip: String
 }
 
-"""
-Manual discount applications capture the intentions of a discount that was manually created.
-
-"""
+"Manual discount applications capture the intentions of a discount that was manually created.\n"
 type ManualDiscountApplication implements DiscountApplication {
   """
   The method by which the discount's value is allocated to its entitled items.
@@ -5120,10 +4714,7 @@ interface Media {
   previewImage: Image
 }
 
-"""
-An auto-generated type for paginating through multiple Media.
-
-"""
+"An auto-generated type for paginating through multiple Media.\n"
 type MediaConnection {
   """A list of edges."""
   edges: [MediaEdge!]!
@@ -5150,10 +4741,7 @@ enum MediaContentType {
   VIDEO
 }
 
-"""
-An auto-generated type which holds one Media and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one Media and a cursor during pagination.\n"
 type MediaEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -5176,7 +4764,7 @@ type MediaImage implements Media & Node {
   """A word or phrase to share the nature or contents of a media."""
   alt: String
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The image for the media."""
@@ -5189,15 +4777,12 @@ type MediaImage implements Media & Node {
   previewImage: Image
 }
 
-"""
-A menu used for navigation within a storefront.
-
-"""
+"A [navigation menu](https://help.shopify.com/manual/online-store/menus-and-links) representing a hierarchy\nof hyperlinks (items).\n"
 type Menu implements Node {
   """The menu's handle."""
   handle: String!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The menu's child items."""
@@ -5210,12 +4795,9 @@ type Menu implements Node {
   title: String!
 }
 
-"""
-A menu item within a parent menu.
-
-"""
+"A menu item within a parent menu.\n"
 type MenuItem implements Node {
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The menu item's child items."""
@@ -5276,11 +4858,7 @@ enum MenuItemType {
 """The merchandise to be purchased at checkout."""
 union Merchandise = ProductVariant
 
-"""
-Metafields represent custom metadata attached to a resource. Metafields can be sorted into namespaces and are
-comprised of keys, values, and value types.
-
-"""
+"Metafields represent custom metadata attached to a resource. Metafields can be sorted into namespaces and are\ncomprised of keys, values, and value types.\n"
 type Metafield implements Node {
   """The date and time when the storefront metafield was created."""
   createdAt: DateTime!
@@ -5288,47 +4866,38 @@ type Metafield implements Node {
   """The description of a metafield."""
   description: String
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
-  """The key name for a metafield."""
+  """The unique identifier for the metafield within its namespace."""
   key: String!
 
-  """The namespace for a metafield."""
+  """
+  The container for a group of metafields that the metafield is associated with.
+  """
   namespace: String!
 
-  """The parent object that the metafield belongs to."""
+  """The type of resource that the metafield is attached to."""
   parentResource: MetafieldParentResource!
 
   """
-  Returns a reference object if the metafield definition's type is a resource reference.
+  Returns a reference object if the metafield's type is a resource reference.
   """
   reference: MetafieldReference
 
-  """
-  The type name of the metafield.
-  See the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).
-  
-  """
+  "The type name of the metafield.\nRefer to the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).\n"
   type: String!
 
-  """The date and time when the storefront metafield was updated."""
+  """The date and time when the metafield was last updated."""
   updatedAt: DateTime!
 
-  """The value of a metafield."""
+  """
+  The data stored in the metafield. Always stored as a string, regardless of the metafield's type.
+  """
   value: String!
 }
 
-"""
-A filter used to view a subset of products in a collection matching a specific metafield value.
-
-Only the following metafield types are currently supported:
-- `number_integer`
-- `number_decimal`
-- `single_line_text_field`
-- `boolean` as of 2022-04.
-
-"""
+"A filter used to view a subset of products in a collection matching a specific metafield value.\n\nOnly the following metafield types are currently supported:\n- `number_integer`\n- `number_decimal`\n- `single_line_text_field`\n- `boolean` as of 2022-04.\n"
 input MetafieldFilter {
   """The key of the metafield to filter on."""
   key: String!
@@ -5343,10 +4912,7 @@ input MetafieldFilter {
 """A resource that the metafield belongs to."""
 union MetafieldParentResource = Article | Blog | Collection | Customer | Order | Page | Product | ProductVariant | Shop
 
-"""
-Returns the resource which is being referred to by a metafield.
-
-"""
+"Returns the resource which is being referred to by a metafield.\n"
 union MetafieldReference = GenericFile | MediaImage | Page | Product | ProductVariant | Video
 
 """Represents a Shopify hosted 3D model."""
@@ -5354,7 +4920,7 @@ type Model3d implements Media & Node {
   """A word or phrase to share the nature or contents of a media."""
   alt: String
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The media content type."""
@@ -5387,7 +4953,7 @@ A monetary value string without a currency symbol or code. Example value: `"100.
 """
 scalar Money
 
-"""Specifies the fields for a monetary value with currency."""
+"""The input fields for a monetary value with currency."""
 input MoneyInput {
   """Decimal money amount."""
   amount: Decimal!
@@ -5396,10 +4962,7 @@ input MoneyInput {
   currencyCode: CurrencyCode!
 }
 
-"""
-A monetary value with currency.
-
-"""
+"A monetary value with currency.\n"
 type MoneyV2 {
   """Decimal money amount."""
   amount: Decimal!
@@ -5423,20 +4986,9 @@ type Mutation {
     cartId: ID!
   ): CartAttributesUpdatePayload
 
-  """
-  Updates customer information associated with a cart.
-  Buyer identity is used to determine
-  [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing)
-  and should match the customer's shipping address.
-  
-  """
+  "Updates customer information associated with a cart.\nBuyer identity is used to determine\n[international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing)\nand should match the customer's shipping address.\n"
   cartBuyerIdentityUpdate(
-    """
-    The customer associated with the cart. Used to determine
-    [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
-    Buyer identity should match the customer's shipping address.
-    
-    """
+    "The customer associated with the cart. Used to determine\n[international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).\nBuyer identity should match the customer's shipping address.\n"
     buyerIdentity: CartBuyerIdentityInput!
 
     """The ID of the cart."""
@@ -5454,10 +5006,7 @@ type Mutation {
     """The ID of the cart."""
     cartId: ID!
 
-    """
-    The case-insensitive discount codes that the customer added at checkout.
-    
-    """
+    "The case-insensitive discount codes that the customer added at checkout.\n"
     discountCodes: [String!]
   ): CartDiscountCodesUpdatePayload
 
@@ -5658,23 +5207,13 @@ type Mutation {
     shippingRateHandle: String!
   ): CheckoutShippingLineUpdatePayload
 
-  """
-  Creates a customer access token.
-  The customer access token is required to modify the customer object in any way.
-  
-  """
+  "Creates a customer access token.\nThe customer access token is required to modify the customer object in any way.\n"
   customerAccessTokenCreate(
     """The fields used to create a customer access token."""
     input: CustomerAccessTokenCreateInput!
   ): CustomerAccessTokenCreatePayload
 
-  """
-  Creates a customer access token using a
-  [multipass token](https://shopify.dev/api/multipass) instead of email and
-  password. A customer record is created if the customer doesn't exist. If a customer
-  record already exists but the record is disabled, then the customer record is enabled.
-  
-  """
+  "Creates a customer access token using a\n[multipass token](https://shopify.dev/api/multipass) instead of email and\npassword. A customer record is created if the customer doesn't exist. If a customer\nrecord already exists but the record is disabled, then the customer record is enabled.\n"
   customerAccessTokenCreateWithMultipass(
     """
     A valid [multipass token](https://shopify.dev/api/multipass) to be authenticated.
@@ -5688,13 +5227,7 @@ type Mutation {
     customerAccessToken: String!
   ): CustomerAccessTokenDeletePayload
 
-  """
-  Renews a customer access token.
-  
-  Access token renewal must happen *before* a token expires.
-  If a token has already expired, a new one should be created instead via `customerAccessTokenCreate`.
-  
-  """
+  "Renews a customer access token.\n\nAccess token renewal must happen *before* a token expires.\nIf a token has already expired, a new one should be created instead via `customerAccessTokenCreate`.\n"
   customerAccessTokenRenew(
     """The access token used to identify the customer."""
     customerAccessToken: String!
@@ -5765,29 +5298,13 @@ type Mutation {
     customerAccessToken: String!
   ): CustomerDefaultAddressUpdatePayload
 
-  """
-  Sends a reset password email to the customer. The reset password
-  email contains a reset password URL and token that you can pass to
-  the [`customerResetByUrl`](https://shopify.dev/api/storefront/latest/mutations/customerResetByUrl) or
-  [`customerReset`](https://shopify.dev/api/storefront/latest/mutations/customerReset) mutation to reset the
-  customer password.
-  
-  This mutation is throttled by IP. With authenticated access,
-  you can provide a [`Shopify-Storefront-Buyer-IP`](https://shopify.dev/api/usage/authentication#optional-ip-header) instead of the request IP.
-  
-  Make sure that the value provided to `Shopify-Storefront-Buyer-IP` is trusted. Unthrottled access to this
-  mutation presents a security risk.
-  
-  """
+  "Sends a reset password email to the customer. The reset password\nemail contains a reset password URL and token that you can pass to\nthe [`customerResetByUrl`](https://shopify.dev/api/storefront/latest/mutations/customerResetByUrl) or\n[`customerReset`](https://shopify.dev/api/storefront/latest/mutations/customerReset) mutation to reset the\ncustomer password.\n\nThis mutation is throttled by IP. With authenticated access,\nyou can provide a [`Shopify-Storefront-Buyer-IP`](https://shopify.dev/api/usage/authentication#optional-ip-header) instead of the request IP.\n\nMake sure that the value provided to `Shopify-Storefront-Buyer-IP` is trusted. Unthrottled access to this\nmutation presents a security risk.\n"
   customerRecover(
     """The email address of the customer to recover."""
     email: String!
   ): CustomerRecoverPayload
 
-  """
-  "Resets a customer’s password with the token received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation."
-  
-  """
+  "\"Resets a customer’s password with the token received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation.\"\n"
   customerReset(
     """Specifies the customer to reset."""
     id: ID!
@@ -5796,10 +5313,7 @@ type Mutation {
     input: CustomerResetInput!
   ): CustomerResetPayload
 
-  """
-  "Resets a customer’s password with the reset password URL received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation."
-  
-  """
+  "\"Resets a customer’s password with the reset password URL received from a reset password email. You can send a reset password email with the [`customerRecover`](https://shopify.dev/api/storefront/latest/mutations/customerRecover) mutation.\"\n"
   customerResetByUrl(
     """New password that will be set as part of the reset password process."""
     password: String!
@@ -5818,15 +5332,9 @@ type Mutation {
   ): CustomerUpdatePayload
 }
 
-"""
-An object with an ID field to support global identification, in accordance with the
-[Relay specification](https://relay.dev/graphql/objectidentification.htm#sec-Node-Interface).
-This interface is used by the [node](https://shopify.dev/api/admin-graphql/unstable/queries/node)
-and [nodes](https://shopify.dev/api/admin-graphql/unstable/queries/nodes) queries.
-
-"""
+"An object with an ID field to support global identification, in accordance with the\n[Relay specification](https://relay.dev/graphql/objectidentification.htm#sec-Node-Interface).\nThis interface is used by the [node](https://shopify.dev/api/admin-graphql/unstable/queries/node)\nand [nodes](https://shopify.dev/api/admin-graphql/unstable/queries/nodes) queries.\n"
 interface Node {
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 }
 
@@ -5911,7 +5419,7 @@ type Order implements HasMetafields & Node {
   """The fulfillment status for the order."""
   fulfillmentStatus: OrderFulfillmentStatus!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """List of the order’s line items."""
@@ -5941,20 +5449,13 @@ type Order implements HasMetafields & Node {
     namespace: String!
   ): Metafield
 
-  """
-  The metafields associated with the resource matching the supplied list of namespaces and keys.
-  
-  """
+  "The metafields associated with the resource matching the supplied list of namespaces and keys.\n"
   metafields(
     """The list of metafields to retrieve by namespace and key."""
     identifiers: [HasMetafieldsIdentifier!]!
   ): [Metafield]!
 
-  """
-  Unique identifier for the order that appears on the order.
-  For example, _#1000_ or _Store1001.
-  
-  """
+  "Unique identifier for the order that appears on the order.\nFor example, _#1000_ or _Store1001.\n"
   name: String!
 
   """
@@ -5971,21 +5472,13 @@ type Order implements HasMetafields & Node {
   """The customer's phone number for receiving SMS notifications."""
   phone: String
 
-  """
-  The date and time when the order was imported.
-  This value can be set to dates in the past when importing from other systems.
-  If no value is provided, it will be auto-generated based on current date and time.
-  
-  """
+  "The date and time when the order was imported.\nThis value can be set to dates in the past when importing from other systems.\nIf no value is provided, it will be auto-generated based on current date and time.\n"
   processedAt: DateTime!
 
   """The address to where the order will be shipped."""
   shippingAddress: MailingAddress
 
-  """
-  The discounts that have been allocated onto the shipping line by discount applications.
-  
-  """
+  "The discounts that have been allocated onto the shipping line by discount applications.\n"
   shippingDiscountAllocations: [DiscountAllocation!]!
 
   """The unique URL for the order's status page."""
@@ -6050,10 +5543,7 @@ enum OrderCancelReason {
   OTHER
 }
 
-"""
-An auto-generated type for paginating through multiple Orders.
-
-"""
+"An auto-generated type for paginating through multiple Orders.\n"
 type OrderConnection {
   """A list of edges."""
   edges: [OrderEdge!]!
@@ -6065,10 +5555,7 @@ type OrderConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one Order and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one Order and a cursor during pagination.\n"
 type OrderEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -6188,10 +5675,7 @@ type OrderLineItem {
   variant: ProductVariant
 }
 
-"""
-An auto-generated type for paginating through multiple OrderLineItems.
-
-"""
+"An auto-generated type for paginating through multiple OrderLineItems.\n"
 type OrderLineItemConnection {
   """A list of edges."""
   edges: [OrderLineItemEdge!]!
@@ -6203,10 +5687,7 @@ type OrderLineItemConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one OrderLineItem and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one OrderLineItem and a cursor during pagination.\n"
 type OrderLineItemEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -6223,11 +5704,7 @@ enum OrderSortKeys {
   """Sort by the `processed_at` value."""
   PROCESSED_AT
 
-  """
-  Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-  Don't use this sort key when no search query is specified.
-  
-  """
+  "Sort by relevance to the search terms when the `query` parameter is specified on the connection.\nDon't use this sort key when no search query is specified.\n"
   RELEVANCE
 
   """Sort by the `total_price` value."""
@@ -6252,7 +5729,7 @@ type Page implements HasMetafields & Node & OnlineStorePublishable {
   """
   handle: String!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """Returns a metafield found by namespace and key."""
@@ -6264,10 +5741,7 @@ type Page implements HasMetafields & Node & OnlineStorePublishable {
     namespace: String!
   ): Metafield
 
-  """
-  The metafields associated with the resource matching the supplied list of namespaces and keys.
-  
-  """
+  "The metafields associated with the resource matching the supplied list of namespaces and keys.\n"
   metafields(
     """The list of metafields to retrieve by namespace and key."""
     identifiers: [HasMetafieldsIdentifier!]!
@@ -6288,10 +5762,7 @@ type Page implements HasMetafields & Node & OnlineStorePublishable {
   updatedAt: DateTime!
 }
 
-"""
-An auto-generated type for paginating through multiple Pages.
-
-"""
+"An auto-generated type for paginating through multiple Pages.\n"
 type PageConnection {
   """A list of edges."""
   edges: [PageEdge!]!
@@ -6303,10 +5774,7 @@ type PageConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one Page and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one Page and a cursor during pagination.\n"
 type PageEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -6315,12 +5783,7 @@ type PageEdge {
   node: Page!
 }
 
-"""
-Returns information about pagination in a connection, in accordance with the
-[Relay specification](https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo).
-For more information, please read our [GraphQL Pagination Usage Guide](https://shopify.dev/api/usage/pagination-graphql).
-
-"""
+"Returns information about pagination in a connection, in accordance with the\n[Relay specification](https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo).\nFor more information, please read our [GraphQL Pagination Usage Guide](https://shopify.dev/api/usage/pagination-graphql).\n"
 type PageInfo {
   """The cursor corresponding to the last node in edges."""
   endCursor: String
@@ -6340,11 +5803,7 @@ enum PageSortKeys {
   """Sort by the `id` value."""
   ID
 
-  """
-  Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-  Don't use this sort key when no search query is specified.
-  
-  """
+  "Sort by relevance to the search terms when the `query` parameter is specified on the connection.\nDon't use this sort key when no search query is specified.\n"
   RELEVANCE
 
   """Sort by the `title` value."""
@@ -6376,15 +5835,10 @@ type Payment implements Node {
   """
   errorMessage: String
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
-  """
-  A client-side generated token to identify a payment and perform idempotent operations.
-  For more information, refer to
-  [Idempotent requests](https://shopify.dev/api/usage/idempotent-requests).
-  
-  """
+  "A client-side generated token to identify a payment and perform idempotent operations.\nFor more information, refer to\n[Idempotent requests](https://shopify.dev/api/usage/idempotent-requests).\n"
   idempotencyKey: String
 
   """
@@ -6425,7 +5879,7 @@ type PaymentSettings {
   """
   enabledPresentmentCurrencies: [CurrencyCode!]!
 
-  """The shop’s Shopify Payments account id."""
+  """The shop’s Shopify Payments account ID."""
   shopifyPaymentsAccountId: String
 
   """List of the digital wallets which the shop supports."""
@@ -6450,9 +5904,7 @@ enum PaymentTokenType {
   VAULT
 }
 
-"""
-A filter used to view a subset of products in a collection matching a specific price range.
-"""
+"The input fields for a filter used to view a subset of products in a collection matching a specific price range.\n"
 input PriceRangeFilter {
   """The maximum price in the range. Empty indicates no max price."""
   max: Float
@@ -6513,22 +5965,13 @@ type Product implements HasMetafields & Node & OnlineStorePublishable {
   """The description of the product, complete with HTML formatting."""
   descriptionHtml: HTML!
 
-  """
-  The featured image for the product.
-  
-  This field is functionally equivalent to `images(first: 1)`.
-  
-  """
+  "The featured image for the product.\n\nThis field is functionally equivalent to `images(first: 1)`.\n"
   featuredImage: Image
 
-  """
-  A human-friendly unique string for the Product automatically generated from its title.
-  They are used by the Liquid templating language to refer to objects.
-  
-  """
+  "A human-friendly unique string for the Product automatically generated from its title.\nThey are used by the Liquid templating language to refer to objects.\n"
   handle: String!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """List of images associated with the product."""
@@ -6582,10 +6025,7 @@ type Product implements HasMetafields & Node & OnlineStorePublishable {
     namespace: String!
   ): Metafield
 
-  """
-  The metafields associated with the resource matching the supplied list of namespaces and keys.
-  
-  """
+  "The metafields associated with the resource matching the supplied list of namespaces and keys.\n"
   metafields(
     """The list of metafields to retrieve by namespace and key."""
     identifiers: [HasMetafieldsIdentifier!]!
@@ -6639,11 +6079,7 @@ type Product implements HasMetafields & Node & OnlineStorePublishable {
   """The product's SEO information."""
   seo: SEO!
 
-  """
-  A comma separated list of tags that have been added to the product.
-  Additional access scope required for private apps: unauthenticated_read_product_tags.
-  
-  """
+  "A comma separated list of tags that have been added to the product.\nAdditional access scope required for private apps: unauthenticated_read_product_tags.\n"
   tags: [String!]!
 
   """The product’s title."""
@@ -6652,21 +6088,10 @@ type Product implements HasMetafields & Node & OnlineStorePublishable {
   """The total quantity of inventory in stock for this Product."""
   totalInventory: Int
 
-  """
-  The date and time when the product was last modified.
-  A product's `updatedAt` value can change for different reasons. For example, if an order
-  is placed for a product that has inventory tracking set up, then the inventory adjustment
-  is counted as an update.
-  
-  """
+  "The date and time when the product was last modified.\nA product's `updatedAt` value can change for different reasons. For example, if an order\nis placed for a product that has inventory tracking set up, then the inventory adjustment\nis counted as an update.\n"
   updatedAt: DateTime!
 
-  """
-  Find a product’s variant based on its selected options.
-  This is useful for converting a user’s selection of product options into a single matching variant.
-  If there is not a variant for the selected options, `null` will be returned.
-  
-  """
+  "Find a product’s variant based on its selected options.\nThis is useful for converting a user’s selection of product options into a single matching variant.\nIf there is not a variant for the selected options, `null` will be returned.\n"
   variantBySelectedOptions(
     """The input fields used for a selected option."""
     selectedOptions: [SelectedOptionInput!]!
@@ -6717,21 +6142,14 @@ enum ProductCollectionSortKeys {
   """Sort by the `price` value."""
   PRICE
 
-  """
-  Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-  Don't use this sort key when no search query is specified.
-  
-  """
+  "Sort by relevance to the search terms when the `query` parameter is specified on the connection.\nDon't use this sort key when no search query is specified.\n"
   RELEVANCE
 
   """Sort by the `title` value."""
   TITLE
 }
 
-"""
-An auto-generated type for paginating through multiple Products.
-
-"""
+"An auto-generated type for paginating through multiple Products.\n"
 type ProductConnection {
   """A list of edges."""
   edges: [ProductEdge!]!
@@ -6746,10 +6164,7 @@ type ProductConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one Product and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one Product and a cursor during pagination.\n"
 type ProductEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -6758,7 +6173,7 @@ type ProductEdge {
   node: Product!
 }
 
-"""A filter used to view a subset of products in a collection."""
+"The input fields for a filter used to view a subset of products in a collection.\nBy default, the `available` and `price` filters are enabled. Filters are customized with the Shopify Search & Discovery app.\nLearn more about [customizing storefront filtering](https://help.shopify.com/manual/online-store/themes/customizing-themes/storefront-filters).\n"
 input ProductFilter {
   """Filter on if the product is available for sale."""
   available: Boolean
@@ -6793,11 +6208,7 @@ enum ProductImageSortKeys {
   """Sort by the `position` value."""
   POSITION
 
-  """
-  Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-  Don't use this sort key when no search query is specified.
-  
-  """
+  "Sort by relevance to the search terms when the `query` parameter is specified on the connection.\nDon't use this sort key when no search query is specified.\n"
   RELEVANCE
 }
 
@@ -6809,22 +6220,13 @@ enum ProductMediaSortKeys {
   """Sort by the `position` value."""
   POSITION
 
-  """
-  Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-  Don't use this sort key when no search query is specified.
-  
-  """
+  "Sort by relevance to the search terms when the `query` parameter is specified on the connection.\nDon't use this sort key when no search query is specified.\n"
   RELEVANCE
 }
 
-"""
-Product property names like "Size", "Color", and "Material" that the customers can select.
-Variants are selected based on permutations of these options.
-255 characters limit each.
-
-"""
+"Product property names like \"Size\", \"Color\", and \"Material\" that the customers can select.\nVariants are selected based on permutations of these options.\n255 characters limit each.\n"
 type ProductOption implements Node {
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The product option’s name."""
@@ -6860,11 +6262,7 @@ enum ProductSortKeys {
   """Sort by the `product_type` value."""
   PRODUCT_TYPE
 
-  """
-  Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-  Don't use this sort key when no search query is specified.
-  
-  """
+  "Sort by relevance to the search terms when the `query` parameter is specified on the connection.\nDon't use this sort key when no search query is specified.\n"
   RELEVANCE
 
   """Sort by the `title` value."""
@@ -6904,13 +6302,10 @@ type ProductVariant implements HasMetafields & Node {
   """
   currentlyNotInStock: Boolean!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
-  """
-  Image associated with the product variant. This field falls back to the product image if no image is available.
-  
-  """
+  "Image associated with the product variant. This field falls back to the product image if no image is available.\n"
   image: Image
 
   """Returns a metafield found by namespace and key."""
@@ -6922,10 +6317,7 @@ type ProductVariant implements HasMetafields & Node {
     namespace: String!
   ): Metafield
 
-  """
-  The metafields associated with the resource matching the supplied list of namespaces and keys.
-  
-  """
+  "The metafields associated with the resource matching the supplied list of namespaces and keys.\n"
   metafields(
     """The list of metafields to retrieve by namespace and key."""
     identifiers: [HasMetafieldsIdentifier!]!
@@ -7012,10 +6404,7 @@ type ProductVariant implements HasMetafields & Node {
   weightUnit: WeightUnit!
 }
 
-"""
-An auto-generated type for paginating through multiple ProductVariants.
-
-"""
+"An auto-generated type for paginating through multiple ProductVariants.\n"
 type ProductVariantConnection {
   """A list of edges."""
   edges: [ProductVariantEdge!]!
@@ -7027,10 +6416,7 @@ type ProductVariantConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one ProductVariant and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one ProductVariant and a cursor during pagination.\n"
 type ProductVariantEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -7047,11 +6433,7 @@ enum ProductVariantSortKeys {
   """Sort by the `position` value."""
   POSITION
 
-  """
-  Sort by relevance to the search terms when the `query` parameter is specified on the connection.
-  Don't use this sort key when no search query is specified.
-  
-  """
+  "Sort by relevance to the search terms when the `query` parameter is specified on the connection.\nDon't use this sort key when no search query is specified.\n"
   RELEVANCE
 
   """Sort by the `sku` value."""
@@ -7079,19 +6461,7 @@ type QueryRoot {
     """Returns up to the last `n` elements from the list."""
     last: Int
 
-    """
-    Supported filter parameters:
-     - `author`
-     - `blog_title`
-     - `created_at`
-     - `tag`
-     - `tag_not`
-     - `updated_at`
-    
-    See the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)
-    for more information about using filters.
-    
-    """
+    "Supported filter parameters:\n - `author`\n - `blog_title`\n - `created_at`\n - `tag`\n - `tag_not`\n - `updated_at`\n\nSee the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)\nfor more information about using filters.\n"
     query: String
 
     """Reverse the order of the underlying list."""
@@ -7130,17 +6500,7 @@ type QueryRoot {
     """Returns up to the last `n` elements from the list."""
     last: Int
 
-    """
-    Supported filter parameters:
-     - `created_at`
-     - `handle`
-     - `title`
-     - `updated_at`
-    
-    See the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)
-    for more information about using filters.
-    
-    """
+    "Supported filter parameters:\n - `created_at`\n - `handle`\n - `title`\n - `updated_at`\n\nSee the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)\nfor more information about using filters.\n"
     query: String
 
     """Reverse the order of the underlying list."""
@@ -7150,11 +6510,7 @@ type QueryRoot {
     sortKey: BlogSortKeys = ID
   ): BlogConnection!
 
-  """
-  Retrieve a cart by its ID. For more information, refer to
-  [Manage a cart with the Storefront API](https://shopify.dev/custom-storefronts/cart/manage).
-  
-  """
+  "Retrieve a cart by its ID. For more information, refer to\n[Manage a cart with the Storefront API](https://shopify.dev/custom-storefronts/cart/manage).\n"
   cart(
     """The ID of the cart."""
     id: ID!
@@ -7189,16 +6545,7 @@ type QueryRoot {
     """Returns up to the last `n` elements from the list."""
     last: Int
 
-    """
-    Supported filter parameters:
-     - `collection_type`
-     - `title`
-     - `updated_at`
-    
-    See the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)
-    for more information about using filters.
-    
-    """
+    "Supported filter parameters:\n - `collection_type`\n - `title`\n - `updated_at`\n\nSee the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)\nfor more information about using filters.\n"
     query: String
 
     """Reverse the order of the underlying list."""
@@ -7208,7 +6555,7 @@ type QueryRoot {
     sortKey: CollectionSortKeys = ID
   ): CollectionConnection!
 
-  """Find a customer by its access token."""
+  "The customer associated with the given access token. Tokens are obtained by using the\n[`customerAccessTokenCreate` mutation](https://shopify.dev/docs/api/storefront/latest/mutations/customerAccessTokenCreate).\n"
   customer(
     """The customer access token."""
     customerAccessToken: String!
@@ -7217,12 +6564,7 @@ type QueryRoot {
   """Returns the localized experiences configured for the shop."""
   localization: Localization!
 
-  """
-  List of the shop's locations that support in-store pickup.
-  
-  When sorting by distance, you must specify a location via the `near` argument.
-  
-  """
+  "List of the shop's locations that support in-store pickup.\n\nWhen sorting by distance, you must specify a location via the `near` argument.\n"
   locations(
     """Returns the elements that come after the specified cursor."""
     after: String
@@ -7246,9 +6588,9 @@ type QueryRoot {
     sortKey: LocationSortKeys = ID
   ): LocationConnection!
 
-  """A storefront menu."""
+  "Retrieve a [navigation menu](https://help.shopify.com/manual/online-store/menus-and-links) by its handle.\n"
   menu(
-    """Returns a storefront menu by the specified handle."""
+    """The navigation menu's handle."""
     handle: String!
   ): Menu
 
@@ -7293,17 +6635,7 @@ type QueryRoot {
     """Returns up to the last `n` elements from the list."""
     last: Int
 
-    """
-    Supported filter parameters:
-     - `created_at`
-     - `handle`
-     - `title`
-     - `updated_at`
-    
-    See the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)
-    for more information about using filters.
-    
-    """
+    "Supported filter parameters:\n - `created_at`\n - `handle`\n - `title`\n - `updated_at`\n\nSee the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)\nfor more information about using filters.\n"
     query: String
 
     """Reverse the order of the underlying list."""
@@ -7330,22 +6662,13 @@ type QueryRoot {
     handle: String!
   ): Product @deprecated(reason: "Use `product` instead.")
 
-  """
-  Find recommended products related to a given `product_id`.
-  To learn more about how recommendations are generated, see
-  [*Showing product recommendations on product pages*](https://help.shopify.com/themes/development/recommended-products).
-  
-  """
+  "Find recommended products related to a given `product_id`.\nTo learn more about how recommendations are generated, see\n[*Showing product recommendations on product pages*](https://help.shopify.com/themes/development/recommended-products).\n"
   productRecommendations(
     """The id of the product."""
     productId: ID!
   ): [Product!]
 
-  """
-  Tags added to products.
-  Additional access scope required: unauthenticated_read_product_tags.
-  
-  """
+  "Tags added to products.\nAdditional access scope required: unauthenticated_read_product_tags.\n"
   productTags(
     """Returns up to the first `n` elements from the list."""
     first: Int!
@@ -7373,22 +6696,7 @@ type QueryRoot {
     """Returns up to the last `n` elements from the list."""
     last: Int
 
-    """
-    Supported filter parameters:
-     - `available_for_sale`
-     - `created_at`
-     - `product_type`
-     - `tag`
-     - `tag_not`
-     - `title`
-     - `updated_at`
-     - `variants.price`
-     - `vendor`
-    
-    See the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)
-    for more information about using filters.
-    
-    """
+    "Supported filter parameters:\n - `available_for_sale`\n - `created_at`\n - `product_type`\n - `tag`\n - `tag_not`\n - `title`\n - `updated_at`\n - `variants.price`\n - `vendor`\n\nSee the detailed [search syntax](https://shopify.dev/api/usage/search-syntax)\nfor more information about using filters.\n"
     query: String
 
     """Reverse the order of the underlying list."""
@@ -7434,11 +6742,7 @@ type SEO {
   title: String
 }
 
-"""
-Script discount applications capture the intentions of a discount that
-was created by a Shopify Script.
-
-"""
+"Script discount applications capture the intentions of a discount that\nwas created by a Shopify Script.\n"
 type ScriptDiscountApplication implements DiscountApplication {
   """
   The method by which the discount's value is allocated to its entitled items.
@@ -7458,11 +6762,7 @@ type ScriptDiscountApplication implements DiscountApplication {
   value: PricingValue!
 }
 
-"""
-Properties used by customers to select a product variant.
-Products can have multiple options, like different sizes or colors.
-
-"""
+"Properties used by customers to select a product variant.\nProducts can have multiple options, like different sizes or colors.\n"
 type SelectedOption {
   """The product option’s name."""
   name: String!
@@ -7471,7 +6771,7 @@ type SelectedOption {
   value: String!
 }
 
-"""Specifies the input fields required for a selected option."""
+"""The input fields required for a selected option."""
 input SelectedOptionInput {
   """The product option’s name."""
   name: String!
@@ -7488,7 +6788,7 @@ type SellingPlan {
   """The description of the selling plan."""
   description: String
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """
@@ -7533,10 +6833,7 @@ type SellingPlanAllocation {
   sellingPlan: SellingPlan!
 }
 
-"""
-An auto-generated type for paginating through multiple SellingPlanAllocations.
-
-"""
+"An auto-generated type for paginating through multiple SellingPlanAllocations.\n"
 type SellingPlanAllocationConnection {
   """A list of edges."""
   edges: [SellingPlanAllocationEdge!]!
@@ -7548,10 +6845,7 @@ type SellingPlanAllocationConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one SellingPlanAllocation and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one SellingPlanAllocation and a cursor during pagination.\n"
 type SellingPlanAllocationEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -7612,10 +6906,7 @@ enum SellingPlanCheckoutChargeType {
 """The portion of the price to be charged at checkout."""
 union SellingPlanCheckoutChargeValue = MoneyV2 | SellingPlanCheckoutChargePercentageValue
 
-"""
-An auto-generated type for paginating through multiple SellingPlans.
-
-"""
+"An auto-generated type for paginating through multiple SellingPlans.\n"
 type SellingPlanConnection {
   """A list of edges."""
   edges: [SellingPlanEdge!]!
@@ -7627,10 +6918,7 @@ type SellingPlanConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one SellingPlan and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one SellingPlan and a cursor during pagination.\n"
 type SellingPlanEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -7693,10 +6981,7 @@ type SellingPlanGroup {
   ): SellingPlanConnection!
 }
 
-"""
-An auto-generated type for paginating through multiple SellingPlanGroups.
-
-"""
+"An auto-generated type for paginating through multiple SellingPlanGroups.\n"
 type SellingPlanGroupConnection {
   """A list of edges."""
   edges: [SellingPlanGroupEdge!]!
@@ -7708,10 +6993,7 @@ type SellingPlanGroupConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one SellingPlanGroup and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one SellingPlanGroup and a cursor during pagination.\n"
 type SellingPlanGroupEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -7794,7 +7076,7 @@ type Shop implements HasMetafields & Node {
   """A description of the shop."""
   description: String
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """Returns a metafield found by namespace and key."""
@@ -7806,10 +7088,7 @@ type Shop implements HasMetafields & Node {
     namespace: String!
   ): Metafield
 
-  """
-  The metafields associated with the resource matching the supplied list of namespaces and keys.
-  
-  """
+  "The metafields associated with the resource matching the supplied list of namespaces and keys.\n"
   metafields(
     """The list of metafields to retrieve by namespace and key."""
     identifiers: [HasMetafieldsIdentifier!]!
@@ -7858,7 +7137,7 @@ type ShopPolicy implements Node {
   """Policy’s handle."""
   handle: String!
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """Policy’s title."""
@@ -7868,12 +7147,7 @@ type ShopPolicy implements Node {
   url: URL!
 }
 
-"""
-A policy for the store that comes with a default value, such as a subscription policy.
-If the merchant hasn't configured a policy for their store, then the policy will return the default value.
-Otherwise, the policy will return the merchant-configured value.
-
-"""
+"A policy for the store that comes with a default value, such as a subscription policy.\nIf the merchant hasn't configured a policy for their store, then the policy will return the default value.\nOtherwise, the policy will return the merchant-configured value.\n"
 type ShopPolicyWithDefault {
   """The text of the policy. Maximum size: 64KB."""
   body: String!
@@ -7881,9 +7155,7 @@ type ShopPolicyWithDefault {
   """The handle of the policy."""
   handle: String!
 
-  """
-  The unique identifier of the policy. A default policy doesn't have an ID.
-  """
+  """The unique ID of the policy. A default policy doesn't have an ID."""
   id: ID
 
   """The title of the policy."""
@@ -7893,11 +7165,7 @@ type ShopPolicyWithDefault {
   url: URL!
 }
 
-"""
-The availability of a product variant at a particular location.
-Local pick-up must be enabled in the  store's shipping settings, otherwise this will return an empty result.
-
-"""
+"The availability of a product variant at a particular location.\nLocal pick-up must be enabled in the  store's shipping settings, otherwise this will return an empty result.\n"
 type StoreAvailability {
   """Whether the product variant is in-stock at this location."""
   available: Boolean!
@@ -7911,10 +7179,7 @@ type StoreAvailability {
   pickUpTime: String!
 }
 
-"""
-An auto-generated type for paginating through multiple StoreAvailabilities.
-
-"""
+"An auto-generated type for paginating through multiple StoreAvailabilities.\n"
 type StoreAvailabilityConnection {
   """A list of edges."""
   edges: [StoreAvailabilityEdge!]!
@@ -7926,10 +7191,7 @@ type StoreAvailabilityConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one StoreAvailability and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one StoreAvailability and a cursor during pagination.\n"
 type StoreAvailabilityEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -7938,10 +7200,7 @@ type StoreAvailabilityEdge {
   node: StoreAvailability!
 }
 
-"""
-An auto-generated type for paginating through a list of Strings.
-
-"""
+"An auto-generated type for paginating through a list of Strings.\n"
 type StringConnection {
   """A list of edges."""
   edges: [StringEdge!]!
@@ -7950,10 +7209,7 @@ type StringConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one String and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one String and a cursor during pagination.\n"
 type StringEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -7962,11 +7218,7 @@ type StringEdge {
   node: String!
 }
 
-"""
-Specifies the fields required to complete a checkout with
-a tokenized payment.
-
-"""
+"Specifies the fields required to complete a checkout with\na tokenized payment.\n"
 input TokenizedPaymentInputV3 {
   """The billing address for the payment."""
   billingAddress: MailingAddressInput!
@@ -8019,11 +7271,7 @@ type Transaction {
 
 """The different kinds of order transactions."""
 enum TransactionKind {
-  """
-  An amount reserved against the cardholder's funding source.
-  Money does not change hands until the authorization is captured.
-  
-  """
+  "An amount reserved against the cardholder's funding source.\nMoney does not change hands until the authorization is captured.\n"
   AUTHORIZATION
 
   """
@@ -8056,20 +7304,10 @@ enum TransactionStatus {
   SUCCESS
 }
 
-"""
-Represents an [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) and
-[RFC 3987](https://datatracker.ietf.org/doc/html/rfc3987)-compliant URI string.
-
-For example, `"https://johns-apparel.myshopify.com"` is a valid URL. It includes a scheme (`https`) and a host
-(`johns-apparel.myshopify.com`).
-
-"""
+"Represents an [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) and\n[RFC 3987](https://datatracker.ietf.org/doc/html/rfc3987)-compliant URI string.\n\nFor example, `\"https://johns-apparel.myshopify.com\"` is a valid URL. It includes a scheme (`https`) and a host\n(`johns-apparel.myshopify.com`).\n"
 scalar URL
 
-"""
-The measurement used to calculate a unit price for a product variant (e.g. $9.99 / 100ml).
-
-"""
+"The measurement used to calculate a unit price for a product variant (e.g. $9.99 / 100ml).\n"
 type UnitPriceMeasurement {
   """The type of unit of measurement for the unit price measurement."""
   measuredType: UnitPriceMeasurementMeasuredType
@@ -8161,10 +7399,7 @@ type UrlRedirect implements Node {
   target: String!
 }
 
-"""
-An auto-generated type for paginating through multiple UrlRedirects.
-
-"""
+"An auto-generated type for paginating through multiple UrlRedirects.\n"
 type UrlRedirectConnection {
   """A list of edges."""
   edges: [UrlRedirectEdge!]!
@@ -8176,10 +7411,7 @@ type UrlRedirectConnection {
   pageInfo: PageInfo!
 }
 
-"""
-An auto-generated type which holds one UrlRedirect and a cursor during pagination.
-
-"""
+"An auto-generated type which holds one UrlRedirect and a cursor during pagination.\n"
 type UrlRedirectEdge {
   """A cursor for use in pagination."""
   cursor: String!
@@ -8197,9 +7429,7 @@ type UserError implements DisplayableError {
   message: String!
 }
 
-"""
-A filter used to view a subset of products in a collection matching a specific variant option.
-"""
+"The input fields for a filter used to view a subset of products in a collection matching a specific variant option.\n"
 input VariantOptionFilter {
   """The name of the variant option to filter on."""
   name: String!
@@ -8213,7 +7443,7 @@ type Video implements Media & Node {
   """A word or phrase to share the nature or contents of a media."""
   alt: String
 
-  """A globally-unique identifier."""
+  """A globally-unique ID."""
   id: ID!
 
   """The media content type."""

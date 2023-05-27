@@ -9,6 +9,7 @@ export const handleError: HandleServerError = ({ error, event }) => {
 	});
 
 	sentry.captureException(error);
+	console.error(error, event);
 
 	return {
 		message: error instanceof Error && 'message' in error ? error.message : String(error)
