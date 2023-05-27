@@ -1,0 +1,9 @@
+query Terms {
+	shop {
+		privacyPolicy {
+			title
+			body
+			url
+		}
+	}
+}

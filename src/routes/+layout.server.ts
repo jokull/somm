@@ -30,15 +30,18 @@ export const load = async (event) => {
 	}
 
 	if (!cart) {
-		const { data } = await CreateCart.mutate({}, { event });
+		const response = await CreateCart.mutate({}, { event });
+		const { data } = response;
 		if (data?.cartCreate?.cart) {
 			await seal(cookies, { cartId: data.cartCreate.cart.id });
 			cart = data.cartCreate.cart;
 		}
 	}
 
+	const vendor = getVendorFromSlug(params.vendor ?? '');
+
 	return {
-		vendor: getVendorFromSlug(params.vendor ?? ''),
+		vendor,
 		vendors: Object.values(vendors),
 		wineType: url.searchParams.get('wineType'),
 		session: session,

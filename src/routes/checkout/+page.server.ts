@@ -4,10 +4,10 @@ import { redirect } from '@sveltejs/kit';
 import { graphql, type CountryCode$options } from '$houdini';
 import { getDokobitSession } from '$lib/dokobit';
 import { unseal } from '$lib/session';
-import type { Actions, PageServerLoad } from './$types';
+// import type { Actions, PageServerLoad } from './$types';
 
 // On POST request to start the dokobit verification process and redirect to it
-export const actions: Actions = {
+export const actions = {
 	default: async ({ url, fetch }) => {
 		const returnUrl = new URL('/checkout', url);
 		const data = await fetch(`${env.DOKOBIT_URL}/create?access_token=${env.DOKOBIT_TOKEN}`, {
@@ -25,7 +25,8 @@ export const actions: Actions = {
 };
 
 // On GET requests process the dokobit based on the ?session_token, if presented
-export const load: PageServerLoad = async ({ cookies, url }) => {
+export async function load(event) {
+	const { cookies, url } = event;
 	const dokobitSessionToken = url.searchParams.get('session_token');
 	const session = await unseal(cookies);
 
@@ -71,4 +72,4 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 	}
 
 	return { checkoutUrl };
-};
+}

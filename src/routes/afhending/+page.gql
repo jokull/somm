@@ -1,0 +1,9 @@
+query ShippingPolicy {
+	shop {
+		shippingPolicy {
+			title
+			body
+			url
+		}
+	}
+}

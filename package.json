@@ -9,14 +9,12 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write .",
-		"codegen": "graphql-codegen",
-		"postinstall": "patch-package"
+		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^1.0.0",
 		"@sveltejs/adapter-cloudflare": "^2.2.0",
-		"@sveltejs/kit": "^1.10.0",
+		"@sveltejs/kit": "^1.13.0",
 		"@tailwindcss/forms": "^0.5.3",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
@@ -31,8 +29,8 @@
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
-		"svelte": "^3.55.1",
-		"svelte-check": "^3.1.0",
+		"svelte": "^3.56.0",
+		"svelte-check": "^3.1.2",
 		"svelte-preprocess": "^5.0.1",
 		"tailwindcss": "^3.1.5",
 		"tslib": "^2.4.1",
@@ -42,8 +40,8 @@
 	"type": "module",
 	"dependencies": {
 		"classnames": "^2.3.2",
-		"houdini": "^1.0.11",
-		"houdini-svelte": "^1.0.11",
+		"houdini": "^1.1.0",
+		"houdini-svelte": "^1.1.0",
 		"iron-session": "^6.3.1",
 		"remeda": "^1.6.0",
 		"toucan-js": "^3.1.0",
