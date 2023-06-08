@@ -1,7 +1,7 @@
-import path from 'path';
-import preprocess from 'svelte-preprocess';
 import adapter from '@sveltejs/adapter-cloudflare';
 import { vitePreprocess } from '@sveltejs/kit/vite';
+import path from 'path';
+import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -13,8 +13,9 @@ const config = {
 			postcss: true
 		})
 	],
-
+	csrf: false,
 	kit: {
+		csrf: false,
 		adapter: adapter(),
 		alias: { $houdini: path.resolve('.', '$houdini') }
 	}
