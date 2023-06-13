@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$houdini';
+	import type { PageParentData } from './$types';
 	import Product from './Product.svelte';
-	export let data: PageData;
+	export let data: PageData & PageParentData;
 	$: ({ Product: ProductStore } = data);
 	let { vendor, cart } = data;
-	console.log({ product: $ProductStore });
 </script>
 
 <svelte:head>

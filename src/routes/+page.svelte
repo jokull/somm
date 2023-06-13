@@ -1,9 +1,18 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import ProductsGrid from '$lib/ProductsGrid.svelte';
 	import ProductsGridSkeleton from '../ProductsGridSkeleton.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	let { Products, cart } = data;
+
+	import { CartStore } from '$houdini';
+
+	let { Products, cart: serverCart } = data;
+
+	$: store = new CartStore();
+	$: browser && store.fetch({ variables: { cartId: serverCart?.id ?? '' } });
+	$: cart = $store.data?.cart ?? serverCart;
+
 	$: ({ Products } = data);
 </script>
 
@@ -19,6 +28,6 @@
 	{#if $Products.fetching || !cart}
 		<ProductsGridSkeleton />
 	{:else if $Products.data?.collection?.products && cart}
-		<ProductsGrid products={$Products.data.collection?.products} serverCart={cart} />
+		<ProductsGrid products={$Products.data.collection?.products} {cart} />
 	{/if}
 </div>

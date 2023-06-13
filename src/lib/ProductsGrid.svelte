@@ -1,31 +1,15 @@
 <script lang="ts">
-	import { graphql, type Cart$result } from '$houdini';
+	import type { Cart$result } from '$houdini';
 	import type { Product } from '$lib/types';
 	import classNames from 'classnames';
 	import ProductCard from './ProductCard.svelte';
 
-	import type { ClientCartVariables } from './$houdini';
-
-	export let serverCart: NonNullable<Cart$result['cart']>;
-
-	export const _ClientCartVariables: ClientCartVariables = () => {
-		return { cartId: serverCart.id };
-	};
-
-	const store = graphql(`
-		query ClientCart($cartId: ID!) {
-			cart(id: $cartId) {
-				...CartFields
-			}
-		}
-	`);
+	export let cart: NonNullable<Cart$result['cart']>;
 
 	export let products: { edges: Product[] };
 	$: filteredProducts = products.edges.filter(({ node }) =>
 		node.variants.edges.find(({ node }) => node.image?.url)
 	);
-
-	$: cart = $store.data?.cart ?? serverCart;
 </script>
 
 <div
