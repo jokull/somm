@@ -17,6 +17,6 @@
 	{#if $Products.fetching || !cart}
 		<ProductsGridSkeleton />
 	{:else if $Products.data?.collection?.products && cart}
-		<ProductsGrid products={$Products.data.collection?.products} serverCart={cart} />
+		<ProductsGrid products={$Products.data.collection?.products} {cart} />
 	{/if}
 </div>
