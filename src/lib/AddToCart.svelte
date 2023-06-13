@@ -1,8 +1,8 @@
 <script lang="ts">
-	import classNames from 'classnames';
 	import { graphql, type Cart$result } from '$houdini';
-	import type { Product } from './types';
+	import classNames from 'classnames';
 	import CartLineItemQuantity from './CartLineItemQuantity.svelte';
+	import type { Product } from './types';
 
 	export let cart: NonNullable<Cart$result['cart']>;
 	export let variant: Product['node']['variants']['edges'][0]['node'];
@@ -18,7 +18,7 @@
 	`);
 
 	$: cartLine = cart.lines.edges.find(({ node }) => node.merchandise.id === variant.id);
-	$: soldOut = variant.quantityAvailable !== null ? variant.quantityAvailable === 0 : false;
+	$: soldOut = !variant.availableForSale;
 </script>
 
 <div class="flex justify-between gap-2">

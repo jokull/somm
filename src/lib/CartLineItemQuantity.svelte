@@ -61,9 +61,7 @@
 			on:click={() => {
 				update(line.node.id, line.node.quantity + 1);
 			}}
-			disabled={line.node.merchandise.quantityAvailable
-				? line.node.merchandise.quantityAvailable < line.node.quantity + 1
-				: false}
+			disabled={!line.node.merchandise.availableForSale}
 			class="enabled:text-[blue] disabled:text-neutral-500"
 		>
 			<Plus />
