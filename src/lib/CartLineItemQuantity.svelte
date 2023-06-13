@@ -18,31 +18,19 @@
 	`);
 
 	function update(lineItemId: string, quantity: number) {
-		updateCartItem.mutate(
-			{
+		const oldQuantity = Number(quantity);
+		// Optimistic update
+		line = { ...line, node: { ...line.node, quantity } };
+		updateCartItem
+			.mutate({
 				cartId: cart.id,
 				lineItemId,
 				quantity
-			},
-			{
-				optimisticResponse: {
-					cartLinesUpdate: {
-						cart: {
-							...cart,
-							lines: {
-								edges: cart.lines.edges.map((line) => ({
-									...line,
-									node: {
-										...line.node,
-										quantity: line.node.id === lineItemId ? quantity : line.node.quantity
-									}
-								}))
-							}
-						}
-					}
-				}
-			}
-		);
+			})
+			.catch(() => {
+				// Revert the optimistic update
+				line = { ...line, node: { ...line.node, quantity: oldQuantity } };
+			});
 	}
 </script>
 
