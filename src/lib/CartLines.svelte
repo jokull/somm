@@ -24,9 +24,28 @@
 			lineItemId
 		});
 	}
+
+	$: bottles = cart.lines.edges.flatMap(({ node }) =>
+		node.merchandise.image
+			? Array.from({ length: node.quantity }).map(() => node.merchandise.image!)
+			: []
+	);
 </script>
 
 <h2 class="text-xl mb-2 font-medium">Karfa</h2>
+
+<div class="flex flex-wrap gap-1 items-center max-w-md mb-8">
+	{#each bottles as bottle}
+		<img
+			src={bottle.url}
+			width={bottle.width ?? undefined}
+			height={bottle.height ?? undefined}
+			class="object-cover h-20 w-12 aspect-[2/3] rounded shadow"
+			loading="lazy"
+			alt="Product"
+		/>
+	{/each}
+</div>
 
 {#if cart.lines.edges.length > 0}
 	{#each cart.lines.edges as line}

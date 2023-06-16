@@ -6654,7 +6654,7 @@ export enum ShopifyWeightUnit {
   Pounds = 'POUNDS'
 }
 
-export type ShopifyCartFieldsFragment = { __typename: 'Cart', id: string, totalQuantity: number, checkoutUrl: string, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalTaxAmount?: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null }, lines: { __typename: 'CartLineConnection', edges: Array<{ __typename: 'CartLineEdge', node: { __typename: 'CartLine', id: string, quantity: number, cost: { __typename: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } }, merchandise: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, product: { __typename: 'Product', id: string, title: string, vendor: string }, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } } }> } };
+export type ShopifyCartFieldsFragment = { __typename: 'Cart', id: string, totalQuantity: number, checkoutUrl: string, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalTaxAmount?: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null }, lines: { __typename: 'CartLineConnection', edges: Array<{ __typename: 'CartLineEdge', node: { __typename: 'CartLine', id: string, quantity: number, cost: { __typename: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } }, merchandise: { __typename: 'ProductVariant', id: string, title: string, product: { __typename: 'Product', id: string, title: string, vendor: string }, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } } } }> } };
 
 
 export type ShopifyCartFieldsFragmentVariables = Exact<{ [key: string]: never; }>;
@@ -6664,24 +6664,24 @@ export type ShopifyGetCartQueryVariables = Exact<{
 }>;
 
 
-export type ShopifyGetCartQuery = { __typename?: 'QueryRoot', cart?: { __typename: 'Cart', id: string, totalQuantity: number, checkoutUrl: string, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalTaxAmount?: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null }, lines: { __typename: 'CartLineConnection', edges: Array<{ __typename: 'CartLineEdge', node: { __typename: 'CartLine', id: string, quantity: number, cost: { __typename: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } }, merchandise: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, product: { __typename: 'Product', id: string, title: string, vendor: string }, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } } }> } } | null };
+export type ShopifyGetCartQuery = { __typename?: 'QueryRoot', cart?: { __typename: 'Cart', id: string, totalQuantity: number, checkoutUrl: string, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalTaxAmount?: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null }, lines: { __typename: 'CartLineConnection', edges: Array<{ __typename: 'CartLineEdge', node: { __typename: 'CartLine', id: string, quantity: number, cost: { __typename: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } }, merchandise: { __typename: 'ProductVariant', id: string, title: string, product: { __typename: 'Product', id: string, title: string, vendor: string }, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } } } }> } } | null };
 
-export type ShopifyLineItemFieldsFragment = { __typename: 'CartLine', id: string, quantity: number, cost: { __typename: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } }, merchandise: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, product: { __typename: 'Product', id: string, title: string, vendor: string }, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } };
+export type ShopifyLineItemFieldsFragment = { __typename: 'CartLine', id: string, quantity: number, cost: { __typename: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } }, merchandise: { __typename: 'ProductVariant', id: string, title: string, product: { __typename: 'Product', id: string, title: string, vendor: string }, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } } };
 
 
 export type ShopifyLineItemFieldsFragmentVariables = Exact<{ [key: string]: never; }>;
 
-export type ShopifyPaginatedProductListFragment = { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } };
+export type ShopifyPaginatedProductListFragment = { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } };
 
 
 export type ShopifyPaginatedProductListFragmentVariables = Exact<{ [key: string]: never; }>;
 
-export type ShopifyProductFieldsFragment = { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } };
+export type ShopifyProductFieldsFragment = { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } };
 
 
 export type ShopifyProductFieldsFragmentVariables = Exact<{ [key: string]: never; }>;
 
-export type ShopifyVariantFieldsFragment = { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null };
+export type ShopifyVariantFieldsFragment = { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null };
 
 
 export type ShopifyVariantFieldsFragmentVariables = Exact<{ [key: string]: never; }>;
@@ -6692,21 +6692,21 @@ export type ShopifyProductsQueryVariables = Exact<{
 }>;
 
 
-export type ShopifyProductsQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } } | null };
+export type ShopifyProductsQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } } | null };
 
 export type ShopifyCartQueryVariables = Exact<{
   cartId: Scalars['ID']['input'];
 }>;
 
 
-export type ShopifyCartQuery = { __typename?: 'QueryRoot', cart?: { __typename: 'Cart', id: string, totalQuantity: number, checkoutUrl: string, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalTaxAmount?: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null }, lines: { __typename: 'CartLineConnection', edges: Array<{ __typename: 'CartLineEdge', node: { __typename: 'CartLine', id: string, quantity: number, cost: { __typename: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } }, merchandise: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, product: { __typename: 'Product', id: string, title: string, vendor: string }, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } } }> } } | null };
+export type ShopifyCartQuery = { __typename?: 'QueryRoot', cart?: { __typename: 'Cart', id: string, totalQuantity: number, checkoutUrl: string, cost: { __typename?: 'CartCost', subtotalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, totalTaxAmount?: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null }, lines: { __typename: 'CartLineConnection', edges: Array<{ __typename: 'CartLineEdge', node: { __typename: 'CartLine', id: string, quantity: number, cost: { __typename: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } }, merchandise: { __typename: 'ProductVariant', id: string, title: string, product: { __typename: 'Product', id: string, title: string, vendor: string }, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } } } }> } } | null };
 
 export type ShopifyProductQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type ShopifyProductQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, seo: { __typename?: 'SEO', title?: string | null, description?: string | null }, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, quantityAvailable?: number | null, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } | null };
+export type ShopifyProductQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, seo: { __typename?: 'SEO', title?: string | null, description?: string | null }, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } | null };
 
 export type ShopifyShippingPolicyQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6716,35 +6716,8 @@ export type ShopifyShippingPolicyQuery = { __typename?: 'QueryRoot', shop: { __t
 export type ShopifyTermsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShopifyTermsQuery = { __typename?: 'QueryRoot', shop: { __typename?: 'Shop', privacyPolicy?: { __typename?: 'ShopPolicy', title: string, body: string, url: string } | null } };
+export type ShopifyTermsQuery = { __typename?: 'QueryRoot', shop: { __typename?: 'Shop', refundPolicy?: { __typename?: 'ShopPolicy', title: string, body: string, url: string } | null } };
 
-export const VariantFieldsFragmentDoc = gql`
-    fragment VariantFields on ProductVariant {
-  __typename
-  id
-  title
-  availableForSale
-  quantityAvailable
-  image {
-    __typename
-    id
-    url(transform: {maxHeight: 1200, maxWidth: 1200, scale: 2})
-    altText
-    width
-    height
-  }
-  priceV2 {
-    __typename
-    amount
-    currencyCode
-  }
-  compareAtPriceV2 {
-    __typename
-    amount
-    currencyCode
-  }
-}
-    `;
 export const LineItemFieldsFragmentDoc = gql`
     fragment LineItemFields on CartLine {
   id
@@ -6762,17 +6735,30 @@ export const LineItemFieldsFragmentDoc = gql`
     ... on ProductVariant {
       __typename
       id
+      title
       product {
         __typename
         id
         title
         vendor
       }
-      ...VariantFields
+      image {
+        __typename
+        id
+        url(transform: {maxHeight: 128, maxWidth: 128, scale: 2})
+        altText
+        width
+        height
+      }
+      priceV2 {
+        __typename
+        amount
+        currencyCode
+      }
     }
   }
 }
-    ${VariantFieldsFragmentDoc}`;
+    `;
 export const CartFieldsFragmentDoc = gql`
     fragment CartFields on Cart {
   __typename
@@ -6804,6 +6790,32 @@ export const CartFieldsFragmentDoc = gql`
   }
 }
     ${LineItemFieldsFragmentDoc}`;
+export const VariantFieldsFragmentDoc = gql`
+    fragment VariantFields on ProductVariant {
+  __typename
+  id
+  title
+  availableForSale
+  image {
+    __typename
+    id
+    url(transform: {maxHeight: 1200, maxWidth: 1200, scale: 2})
+    altText
+    width
+    height
+  }
+  priceV2 {
+    __typename
+    amount
+    currencyCode
+  }
+  compareAtPriceV2 {
+    __typename
+    amount
+    currencyCode
+  }
+}
+    `;
 export const ProductFieldsFragmentDoc = gql`
     fragment ProductFields on Product {
   id
@@ -6914,7 +6926,7 @@ export const ShippingPolicyDocument = gql`
 export const TermsDocument = gql`
     query Terms {
   shop {
-    privacyPolicy {
+    refundPolicy {
       title
       body
       url

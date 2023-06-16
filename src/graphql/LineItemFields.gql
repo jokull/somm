@@ -14,13 +14,26 @@ fragment LineItemFields on CartLine {
 		... on ProductVariant {
 			__typename
 			id
+			title
 			product {
 				__typename
 				id
 				title
 				vendor
 			}
-			...VariantFields
+			image {
+				__typename
+				id
+				url(transform: { maxHeight: 128, maxWidth: 128, scale: 2 })
+				altText
+				width
+				height
+			}
+			priceV2 {
+				__typename
+				amount
+				currencyCode
+			}
 		}
 	}
 }

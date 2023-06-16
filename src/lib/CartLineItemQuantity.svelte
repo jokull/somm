@@ -35,7 +35,7 @@
 </script>
 
 <div class="whitespace-nowrap">
-	<div class="tabular-nums whitespace-nowrap flex items-center gap-2 text-sm">
+	<div class="tabular-nums nums whitespace-nowrap flex items-center gap-2 text-sm">
 		<button
 			on:click={() => {
 				update(line.node.id, line.node.quantity - 1);
@@ -49,7 +49,6 @@
 			on:click={() => {
 				update(line.node.id, line.node.quantity + 1);
 			}}
-			disabled={!line.node.merchandise.availableForSale}
 			class="enabled:text-[blue] disabled:text-neutral-500"
 		>
 			<Plus />
