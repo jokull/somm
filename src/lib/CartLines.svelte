@@ -94,6 +94,9 @@
 			</button>
 		</form>
 	</div>
+	<div class="mt-4 text-xs text-neutral-400 text-center">
+		Ekki má selja eða afhenda þeim áfengi sem eru yngri en 20 ára
+	</div>
 {:else}
 	<div>Tóm karfa</div>
 {/if}

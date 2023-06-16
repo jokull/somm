@@ -5,7 +5,7 @@ import { seal, unseal } from '$lib/session';
 import type { LayoutServerLoadEvent } from './$types';
 
 export const load = async (event) => {
-	const { params, url, cookies } = event as LayoutServerLoadEvent;
+	const { params, url, cookies, route } = event as LayoutServerLoadEvent;
 	const session = await unseal(cookies);
 
 	let cart: Cart$result['cart'] = null;
@@ -45,6 +45,8 @@ export const load = async (event) => {
 		vendors: Object.values(vendors),
 		wineType: url.searchParams.get('wineType'),
 		session: session,
-		cart
+		cart,
+		urlPath: url.pathname,
+		routeId: route.id
 	};
 };
