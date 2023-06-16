@@ -1,5 +1,6 @@
 import { loadAll, load_Products } from '$houdini';
 import { getVendorFromSlug } from '$lib/utils';
+import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async (event) => {
@@ -9,7 +10,7 @@ export const load: PageLoad = async (event) => {
 	const wineType = event.url.searchParams.get('wineType');
 	const vendor = (await event.parent()).vendor;
 	if (!vendor) {
-		throw new Error('Vendor should always be defined');
+		throw error(404, { message: 'No vendor found' });
 	}
 	const vendorName = getVendorFromSlug(event.params.vendor)?.shopifyVendor ?? '';
 	return {
