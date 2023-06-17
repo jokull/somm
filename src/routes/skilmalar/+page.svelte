@@ -12,4 +12,5 @@
 	class="[&_p]:mb-4 [&_h1]:mb-4 [&_.s8]:font-bold [&_.s4]:text-lg [&_.s4]:font-medium [&_h1]:text-2xl [&_h1]:font-bold max-w-lg"
 >
 	{@html $TermsStore?.data?.shop.termsOfService?.body ?? ''}
+	{@html $TermsStore?.data?.shop.privacyPolicy?.body ?? ''}
 </div>

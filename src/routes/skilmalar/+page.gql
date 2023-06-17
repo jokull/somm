@@ -1,9 +1,10 @@
 query Terms {
 	shop {
 		termsOfService {
-			title
 			body
-			url
+		}
+		privacyPolicy {
+			body
 		}
 	}
 }
