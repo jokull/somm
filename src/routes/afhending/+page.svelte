@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>{$ShippingPolicyStore?.data?.shop.shippingPolicy?.title ?? 'Skilmálar'} - Somm</title>
+	<title>Afhending - Somm</title>
 </svelte:head>
 
 <div

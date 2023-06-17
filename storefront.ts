@@ -6716,7 +6716,7 @@ export type ShopifyShippingPolicyQuery = { __typename?: 'QueryRoot', shop: { __t
 export type ShopifyTermsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShopifyTermsQuery = { __typename?: 'QueryRoot', shop: { __typename?: 'Shop', refundPolicy?: { __typename?: 'ShopPolicy', title: string, body: string, url: string } | null } };
+export type ShopifyTermsQuery = { __typename?: 'QueryRoot', shop: { __typename?: 'Shop', termsOfService?: { __typename?: 'ShopPolicy', title: string, body: string, url: string } | null } };
 
 export const LineItemFieldsFragmentDoc = gql`
     fragment LineItemFields on CartLine {
@@ -6926,7 +6926,7 @@ export const ShippingPolicyDocument = gql`
 export const TermsDocument = gql`
     query Terms {
   shop {
-    refundPolicy {
+    termsOfService {
       title
       body
       url

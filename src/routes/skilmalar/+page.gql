@@ -1,6 +1,6 @@
 query Terms {
 	shop {
-		refundPolicy {
+		termsOfService {
 			title
 			body
 			url
