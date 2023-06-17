@@ -11,7 +11,7 @@
 			dialog.close();
 		}
 	}}
-	class="bg-white p-0 rounded-lg shadow-xl backdrop:bg-black/20 backdrop-blur-md"
+	class="bg-white p-0 rounded-lg shadow-xl backdrop:bg-black/20 backdrop-blur-md max-h-[calc(100vh-120px)] overflow-y-auto"
 >
 	<slot />
 </dialog>

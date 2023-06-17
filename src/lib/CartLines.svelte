@@ -30,21 +30,28 @@
 			? Array.from({ length: node.quantity }).map(() => node.merchandise.image!)
 			: []
 	);
+
+	const maxBottleLength = 8 * 2;
 </script>
 
 <h2 class="text-xl mb-2 font-medium">Karfa</h2>
 
-<div class="flex flex-wrap gap-1 items-center max-w-md mb-8">
-	{#each bottles as bottle}
+<div class="grid grid-cols-8 gap-1 items-center max-w-md mb-8">
+	{#each bottles.slice(0, maxBottleLength - 1) as bottle}
 		<img
 			src={bottle.url}
 			width={bottle.width ?? undefined}
 			height={bottle.height ?? undefined}
-			class="object-cover h-20 w-12 aspect-[2/3] rounded shadow"
+			class="object-cover h-20 aspect-[2/3] rounded shadow"
 			loading="lazy"
 			alt="Product"
 		/>
 	{/each}
+	{#if bottles.length > maxBottleLength - 1}
+		<div class="h-20 rounded flex items-center justify-center text-lg font-serif font-bold">
+			+ {bottles.length - (maxBottleLength - 1)}
+		</div>
+	{/if}
 </div>
 
 {#if cart.lines.edges.length > 0}

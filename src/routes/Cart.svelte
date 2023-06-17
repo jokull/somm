@@ -43,7 +43,7 @@
 			{#if open}
 				<div
 					transition:fly={{ y: -20, duration: 250 }}
-					class="bg-neutral-100 rounded-md shadow-xl border border-neutral-200 flex flex-col gap-2 p-6 mt-2 w-[480px] absolute z-10 top-10 right-0"
+					class="bg-neutral-100 rounded-md shadow-xl border border-neutral-200 flex flex-col gap-2 p-6 mt-2 w-[480px] absolute z-10 top-10 right-0 max-h-[calc(100vh-120px)] overflow-y-auto"
 				>
 					<CartLines {cart} />
 				</div>
