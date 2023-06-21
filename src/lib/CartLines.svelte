@@ -120,7 +120,12 @@
 			</button>
 		</form>
 	</div>
-	<div class="mt-4 text-xs text-neutral-400 text-center">
+	<div class="mt-4 text-sm text-neutral-600 text-center">
+		Með því að smella á Auðkenni samþykkir þú <a class="font-bold underline" href="/skilmalar"
+			>skilmála</a
+		> Somm.is
+	</div>
+	<div class="mt-2 text-xs text-neutral-400 text-center">
 		Ekki má selja eða afhenda þeim áfengi sem eru yngri en 20 ára
 	</div>
 {:else}
