@@ -34,12 +34,12 @@ export const vendors = {
 	// 	slug: 'vinstukan',
 	// 	instagram: 'vinstukan'
 	// },
-	// akkurat: {
-	// 	name: 'Akkúrat',
-	// 	shopifyVendor: 'Akkúrat',
-	// 	slug: 'akkurat',
-	// 	instagram: 'akkurat'
-	// },
+	akkurat: {
+		name: 'Akkúrat',
+		shopifyVendor: 'Akkúrat',
+		slug: 'akkurat',
+		instagram: 'akkurat'
+	},
 	vinbondinn: {
 		name: 'Vínbóndinn',
 		shopifyVendor: 'Vínbóndinn ehf.',
