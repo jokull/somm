@@ -14,12 +14,13 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Color: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   Decimal: { input: string; output: string; }
   HTML: { input: any; output: any; }
   JSON: { input: any; output: any; }
-  Money: { input: any; output: any; }
   URL: { input: string; output: string; }
+  UnsignedInt64: { input: any; output: any; }
 };
 
 /**
@@ -40,19 +41,19 @@ export type ShopifyApiVersion = {
 /** Details about the gift card used on the checkout. */
 export type ShopifyAppliedGiftCard = ShopifyNode & {
   __typename?: 'AppliedGiftCard';
+  /** The amount that was taken from the gift card by applying it. */
+  amountUsed: ShopifyMoneyV2;
   /**
    * The amount that was taken from the gift card by applying it.
-   * @deprecated Use `amountUsedV2` instead.
+   * @deprecated Use `amountUsed` instead.
    */
-  amountUsed: Scalars['Money']['output'];
-  /** The amount that was taken from the gift card by applying it. */
   amountUsedV2: ShopifyMoneyV2;
+  /** The amount left on the gift card. */
+  balance: ShopifyMoneyV2;
   /**
    * The amount left on the gift card.
-   * @deprecated Use `balanceV2` instead.
+   * @deprecated Use `balance` instead.
    */
-  balance: Scalars['Money']['output'];
-  /** The amount left on the gift card. */
   balanceV2: ShopifyMoneyV2;
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
@@ -84,10 +85,7 @@ export type ShopifyArticle = ShopifyHasMetafields & ShopifyNode & ShopifyOnlineS
   excerpt?: Maybe<Scalars['String']['output']>;
   /** The excerpt of the article, complete with HTML formatting. */
   excerptHtml?: Maybe<Scalars['HTML']['output']>;
-  /**
-   * A human-friendly unique string for the Article automatically generated from its title.
-   *
-   */
+  /** A human-friendly unique string for the Article automatically generated from its title. */
   handle: Scalars['String']['output'];
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
@@ -95,10 +93,7 @@ export type ShopifyArticle = ShopifyHasMetafields & ShopifyNode & ShopifyOnlineS
   image?: Maybe<ShopifyImage>;
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<ShopifyMetafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
+  /** The metafields associated with the resource matching the supplied list of namespaces and keys. */
   metafields: Array<Maybe<ShopifyMetafield>>;
   /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
   onlineStoreUrl?: Maybe<Scalars['URL']['output']>;
@@ -106,7 +101,10 @@ export type ShopifyArticle = ShopifyHasMetafields & ShopifyNode & ShopifyOnlineS
   publishedAt: Scalars['DateTime']['output'];
   /** The article’s SEO information. */
   seo?: Maybe<ShopifySeo>;
-  /** A categorization that a article can be tagged with. */
+  /**
+   * A categorization that a article can be tagged with.
+   *
+   */
   tags: Array<Scalars['String']['output']>;
   /** The article’s name. */
   title: Scalars['String']['output'];
@@ -277,10 +275,7 @@ export type ShopifyBlog = ShopifyHasMetafields & ShopifyNode & ShopifyOnlineStor
   id: Scalars['ID']['output'];
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<ShopifyMetafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
+  /** The metafields associated with the resource matching the supplied list of namespaces and keys. */
   metafields: Array<Maybe<ShopifyMetafield>>;
   /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
   onlineStoreUrl?: Maybe<Scalars['URL']['output']>;
@@ -363,6 +358,50 @@ export enum ShopifyBlogSortKeys {
   Title = 'TITLE'
 }
 
+/**
+ * The store's [branding configuration](https://help.shopify.com/en/manual/promoting-marketing/managing-brand-assets).
+ *
+ */
+export type ShopifyBrand = {
+  __typename?: 'Brand';
+  /** The colors of the store's brand. */
+  colors: ShopifyBrandColors;
+  /** The store's cover image. */
+  coverImage?: Maybe<ShopifyMediaImage>;
+  /** The store's default logo. */
+  logo?: Maybe<ShopifyMediaImage>;
+  /** The store's short description. */
+  shortDescription?: Maybe<Scalars['String']['output']>;
+  /** The store's slogan. */
+  slogan?: Maybe<Scalars['String']['output']>;
+  /** The store's preferred logo for square UI elements. */
+  squareLogo?: Maybe<ShopifyMediaImage>;
+};
+
+/**
+ * A group of related colors for the shop's brand.
+ *
+ */
+export type ShopifyBrandColorGroup = {
+  __typename?: 'BrandColorGroup';
+  /** The background color. */
+  background?: Maybe<Scalars['Color']['output']>;
+  /** The foreground color. */
+  foreground?: Maybe<Scalars['Color']['output']>;
+};
+
+/**
+ * The colors of the shop's brand.
+ *
+ */
+export type ShopifyBrandColors = {
+  __typename?: 'BrandColors';
+  /** The shop's primary brand colors. */
+  primary: Array<ShopifyBrandColorGroup>;
+  /** The shop's secondary brand colors. */
+  secondary: Array<ShopifyBrandColorGroup>;
+};
+
 /** Card brand, such as Visa or Mastercard, which can be used for payments. */
 export enum ShopifyCardBrand {
   /** American Express. */
@@ -392,7 +431,7 @@ export type ShopifyCart = ShopifyNode & {
   attribute?: Maybe<ShopifyAttribute>;
   /** The attributes associated with the cart. Attributes are represented as key-value pairs. */
   attributes: Array<ShopifyAttribute>;
-  /** Information about the buyer that is interacting with the cart. */
+  /** Information about the buyer that's interacting with the cart. */
   buyerIdentity: ShopifyCartBuyerIdentity;
   /** The URL of the checkout for the cart. */
   checkoutUrl: Scalars['URL']['output'];
@@ -400,21 +439,18 @@ export type ShopifyCart = ShopifyNode & {
   cost: ShopifyCartCost;
   /** The date and time when the cart was created. */
   createdAt: Scalars['DateTime']['output'];
-  /** The delivery groups available for the cart, based on the default address of the logged-in customer. */
+  /**
+   * The delivery groups available for the cart, based on the buyer identity default
+   * delivery address preference or the default address of the logged-in customer.
+   *
+   */
   deliveryGroups: ShopifyCartDeliveryGroupConnection;
   /** The discounts that have been applied to the entire cart. */
   discountAllocations: Array<ShopifyCartDiscountAllocation>;
-  /**
-   * The case-insensitive discount codes that the customer added at checkout.
-   *
-   */
+  /** The case-insensitive discount codes that the customer added at checkout. */
   discountCodes: Array<ShopifyCartDiscountCode>;
   /**
-   * The estimated costs that the buyer will pay at checkout.
-   * The estimated costs are subject to change and changes will be reflected at checkout.
-   * The `estimatedCost` field uses the `buyerIdentity` field to determine
-   * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
-   *
+   * The estimated costs that the buyer will pay at checkout. The estimated costs are subject to change and changes will be reflected at checkout. The `estimatedCost` field uses the `buyerIdentity` field to determine [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
    * @deprecated Use `cost` instead.
    */
   estimatedCost: ShopifyCartEstimatedCost;
@@ -422,7 +458,7 @@ export type ShopifyCart = ShopifyNode & {
   id: Scalars['ID']['output'];
   /** A list of lines containing information about the items the customer intends to purchase. */
   lines: ShopifyCartLineConnection;
-  /** A note that is associated with the cart. For example, the note can be a personalized message to the buyer. */
+  /** A note that's associated with the cart. For example, the note can be a personalized message to the buyer. */
   note?: Maybe<Scalars['String']['output']>;
   /** The total number of items in the cart. */
   totalQuantity: Scalars['Int']['output'];
@@ -499,9 +535,16 @@ export type ShopifyCartBuyerIdentity = {
   countryCode?: Maybe<ShopifyCountryCode>;
   /** The customer account associated with the cart. */
   customer?: Maybe<ShopifyCustomer>;
-  /** The email address of the buyer that is interacting with the cart. */
+  /**
+   * An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
+   * The rank of the preferences is determined by the order of the addresses in the array. Preferences
+   * can be used to populate relevant fields in the checkout flow.
+   *
+   */
+  deliveryAddressPreferences: Array<ShopifyDeliveryAddress>;
+  /** The email address of the buyer that's interacting with the cart. */
   email?: Maybe<Scalars['String']['output']>;
-  /** The phone number of the buyer that is interacting with the cart. */
+  /** The phone number of the buyer that's interacting with the cart. */
   phone?: Maybe<Scalars['String']['output']>;
 };
 
@@ -517,6 +560,13 @@ export type ShopifyCartBuyerIdentityInput = {
   countryCode?: InputMaybe<ShopifyCountryCode>;
   /** The access token used to identify the customer associated with the cart. */
   customerAccessToken?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * An ordered set of delivery addresses tied to the buyer that is interacting with the cart.
+   * The rank of the preferences is determined by the order of the addresses in the array. Preferences
+   * can be used to populate relevant fields in the checkout flow.
+   *
+   */
+  deliveryAddressPreferences?: InputMaybe<Array<ShopifyDeliveryAddressInput>>;
   /** The email address of the buyer that is interacting with the cart. */
   email?: InputMaybe<Scalars['String']['input']>;
   /** The phone number of the buyer that is interacting with the cart. */
@@ -598,6 +648,8 @@ export type ShopifyCartDeliveryGroup = {
   deliveryOptions: Array<ShopifyCartDeliveryOption>;
   /** The ID for the delivery group. */
   id: Scalars['ID']['output'];
+  /** The selected delivery option for the delivery group. */
+  selectedDeliveryOption?: Maybe<ShopifyCartDeliveryOption>;
 };
 
 
@@ -647,6 +699,8 @@ export type ShopifyCartDeliveryOption = {
   description?: Maybe<Scalars['String']['output']>;
   /** The estimated cost for the delivery option. */
   estimatedCost: ShopifyMoneyV2;
+  /** The unique identifier of the delivery option. */
+  handle: Scalars['String']['output'];
   /** The title of the delivery option. */
   title?: Maybe<Scalars['String']['output']>;
 };
@@ -689,14 +743,7 @@ export enum ShopifyCartErrorCode {
   MissingNote = 'MISSING_NOTE'
 }
 
-/**
- * The estimated costs that the buyer will pay at checkout.
- * The estimated cost uses
- * [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity)
- * to determine
- * [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing).
- *
- */
+/** The estimated costs that the buyer will pay at checkout. The estimated cost uses [`CartBuyerIdentity`](https://shopify.dev/api/storefront/reference/cart/cartbuyeridentity) to determine [international pricing](https://shopify.dev/custom-storefronts/internationalization/international-pricing). */
 export type ShopifyCartEstimatedCost = {
   __typename?: 'CartEstimatedCost';
   /** The estimated amount, before taxes and discounts, for the customer to pay at checkout. The checkout charge amount doesn't include any deferred payments that'll be paid at a later date. If the cart has no deferred payments, then the checkout charge amount is equivalent to`subtotal_amount`. */
@@ -729,7 +776,10 @@ export type ShopifyCartInput = {
   discountCodes?: InputMaybe<Array<Scalars['String']['input']>>;
   /** A list of merchandise lines to add to the cart. */
   lines?: InputMaybe<Array<ShopifyCartLineInput>>;
-  /** A note that is associated with the cart. For example, the note can be a personalized message to the buyer. */
+  /**
+   * A note that's associated with the cart. For example, the note can be a personalized message to the buyer.
+   *
+   */
   note?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -804,7 +854,10 @@ export type ShopifyCartLineEdge = {
   node: ShopifyCartLine;
 };
 
-/** The estimated cost of the merchandise line that the buyer will pay at checkout. */
+/**
+ * The estimated cost of the merchandise line that the buyer will pay at checkout.
+ *
+ */
 export type ShopifyCartLineEstimatedCost = {
   __typename?: 'CartLineEstimatedCost';
   /** The amount of the merchandise line. */
@@ -879,6 +932,26 @@ export type ShopifyCartNoteUpdatePayload = {
   userErrors: Array<ShopifyCartUserError>;
 };
 
+/**
+ * The input fields for updating the selected delivery options for a delivery group.
+ *
+ */
+export type ShopifyCartSelectedDeliveryOptionInput = {
+  /** The ID of the cart delivery group. */
+  deliveryGroupId: Scalars['ID']['input'];
+  /** The handle of the selected delivery option. */
+  deliveryOptionHandle: Scalars['String']['input'];
+};
+
+/** Return type for `cartSelectedDeliveryOptionsUpdate` mutation. */
+export type ShopifyCartSelectedDeliveryOptionsUpdatePayload = {
+  __typename?: 'CartSelectedDeliveryOptionsUpdatePayload';
+  /** The updated cart. */
+  cart?: Maybe<ShopifyCart>;
+  /** The list of errors that occurred from executing the mutation. */
+  userErrors: Array<ShopifyCartUserError>;
+};
+
 /** Represents an error that happens during execution of a cart mutation. */
 export type ShopifyCartUserError = ShopifyDisplayableError & {
   __typename?: 'CartUserError';
@@ -910,7 +983,7 @@ export type ShopifyCheckout = ShopifyNode & {
   createdAt: Scalars['DateTime']['output'];
   /** The currency code for the checkout. */
   currencyCode: ShopifyCurrencyCode;
-  /** A list of extra information that is added to the checkout. */
+  /** A list of extra information that's added to the checkout. */
   customAttributes: Array<ShopifyAttribute>;
   /** Discounts that have been applied on the checkout. */
   discountApplications: ShopifyDiscountApplicationConnection;
@@ -926,14 +999,14 @@ export type ShopifyCheckout = ShopifyNode & {
   note?: Maybe<Scalars['String']['output']>;
   /** The resulting order from a paid checkout. */
   order?: Maybe<ShopifyOrder>;
-  /** The Order Status Page for this Checkout, null when checkout is not completed. */
+  /** The Order Status Page for this Checkout, null when checkout isn't completed. */
   orderStatusUrl?: Maybe<Scalars['URL']['output']>;
+  /** The amount left to be paid. This is equal to the cost of the line items, taxes, and shipping, minus discounts and gift cards. */
+  paymentDue: ShopifyMoneyV2;
   /**
-   * The amount left to be paid. This is equal to the cost of the line items, taxes and shipping minus discounts and gift cards.
-   * @deprecated Use `paymentDueV2` instead.
+   * The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards.
+   * @deprecated Use `paymentDue` instead.
    */
-  paymentDue: Scalars['Money']['output'];
-  /** The amount left to be paid. This is equal to the cost of the line items, duties, taxes, and shipping, minus discounts and gift cards. */
   paymentDueV2: ShopifyMoneyV2;
   /**
    * Whether or not the Checkout is ready and can be completed. Checkouts may
@@ -952,14 +1025,14 @@ export type ShopifyCheckout = ShopifyNode & {
    *
    */
   shippingDiscountAllocations: Array<ShopifyDiscountAllocation>;
-  /** Once a shipping rate is selected by the customer it is transitioned to a `shipping_line` object. */
+  /** Once a shipping rate is selected by the customer it's transitioned to a `shipping_line` object. */
   shippingLine?: Maybe<ShopifyShippingRate>;
+  /** The price at checkout before shipping and taxes. */
+  subtotalPrice: ShopifyMoneyV2;
   /**
-   * Price of the checkout before shipping and taxes.
-   * @deprecated Use `subtotalPriceV2` instead.
+   * The price at checkout before duties, shipping, and taxes.
+   * @deprecated Use `subtotalPrice` instead.
    */
-  subtotalPrice: Scalars['Money']['output'];
-  /** The price at checkout before duties, shipping, and taxes. */
   subtotalPriceV2: ShopifyMoneyV2;
   /** Whether the checkout is tax exempt. */
   taxExempt: Scalars['Boolean']['output'];
@@ -967,19 +1040,19 @@ export type ShopifyCheckout = ShopifyNode & {
   taxesIncluded: Scalars['Boolean']['output'];
   /** The sum of all the duties applied to the line items in the checkout. */
   totalDuties?: Maybe<ShopifyMoneyV2>;
+  /** The sum of all the prices of all the items in the checkout, including taxes and duties. */
+  totalPrice: ShopifyMoneyV2;
   /**
-   * The sum of all the prices of all the items in the checkout, taxes and discounts included.
-   * @deprecated Use `totalPriceV2` instead.
+   * The sum of all the prices of all the items in the checkout, including taxes and duties.
+   * @deprecated Use `totalPrice` instead.
    */
-  totalPrice: Scalars['Money']['output'];
-  /** The sum of all the prices of all the items in the checkout, including duties, taxes, and discounts. */
   totalPriceV2: ShopifyMoneyV2;
+  /** The sum of all the taxes applied to the line items and shipping lines in the checkout. */
+  totalTax: ShopifyMoneyV2;
   /**
    * The sum of all the taxes applied to the line items and shipping lines in the checkout.
-   * @deprecated Use `totalTaxV2` instead.
+   * @deprecated Use `totalTax` instead.
    */
-  totalTax: Scalars['Money']['output'];
-  /** The sum of all the taxes applied to the line items and shipping lines in the checkout. */
   totalTaxV2: ShopifyMoneyV2;
   /** The date and time when the checkout was last updated. */
   updatedAt: Scalars['DateTime']['output'];
@@ -1017,7 +1090,7 @@ export type ShopifyCheckoutAttributesUpdateV2Input = {
    *
    */
   allowPartialAddresses?: InputMaybe<Scalars['Boolean']['input']>;
-  /** A list of extra information that is added to the checkout. */
+  /** A list of extra information that's added to the checkout. */
   customAttributes?: InputMaybe<Array<ShopifyAttributeInput>>;
   /** The text of an optional note that a shop owner can attach to the checkout. */
   note?: InputMaybe<Scalars['String']['input']>;
@@ -1112,7 +1185,7 @@ export type ShopifyCheckoutCreateInput = {
   allowPartialAddresses?: InputMaybe<Scalars['Boolean']['input']>;
   /** The identity of the customer associated with the checkout. */
   buyerIdentity?: InputMaybe<ShopifyCheckoutBuyerIdentityInput>;
-  /** A list of extra information that is added to the checkout. */
+  /** A list of extra information that's added to the checkout. */
   customAttributes?: InputMaybe<Array<ShopifyAttributeInput>>;
   /** The email with which the customer wants to checkout. */
   email?: InputMaybe<Scalars['String']['input']>;
@@ -1491,7 +1564,11 @@ export type ShopifyCheckoutUserError = ShopifyDisplayableError & {
   message: Scalars['String']['output'];
 };
 
-/** A collection represents a grouping of products that a shop owner can create to organize them or make their shops easier to browse. */
+/**
+ * A collection represents a grouping of products that a shop owner can create to
+ * organize them or make their shops easier to browse.
+ *
+ */
 export type ShopifyCollection = ShopifyHasMetafields & ShopifyNode & ShopifyOnlineStorePublishable & {
   __typename?: 'Collection';
   /** Stripped description of the collection, single line with HTML tags removed. */
@@ -1510,10 +1587,7 @@ export type ShopifyCollection = ShopifyHasMetafields & ShopifyNode & ShopifyOnli
   image?: Maybe<ShopifyImage>;
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<ShopifyMetafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
+  /** The metafields associated with the resource matching the supplied list of namespaces and keys. */
   metafields: Array<Maybe<ShopifyMetafield>>;
   /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
   onlineStoreUrl?: Maybe<Scalars['URL']['output']>;
@@ -1528,26 +1602,42 @@ export type ShopifyCollection = ShopifyHasMetafields & ShopifyNode & ShopifyOnli
 };
 
 
-/** A collection represents a grouping of products that a shop owner can create to organize them or make their shops easier to browse. */
+/**
+ * A collection represents a grouping of products that a shop owner can create to
+ * organize them or make their shops easier to browse.
+ *
+ */
 export type ShopifyCollectionDescriptionArgs = {
   truncateAt?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
-/** A collection represents a grouping of products that a shop owner can create to organize them or make their shops easier to browse. */
+/**
+ * A collection represents a grouping of products that a shop owner can create to
+ * organize them or make their shops easier to browse.
+ *
+ */
 export type ShopifyCollectionMetafieldArgs = {
   key: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
 };
 
 
-/** A collection represents a grouping of products that a shop owner can create to organize them or make their shops easier to browse. */
+/**
+ * A collection represents a grouping of products that a shop owner can create to
+ * organize them or make their shops easier to browse.
+ *
+ */
 export type ShopifyCollectionMetafieldsArgs = {
   identifiers: Array<ShopifyHasMetafieldsIdentifier>;
 };
 
 
-/** A collection represents a grouping of products that a shop owner can create to organize them or make their shops easier to browse. */
+/**
+ * A collection represents a grouping of products that a shop owner can create to
+ * organize them or make their shops easier to browse.
+ *
+ */
 export type ShopifyCollectionProductsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -2234,7 +2324,8 @@ export type ShopifyCurrency = {
 };
 
 /**
- * The three-letter currency codes that represent the world currencies used in stores. These include standard ISO 4217 codes, legacy codes,
+ * The three-letter currency codes that represent the world currencies used in
+ * stores. These include standard ISO 4217 codes, legacy codes,
  * and non-standard codes.
  *
  */
@@ -2546,7 +2637,7 @@ export enum ShopifyCurrencyCode {
    * @deprecated `VEF` is deprecated. Use `VES` available from version `2020-10` onwards instead.
    */
   Vef = 'VEF',
-  /** Venezuelan Bolivares (VES). */
+  /** Venezuelan Bolivares Soberanos (VES). */
   Ves = 'VES',
   /** Vietnamese đồng (VND). */
   Vnd = 'VND',
@@ -2597,11 +2688,10 @@ export type ShopifyCustomer = ShopifyHasMetafields & {
   lastName?: Maybe<Scalars['String']['output']>;
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<ShopifyMetafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
+  /** The metafields associated with the resource matching the supplied list of namespaces and keys. */
   metafields: Array<Maybe<ShopifyMetafield>>;
+  /** The number of orders that the customer has made at the store in their lifetime. */
+  numberOfOrders: Scalars['UnsignedInt64']['output'];
   /** The orders associated with the customer. */
   orders: ShopifyOrderConnection;
   /** The customer’s phone number. */
@@ -2975,6 +3065,18 @@ export type ShopifyCustomerUserError = ShopifyDisplayableError & {
   message: Scalars['String']['output'];
 };
 
+/** A delivery address of the buyer that is interacting with the cart. */
+export type ShopifyDeliveryAddress = ShopifyMailingAddress;
+
+/**
+ * The input fields for delivery address preferences.
+ *
+ */
+export type ShopifyDeliveryAddressInput = {
+  /** A delivery address preference of a buyer that is interacting with the cart. */
+  deliveryAddress?: InputMaybe<ShopifyMailingAddressInput>;
+};
+
 /** List of different delivery method types. */
 export enum ShopifyDeliveryMethodType {
   /** Local Delivery. */
@@ -3200,7 +3302,9 @@ export type ShopifyFilterValue = {
   /**
    * An input object that can be used to filter by this value on the parent field.
    *
-   * The value is provided as a helper for building dynamic filtering UI. For example, if you have a list of selected `FilterValue` objects, you can combine their respective `input` values to use in a subsequent query.
+   * The value is provided as a helper for building dynamic filtering UI. For
+   * example, if you have a list of selected `FilterValue` objects, you can combine
+   * their respective `input` values to use in a subsequent query.
    *
    */
   input: Scalars['JSON']['output'];
@@ -3312,10 +3416,7 @@ export type ShopifyGeoCoordinateInput = {
 export type ShopifyHasMetafields = {
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<ShopifyMetafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
+  /** The metafields associated with the resource matching the supplied list of namespaces and keys. */
   metafields: Array<Maybe<ShopifyMetafield>>;
 };
 
@@ -3336,7 +3437,7 @@ export type ShopifyHasMetafieldsMetafieldsArgs = {
 export type ShopifyHasMetafieldsIdentifier = {
   /** The identifier for the metafield. */
   key: Scalars['String']['input'];
-  /** A container for a set of metafields. */
+  /** The container the metafield belongs to. */
   namespace: Scalars['String']['input'];
 };
 
@@ -3345,7 +3446,7 @@ export type ShopifyImage = {
   __typename?: 'Image';
   /** A word or phrase to share the nature or contents of an image. */
   altText?: Maybe<Scalars['String']['output']>;
-  /** The original height of the image in pixels. Returns `null` if the image is not hosted by Shopify. */
+  /** The original height of the image in pixels. Returns `null` if the image isn't hosted by Shopify. */
   height?: Maybe<Scalars['Int']['output']>;
   /** A unique ID for the image. */
   id?: Maybe<Scalars['ID']['output']>;
@@ -3366,7 +3467,7 @@ export type ShopifyImage = {
    * The location of the transformed image as a URL.
    *
    * All transformation arguments are considered "best-effort". If they can be applied to an image, they will be.
-   * Otherwise any transformations which an image type does not support will be ignored.
+   * Otherwise any transformations which an image type doesn't support will be ignored.
    *
    * @deprecated Use `url(transform:)` instead
    */
@@ -3382,7 +3483,7 @@ export type ShopifyImage = {
    *
    */
   url: Scalars['URL']['output'];
-  /** The original width of the image in pixels. Returns `null` if the image is not hosted by Shopify. */
+  /** The original width of the image in pixels. Returns `null` if the image isn't hosted by Shopify. */
   width?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -3441,15 +3542,18 @@ export type ShopifyImageEdge = {
 /**
  * The available options for transforming an image.
  *
- * All transformation options are considered best effort. Any transformation that the original image type doesn't support will be ignored.
+ * All transformation options are considered best effort. Any transformation that
+ * the original image type doesn't support will be ignored.
  *
  */
 export type ShopifyImageTransformInput = {
   /**
    * The region of the image to remain after cropping.
-   * Must be used in conjunction with the `maxWidth` and/or `maxHeight` fields, where the `maxWidth` and `maxHeight` aren't equal.
+   * Must be used in conjunction with the `maxWidth` and/or `maxHeight` fields,
+   * where the `maxWidth` and `maxHeight` aren't equal.
    * The `crop` argument should coincide with the smaller value. A smaller `maxWidth` indicates a `LEFT` or `RIGHT` crop, while
-   * a smaller `maxHeight` indicates a `TOP` or `BOTTOM` crop. For example, `{ maxWidth: 5, maxHeight: 10, crop: LEFT }` will result
+   * a smaller `maxHeight` indicates a `TOP` or `BOTTOM` crop. For example, `{
+   * maxWidth: 5, maxHeight: 10, crop: LEFT }` will result
    * in an image with a width of 5 and height of 10, where the right side of the image is removed.
    *
    */
@@ -3520,6 +3624,8 @@ export enum ShopifyLanguageCode {
   Ca = 'CA',
   /** Chechen. */
   Ce = 'CE',
+  /** Central Kurdish. */
+  Ckb = 'CKB',
   /** Czech. */
   Cs = 'CS',
   /** Church Slavic. */
@@ -3552,6 +3658,8 @@ export enum ShopifyLanguageCode {
   Ff = 'FF',
   /** Finnish. */
   Fi = 'FI',
+  /** Filipino. */
+  Fil = 'FIL',
   /** Faroese. */
   Fo = 'FO',
   /** French. */
@@ -3618,6 +3726,8 @@ export enum ShopifyLanguageCode {
   Kw = 'KW',
   /** Kyrgyz. */
   Ky = 'KY',
+  /** Latin. */
+  La = 'LA',
   /** Luxembourgish. */
   Lb = 'LB',
   /** Ganda. */
@@ -3642,6 +3752,8 @@ export enum ShopifyLanguageCode {
   Ml = 'ML',
   /** Mongolian. */
   Mn = 'MN',
+  /** Moldavian. */
+  Mo = 'MO',
   /** Marathi. */
   Mr = 'MR',
   /** Malay. */
@@ -3692,12 +3804,18 @@ export enum ShopifyLanguageCode {
   Ru = 'RU',
   /** Kinyarwanda. */
   Rw = 'RW',
+  /** Sanskrit. */
+  Sa = 'SA',
+  /** Sardinian. */
+  Sc = 'SC',
   /** Sindhi. */
   Sd = 'SD',
   /** Northern Sami. */
   Se = 'SE',
   /** Sango. */
   Sg = 'SG',
+  /** Serbo-Croatian. */
+  Sh = 'SH',
   /** Sinhala. */
   Si = 'SI',
   /** Slovak. */
@@ -3873,20 +3991,11 @@ export type ShopifyMailingAddress = ShopifyNode & {
    *
    */
   address2?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the city, district, village, or town.
-   *
-   */
+  /** The name of the city, district, village, or town. */
   city?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the customer's company or organization.
-   *
-   */
+  /** The name of the customer's company or organization. */
   company?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the country.
-   *
-   */
+  /** The name of the country. */
   country?: Maybe<Scalars['String']['output']>;
   /**
    * The two-letter code for the country of the address.
@@ -3917,10 +4026,7 @@ export type ShopifyMailingAddress = ShopifyNode & {
   latitude?: Maybe<Scalars['Float']['output']>;
   /** The longitude coordinate of the customer address. */
   longitude?: Maybe<Scalars['Float']['output']>;
-  /**
-   * The full name of the customer, based on firstName and lastName.
-   *
-   */
+  /** The full name of the customer, based on firstName and lastName. */
   name?: Maybe<Scalars['String']['output']>;
   /**
    * A unique phone number for the customer.
@@ -4126,10 +4232,7 @@ export type ShopifyMenu = ShopifyNode & {
   title: Scalars['String']['output'];
 };
 
-/**
- * A menu item within a parent menu.
- *
- */
+/** A menu item within a parent menu. */
 export type ShopifyMenuItem = ShopifyNode & {
   __typename?: 'MenuItem';
   /** A globally-unique ID. */
@@ -4198,6 +4301,8 @@ export type ShopifyMetafield = ShopifyNode & {
   parentResource: ShopifyMetafieldParentResource;
   /** Returns a reference object if the metafield's type is a resource reference. */
   reference?: Maybe<ShopifyMetafieldReference>;
+  /** A list of reference objects if the metafield's type is a resource reference list. */
+  references?: Maybe<ShopifyMetafieldReferenceConnection>;
   /**
    * The type name of the metafield.
    * Refer to the list of [supported types](https://shopify.dev/apps/metafields/definitions/types).
@@ -4208,6 +4313,19 @@ export type ShopifyMetafield = ShopifyNode & {
   updatedAt: Scalars['DateTime']['output'];
   /** The data stored in the metafield. Always stored as a string, regardless of the metafield's type. */
   value: Scalars['String']['output'];
+};
+
+
+/**
+ * Metafields represent custom metadata attached to a resource. Metafields can be sorted into namespaces and are
+ * comprised of keys, values, and value types.
+ *
+ */
+export type ShopifyMetafieldReferencesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /**
@@ -4236,7 +4354,33 @@ export type ShopifyMetafieldParentResource = ShopifyArticle | ShopifyBlog | Shop
  * Returns the resource which is being referred to by a metafield.
  *
  */
-export type ShopifyMetafieldReference = ShopifyGenericFile | ShopifyMediaImage | ShopifyPage | ShopifyProduct | ShopifyProductVariant | ShopifyVideo;
+export type ShopifyMetafieldReference = ShopifyCollection | ShopifyGenericFile | ShopifyMediaImage | ShopifyPage | ShopifyProduct | ShopifyProductVariant | ShopifyVideo;
+
+/**
+ * An auto-generated type for paginating through multiple MetafieldReferences.
+ *
+ */
+export type ShopifyMetafieldReferenceConnection = {
+  __typename?: 'MetafieldReferenceConnection';
+  /** A list of edges. */
+  edges: Array<ShopifyMetafieldReferenceEdge>;
+  /** A list of the nodes contained in MetafieldReferenceEdge. */
+  nodes: Array<ShopifyMetafieldReference>;
+  /** Information to aid in pagination. */
+  pageInfo: ShopifyPageInfo;
+};
+
+/**
+ * An auto-generated type which holds one MetafieldReference and a cursor during pagination.
+ *
+ */
+export type ShopifyMetafieldReferenceEdge = {
+  __typename?: 'MetafieldReferenceEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of MetafieldReferenceEdge. */
+  node: ShopifyMetafieldReference;
+};
 
 /** Represents a Shopify hosted 3D model. */
 export type ShopifyModel3d = ShopifyMedia & ShopifyNode & {
@@ -4311,6 +4455,8 @@ export type ShopifyMutation = {
   cartLinesUpdate?: Maybe<ShopifyCartLinesUpdatePayload>;
   /** Updates the note on the cart. */
   cartNoteUpdate?: Maybe<ShopifyCartNoteUpdatePayload>;
+  /** Update the selected delivery options for a delivery group. */
+  cartSelectedDeliveryOptionsUpdate?: Maybe<ShopifyCartSelectedDeliveryOptionsUpdatePayload>;
   /** Updates the attributes of a checkout if `allowPartialAddresses` is `true`. */
   checkoutAttributesUpdateV2?: Maybe<ShopifyCheckoutAttributesUpdateV2Payload>;
   /** Completes a checkout without providing payment information. You can use this mutation for free items or items whose purchase price is covered by a gift card. */
@@ -4392,8 +4538,9 @@ export type ShopifyMutation = {
    * [`customerReset`](https://shopify.dev/api/storefront/latest/mutations/customerReset) mutation to reset the
    * customer password.
    *
-   * This mutation is throttled by IP. With authenticated access,
+   * This mutation is throttled by IP. With private access,
    * you can provide a [`Shopify-Storefront-Buyer-IP`](https://shopify.dev/api/usage/authentication#optional-ip-header) instead of the request IP.
+   * The header is case-sensitive and must be sent as `Shopify-Storefront-Buyer-IP`.
    *
    * Make sure that the value provided to `Shopify-Storefront-Buyer-IP` is trusted. Unthrottled access to this
    * mutation presents a security risk.
@@ -4467,6 +4614,13 @@ export type ShopifyMutationCartLinesUpdateArgs = {
 export type ShopifyMutationCartNoteUpdateArgs = {
   cartId: Scalars['ID']['input'];
   note?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** The schema’s entry-point for mutations. This acts as the public, top-level API from which all mutation queries must start. */
+export type ShopifyMutationCartSelectedDeliveryOptionsUpdateArgs = {
+  cartId: Scalars['ID']['input'];
+  selectedDeliveryOptions: Array<ShopifyCartSelectedDeliveryOptionInput>;
 };
 
 
@@ -4719,7 +4873,7 @@ export type ShopifyOrder = ShopifyHasMetafields & ShopifyNode & {
   canceledAt?: Maybe<Scalars['DateTime']['output']>;
   /** The code of the currency used for the payment. */
   currencyCode: ShopifyCurrencyCode;
-  /** The subtotal of line items and their discounts, excluding line items that have been removed. Does not contain order-level discounts, duties, shipping costs, or shipping discounts. Taxes are not included unless the order is a taxes-included order. */
+  /** The subtotal of line items and their discounts, excluding line items that have been removed. Does not contain order-level discounts, duties, shipping costs, or shipping discounts. Taxes aren't included unless the order is a taxes-included order. */
   currentSubtotalPrice: ShopifyMoneyV2;
   /** The total cost of duties for the order, including refunds. */
   currentTotalDuties?: Maybe<ShopifyMoneyV2>;
@@ -4747,10 +4901,7 @@ export type ShopifyOrder = ShopifyHasMetafields & ShopifyNode & {
   lineItems: ShopifyOrderLineItemConnection;
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<ShopifyMetafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
+  /** The metafields associated with the resource matching the supplied list of namespaces and keys. */
   metafields: Array<Maybe<ShopifyMetafield>>;
   /**
    * Unique identifier for the order that appears on the order.
@@ -4782,42 +4933,42 @@ export type ShopifyOrder = ShopifyHasMetafields & ShopifyNode & {
   shippingDiscountAllocations: Array<ShopifyDiscountAllocation>;
   /** The unique URL for the order's status page. */
   statusUrl: Scalars['URL']['output'];
+  /** Price of the order before shipping and taxes. */
+  subtotalPrice?: Maybe<ShopifyMoneyV2>;
   /**
-   * Price of the order before shipping and taxes.
-   * @deprecated Use `subtotalPriceV2` instead.
+   * Price of the order before duties, shipping and taxes.
+   * @deprecated Use `subtotalPrice` instead.
    */
-  subtotalPrice?: Maybe<Scalars['Money']['output']>;
-  /** Price of the order before duties, shipping and taxes. */
   subtotalPriceV2?: Maybe<ShopifyMoneyV2>;
   /** List of the order’s successful fulfillments. */
   successfulFulfillments?: Maybe<Array<ShopifyFulfillment>>;
-  /**
-   * The sum of all the prices of all the items in the order, taxes and discounts included (must be positive).
-   * @deprecated Use `totalPriceV2` instead.
-   */
-  totalPrice: Scalars['Money']['output'];
   /** The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive). */
+  totalPrice: ShopifyMoneyV2;
+  /**
+   * The sum of all the prices of all the items in the order, duties, taxes and discounts included (must be positive).
+   * @deprecated Use `totalPrice` instead.
+   */
   totalPriceV2: ShopifyMoneyV2;
+  /** The total amount that has been refunded. */
+  totalRefunded: ShopifyMoneyV2;
   /**
    * The total amount that has been refunded.
-   * @deprecated Use `totalRefundedV2` instead.
+   * @deprecated Use `totalRefunded` instead.
    */
-  totalRefunded: Scalars['Money']['output'];
-  /** The total amount that has been refunded. */
   totalRefundedV2: ShopifyMoneyV2;
+  /** The total cost of shipping. */
+  totalShippingPrice: ShopifyMoneyV2;
   /**
    * The total cost of shipping.
-   * @deprecated Use `totalShippingPriceV2` instead.
+   * @deprecated Use `totalShippingPrice` instead.
    */
-  totalShippingPrice: Scalars['Money']['output'];
-  /** The total cost of shipping. */
   totalShippingPriceV2: ShopifyMoneyV2;
+  /** The total cost of taxes. */
+  totalTax?: Maybe<ShopifyMoneyV2>;
   /**
    * The total cost of taxes.
-   * @deprecated Use `totalTaxV2` instead.
+   * @deprecated Use `totalTax` instead.
    */
-  totalTax?: Maybe<Scalars['Money']['output']>;
-  /** The total cost of taxes. */
   totalTaxV2?: Maybe<ShopifyMoneyV2>;
 };
 
@@ -4886,6 +5037,8 @@ export type ShopifyOrderConnection = {
   nodes: Array<ShopifyOrder>;
   /** Information to aid in pagination. */
   pageInfo: ShopifyPageInfo;
+  /** The total count of Orders. */
+  totalCount: Scalars['UnsignedInt64']['output'];
 };
 
 /**
@@ -4951,7 +5104,7 @@ export type ShopifyOrderLineItem = {
   discountAllocations: Array<ShopifyDiscountAllocation>;
   /** The total price of the line item, including discounts, and displayed in the presentment currency. */
   discountedTotalPrice: ShopifyMoneyV2;
-  /** The total price of the line item, not including any discounts. The total price is calculated using the original unit price multiplied by the quantity, and it is displayed in the presentment currency. */
+  /** The total price of the line item, not including any discounts. The total price is calculated using the original unit price multiplied by the quantity, and it's displayed in the presentment currency. */
   originalTotalPrice: ShopifyMoneyV2;
   /** The number of products variants associated to the line item. */
   quantity: Scalars['Int']['output'];
@@ -5018,10 +5171,7 @@ export type ShopifyPage = ShopifyHasMetafields & ShopifyNode & ShopifyOnlineStor
   id: Scalars['ID']['output'];
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<ShopifyMetafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
+  /** The metafields associated with the resource matching the supplied list of namespaces and keys. */
   metafields: Array<Maybe<ShopifyMetafield>>;
   /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
   onlineStoreUrl?: Maybe<Scalars['URL']['output']>;
@@ -5109,12 +5259,12 @@ export enum ShopifyPageSortKeys {
 /** A payment applied to a checkout. */
 export type ShopifyPayment = ShopifyNode & {
   __typename?: 'Payment';
+  /** The amount of the payment. */
+  amount: ShopifyMoneyV2;
   /**
    * The amount of the payment.
-   * @deprecated Use `amountV2` instead.
+   * @deprecated Use `amount` instead.
    */
-  amount: Scalars['Money']['output'];
-  /** The amount of the payment. */
   amountV2: ShopifyMoneyV2;
   /** The billing address for the payment. */
   billingAddress?: Maybe<ShopifyMailingAddress>;
@@ -5154,7 +5304,11 @@ export type ShopifyPaymentSettings = {
   countryCode: ShopifyCountryCode;
   /** The three-letter code for the shop's primary currency. */
   currencyCode: ShopifyCurrencyCode;
-  /** A list of enabled currencies (ISO 4217 format) that the shop accepts. Merchants can enable currencies from their Shopify Payments settings in the Shopify admin. */
+  /**
+   * A list of enabled currencies (ISO 4217 format) that the shop accepts.
+   * Merchants can enable currencies from their Shopify Payments settings in the Shopify admin.
+   *
+   */
   enabledPresentmentCurrencies: Array<ShopifyCurrencyCode>;
   /** The shop’s Shopify Payments account ID. */
   shopifyPaymentsAccountId?: Maybe<Scalars['String']['output']>;
@@ -5199,7 +5353,10 @@ export type ShopifyPricingValue = ShopifyMoneyV2 | ShopifyPricingPercentageValue
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProduct = ShopifyHasMetafields & ShopifyNode & ShopifyOnlineStorePublishable & {
   __typename?: 'Product';
@@ -5232,14 +5389,13 @@ export type ShopifyProduct = ShopifyHasMetafields & ShopifyNode & ShopifyOnlineS
   id: Scalars['ID']['output'];
   /** List of images associated with the product. */
   images: ShopifyImageConnection;
+  /** Whether the product is a gift card. */
+  isGiftCard: Scalars['Boolean']['output'];
   /** The media associated with the product. */
   media: ShopifyMediaConnection;
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<ShopifyMetafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
+  /** The metafields associated with the resource matching the supplied list of namespaces and keys. */
   metafields: Array<Maybe<ShopifyMetafield>>;
   /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
   onlineStoreUrl?: Maybe<Scalars['URL']['output']>;
@@ -5291,7 +5447,10 @@ export type ShopifyProduct = ShopifyHasMetafields & ShopifyNode & ShopifyOnlineS
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProductCollectionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -5304,7 +5463,10 @@ export type ShopifyProductCollectionsArgs = {
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProductDescriptionArgs = {
   truncateAt?: InputMaybe<Scalars['Int']['input']>;
@@ -5313,7 +5475,10 @@ export type ShopifyProductDescriptionArgs = {
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProductImagesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -5327,7 +5492,10 @@ export type ShopifyProductImagesArgs = {
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProductMediaArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -5341,7 +5509,10 @@ export type ShopifyProductMediaArgs = {
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProductMetafieldArgs = {
   key: Scalars['String']['input'];
@@ -5351,7 +5522,10 @@ export type ShopifyProductMetafieldArgs = {
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProductMetafieldsArgs = {
   identifiers: Array<ShopifyHasMetafieldsIdentifier>;
@@ -5360,7 +5534,10 @@ export type ShopifyProductMetafieldsArgs = {
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProductOptionsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -5369,7 +5546,10 @@ export type ShopifyProductOptionsArgs = {
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProductSellingPlanGroupsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -5382,7 +5562,10 @@ export type ShopifyProductSellingPlanGroupsArgs = {
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProductVariantBySelectedOptionsArgs = {
   selectedOptions: Array<ShopifySelectedOptionInput>;
@@ -5391,7 +5574,10 @@ export type ShopifyProductVariantBySelectedOptionsArgs = {
 
 /**
  * A product represents an individual item for sale in a Shopify store. Products are often physical, but they don't have to be.
- * For example, a digital download (such as a movie, music or ebook file) also qualifies as a product, as do services (such as equipment rental, work for hire, customization of another product or an extended warranty).
+ * For example, a digital download (such as a movie, music or ebook file) also
+ * qualifies as a product, as do services (such as equipment rental, work for hire,
+ * customization of another product or an extended warranty).
+ *
  */
 export type ShopifyProductVariantsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -5558,42 +5744,39 @@ export enum ShopifyProductSortKeys {
   Vendor = 'VENDOR'
 }
 
-/** A product variant represents a different version of a product, such as differing sizes or differing colors. */
+/**
+ * A product variant represents a different version of a product, such as differing sizes or differing colors.
+ *
+ */
 export type ShopifyProductVariant = ShopifyHasMetafields & ShopifyNode & {
   __typename?: 'ProductVariant';
   /** Indicates if the product variant is available for sale. */
   availableForSale: Scalars['Boolean']['output'];
   /** The barcode (for example, ISBN, UPC, or GTIN) associated with the variant. */
   barcode?: Maybe<Scalars['String']['output']>;
+  /** The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPrice` is higher than `price`. */
+  compareAtPrice?: Maybe<ShopifyMoneyV2>;
   /**
-   * The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPrice` is higher than `price`.
-   * @deprecated Use `compareAtPriceV2` instead.
+   * The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPriceV2` is higher than `priceV2`.
+   * @deprecated Use `compareAtPrice` instead.
    */
-  compareAtPrice?: Maybe<Scalars['Money']['output']>;
-  /** The compare at price of the variant. This can be used to mark a variant as on sale, when `compareAtPriceV2` is higher than `priceV2`. */
   compareAtPriceV2?: Maybe<ShopifyMoneyV2>;
   /** Whether a product is out of stock but still available for purchase (used for backorders). */
   currentlyNotInStock: Scalars['Boolean']['output'];
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
-  /**
-   * Image associated with the product variant. This field falls back to the product image if no image is available.
-   *
-   */
+  /** Image associated with the product variant. This field falls back to the product image if no image is available. */
   image?: Maybe<ShopifyImage>;
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<ShopifyMetafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
+  /** The metafields associated with the resource matching the supplied list of namespaces and keys. */
   metafields: Array<Maybe<ShopifyMetafield>>;
+  /** The product variant’s price. */
+  price: ShopifyMoneyV2;
   /**
    * The product variant’s price.
-   * @deprecated Use `priceV2` instead.
+   * @deprecated Use `price` instead.
    */
-  price: Scalars['Money']['output'];
-  /** The product variant’s price. */
   priceV2: ShopifyMoneyV2;
   /** The product object that the product variant belongs to. */
   product: ShopifyProduct;
@@ -5622,20 +5805,29 @@ export type ShopifyProductVariant = ShopifyHasMetafields & ShopifyNode & {
 };
 
 
-/** A product variant represents a different version of a product, such as differing sizes or differing colors. */
+/**
+ * A product variant represents a different version of a product, such as differing sizes or differing colors.
+ *
+ */
 export type ShopifyProductVariantMetafieldArgs = {
   key: Scalars['String']['input'];
   namespace: Scalars['String']['input'];
 };
 
 
-/** A product variant represents a different version of a product, such as differing sizes or differing colors. */
+/**
+ * A product variant represents a different version of a product, such as differing sizes or differing colors.
+ *
+ */
 export type ShopifyProductVariantMetafieldsArgs = {
   identifiers: Array<ShopifyHasMetafieldsIdentifier>;
 };
 
 
-/** A product variant represents a different version of a product, such as differing sizes or differing colors. */
+/**
+ * A product variant represents a different version of a product, such as differing sizes or differing colors.
+ *
+ */
 export type ShopifyProductVariantSellingPlanAllocationsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -5645,7 +5837,10 @@ export type ShopifyProductVariantSellingPlanAllocationsArgs = {
 };
 
 
-/** A product variant represents a different version of a product, such as differing sizes or differing colors. */
+/**
+ * A product variant represents a different version of a product, such as differing sizes or differing colors.
+ *
+ */
 export type ShopifyProductVariantStoreAvailabilityArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -5740,12 +5935,10 @@ export type ShopifyQueryRoot = {
    *
    * When sorting by distance, you must specify a location via the `near` argument.
    *
-   */
-  locations: ShopifyLocationConnection;
-  /**
-   * Retrieve a [navigation menu](https://help.shopify.com/manual/online-store/menus-and-links) by its handle.
    *
    */
+  locations: ShopifyLocationConnection;
+  /** Retrieve a [navigation menu](https://help.shopify.com/manual/online-store/menus-and-links) by its handle. */
   menu?: Maybe<ShopifyMenu>;
   /** Returns a specific node by ID. */
   node?: Maybe<ShopifyNode>;
@@ -6256,12 +6449,12 @@ export type ShopifyShippingRate = {
   __typename?: 'ShippingRate';
   /** Human-readable unique identifier for this shipping rate. */
   handle: Scalars['String']['output'];
+  /** Price of this shipping rate. */
+  price: ShopifyMoneyV2;
   /**
    * Price of this shipping rate.
-   * @deprecated Use `priceV2` instead.
+   * @deprecated Use `price` instead.
    */
-  price: Scalars['Money']['output'];
-  /** Price of this shipping rate. */
   priceV2: ShopifyMoneyV2;
   /** Title of this shipping rate. */
   title: Scalars['String']['output'];
@@ -6270,16 +6463,15 @@ export type ShopifyShippingRate = {
 /** Shop represents a collection of the general settings and information about the shop. */
 export type ShopifyShop = ShopifyHasMetafields & ShopifyNode & {
   __typename?: 'Shop';
+  /** The shop's branding configuration. */
+  brand?: Maybe<ShopifyBrand>;
   /** A description of the shop. */
   description?: Maybe<Scalars['String']['output']>;
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
   /** Returns a metafield found by namespace and key. */
   metafield?: Maybe<ShopifyMetafield>;
-  /**
-   * The metafields associated with the resource matching the supplied list of namespaces and keys.
-   *
-   */
+  /** The metafields associated with the resource matching the supplied list of namespaces and keys. */
   metafields: Array<Maybe<ShopifyMetafield>>;
   /** A string representing the way currency is formatted when the currency isn’t specified. */
   moneyFormat: Scalars['String']['output'];
@@ -6432,7 +6624,7 @@ export type ShopifyTokenizedPaymentInputV3 = {
   paymentAmount: ShopifyMoneyInput;
   /** A simple string or JSON containing the required payment data for the tokenized payment. */
   paymentData: Scalars['String']['input'];
-  /** Whether to execute the payment in test mode, if possible. Test mode is not supported in production stores. Defaults to `false`. */
+  /** Whether to execute the payment in test mode, if possible. Test mode isn't supported in production stores. Defaults to `false`. */
   test?: InputMaybe<Scalars['Boolean']['input']>;
   /** The type of payment token. */
   type: ShopifyPaymentTokenType;
@@ -6441,12 +6633,12 @@ export type ShopifyTokenizedPaymentInputV3 = {
 /** An object representing exchange of money for a product or service. */
 export type ShopifyTransaction = {
   __typename?: 'Transaction';
+  /** The amount of money that the transaction was for. */
+  amount: ShopifyMoneyV2;
   /**
    * The amount of money that the transaction was for.
-   * @deprecated Use `amountV2` instead.
+   * @deprecated Use `amount` instead.
    */
-  amount: Scalars['Money']['output'];
-  /** The amount of money that the transaction was for. */
   amountV2: ShopifyMoneyV2;
   /** The kind of the transaction. */
   kind: ShopifyTransactionKind;
@@ -6601,10 +6793,7 @@ export type ShopifyUserError = ShopifyDisplayableError & {
   message: Scalars['String']['output'];
 };
 
-/**
- * The input fields for a filter used to view a subset of products in a collection matching a specific variant option.
- *
- */
+/** The input fields for a filter used to view a subset of products in a collection matching a specific variant option. */
 export type ShopifyVariantOptionFilter = {
   /** The name of the variant option to filter on. */
   name: Scalars['String']['input'];
@@ -6671,12 +6860,12 @@ export type ShopifyLineItemFieldsFragment = { __typename: 'CartLine', id: string
 
 export type ShopifyLineItemFieldsFragmentVariables = Exact<{ [key: string]: never; }>;
 
-export type ShopifyPaginatedProductListFragment = { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } };
+export type ShopifyPaginatedProductListFragment = { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, totalInventory?: number | null, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } };
 
 
 export type ShopifyPaginatedProductListFragmentVariables = Exact<{ [key: string]: never; }>;
 
-export type ShopifyProductFieldsFragment = { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } };
+export type ShopifyProductFieldsFragment = { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, totalInventory?: number | null, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } };
 
 
 export type ShopifyProductFieldsFragmentVariables = Exact<{ [key: string]: never; }>;
@@ -6692,7 +6881,7 @@ export type ShopifyProductsQueryVariables = Exact<{
 }>;
 
 
-export type ShopifyProductsQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } } | null };
+export type ShopifyProductsQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', cursor: string, node: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, totalInventory?: number | null, vendor: string, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } } | null };
 
 export type ShopifyCartQueryVariables = Exact<{
   cartId: Scalars['ID']['input'];
@@ -6706,7 +6895,7 @@ export type ShopifyProductQueryVariables = Exact<{
 }>;
 
 
-export type ShopifyProductQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, vendor: string, seo: { __typename?: 'SEO', title?: string | null, description?: string | null }, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } | null };
+export type ShopifyProductQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', id: string, handle: string, title: string, description: string, availableForSale: boolean, totalInventory?: number | null, vendor: string, seo: { __typename?: 'SEO', title?: string | null, description?: string | null }, thruga?: { __typename?: 'Metafield', value: string, type: string } | null, country?: { __typename?: 'Metafield', value: string, type: string } | null, region?: { __typename?: 'Metafield', value: string, type: string } | null, wineType?: { __typename?: 'Metafield', value: string, type: string } | null, framleidandi?: { __typename?: 'Metafield', value: string, type: string } | null, raektun?: { __typename?: 'Metafield', value: string, type: string } | null, abv?: { __typename?: 'Metafield', value: string, type: string } | null, magn?: { __typename?: 'Metafield', value: string, type: string } | null, variants: { __typename?: 'ProductVariantConnection', edges: Array<{ __typename?: 'ProductVariantEdge', node: { __typename: 'ProductVariant', id: string, title: string, availableForSale: boolean, image?: { __typename: 'Image', id?: string | null, url: string, altText?: string | null, width?: number | null, height?: number | null } | null, priceV2: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode }, compareAtPriceV2?: { __typename: 'MoneyV2', amount: string, currencyCode: ShopifyCurrencyCode } | null } }> } } | null };
 
 export type ShopifyShippingPolicyQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6823,6 +7012,7 @@ export const ProductFieldsFragmentDoc = gql`
   title
   description
   availableForSale
+  totalInventory
   vendor
   thruga: metafield(namespace: "custom", key: "thruga") {
     value

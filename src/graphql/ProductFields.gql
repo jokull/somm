@@ -4,6 +4,7 @@ fragment ProductFields on Product {
 	title
 	description
 	availableForSale
+	totalInventory
 	vendor
 	thruga: metafield(namespace: "custom", key: "thruga") {
 		value

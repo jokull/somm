@@ -7,9 +7,12 @@
 	export let cart: NonNullable<Cart$result['cart']>;
 
 	export let products: { edges: Product[] };
-	$: filteredProducts = products.edges.filter(({ node }) =>
-		node.variants.edges.find(({ node }) => node.image?.url)
-	);
+
+	$: filteredProducts = products.edges
+		.filter(({ node }) => node.variants.edges.find(({ node }) => node.image?.url))
+		.flatMap(({ node }) =>
+			typeof node.totalInventory === 'number' && node.totalInventory > 0 ? [node] : []
+		);
 </script>
 
 <div
@@ -23,7 +26,7 @@
 >
 	{#if filteredProducts.length > 0}
 		{#each filteredProducts as product}
-			<ProductCard product={product.node} {cart} />
+			<ProductCard {product} {cart} />
 		{/each}
 	{:else}
 		<span>Engar vörur</span>
